@@ -10,4 +10,4 @@ ALLOWED_ORIGINS = "https://ggamdong.github.io,http://localhost:8787,http://127.0
 [[d1_databases]]
 binding = "DB"
 database_name = "film-rescue-lb"
-database_id = "REPLACE_ME"
+database_id = "c9f524f2-63c4-4bc0-926b-b4974a7e9753"
