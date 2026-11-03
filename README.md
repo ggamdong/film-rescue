@@ -150,7 +150,7 @@ node tools/simulate.mjs --n 1000 --policy random
 1. Workers & Pages → Create → Pages → 저장소 연결.
 2. Build command 비움, Build output directory `/`. 끝.
 
-배포 전 체크리스트: `node tools/build-cards.mjs` 로 `cards.js` 를 최신으로, `img/og.webp` 가 있으면 링크 미리보기가 생긴다, `index.html` 의 `og:image` 는 상대 경로라 서브경로 배포에서도 동작한다.
+배포 전 체크리스트: `node tools/build-cards.mjs` 로 `cards.js` 를 최신으로, `img/og.webp` 가 있으면 링크 미리보기가 생긴다, `index.html` 의 `og:url`·`og:image` 는 절대 주소(ggamdong.github.io/film-rescue)로 박혀 있으니 다른 주소로 옮기면 두 줄을 바꾼다.
 
 ## 수정 포인트 빠른 안내
 
