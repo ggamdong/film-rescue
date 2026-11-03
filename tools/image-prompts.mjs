@@ -37,10 +37,7 @@ const haveImg = (rel) => existsSync(path.join(ROOT, "img", rel));
 
 // 다시 만들기를 권하는 이미지: id → 이유 (검수하며 추가/삭제)
 const REDO = {
-  "mkt-01": "파일명만 보고 짐작으로 배치한 그림(달력 사무실). 개봉일 겹침 장면이 아님",
-  "mkt-05": "짐작 배치(상승 그래프 사무실). 라디오 생방송 장면이 아님",
-  "rel-01": "짐작 배치(번개로 갈린 통화). 상영관 절반 장면과 거리 있음",
-  "plan-05": "그림 속 파이 차트에 숫자 글자가 보임",
+  "rel-popcorn-collab": "생성 결과 두 장 모두 돼지 저금통 장면이 나옴(팝콘통 콜라보 장면이 아님)",
 };
 
 const COVER_PROMPT = `A small Korean cinema at golden hour with a blank marquee, a hopeful producer in a wrinkled suit standing in front of it holding a giant film reel like a steering wheel, crew members peeking from behind, pigeons on the marquee. ${STYLE}`;
