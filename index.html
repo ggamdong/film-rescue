@@ -78,8 +78,10 @@ h1,h2,h3{margin:0;line-height:1.25;letter-spacing:-.01em}
 .chip{padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:var(--panel);font-size:13px}
 .chip.on{background:var(--accent);color:#1a1405;border-color:transparent;font-weight:700}
 .chip small{color:inherit;opacity:.7;margin-left:4px;font-size:11px}
-.howto{font-size:13px;color:var(--mute);margin-top:18px;padding:12px 14px;border:1px dashed var(--line);border-radius:12px}
-.howto b{color:var(--fg)}
+.howto{font-size:13px;color:var(--mute);margin:18px 0 0;padding:10px 14px;border:1px dashed var(--line);border-radius:12px;list-style:none}
+.howto li{display:grid;grid-template-columns:118px 1fr;gap:10px;padding:5px 0;align-items:baseline}
+.howto b{color:var(--fg);white-space:nowrap}
+@media (max-width:360px){.howto li{grid-template-columns:1fr}}
 
 /* game */
 .top{display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--mute);margin-bottom:10px}
@@ -194,19 +196,20 @@ h1,h2,h3{margin:0;line-height:1.25;letter-spacing:-.01em}
   <div class="modes" style="margin-top:18px">
     <button class="mode" id="start-daily">
       <div class="mt">📅 오늘의 영화 <span id="daily-tag"></span></div>
-      <div class="ms">오늘은 모두 같은 카드. 결과를 복사해 친구와 비교하세요.</div>
+      <div class="ms">오늘은 전국 제작자가 같은 덱을 받습니다. 누가 덜 망하나 겨뤄 보세요.</div>
       <div class="mb" id="daily-badge"></div>
     </button>
     <button class="mode" id="start-random">
       <div class="mt">🎲 무작위 영화</div>
-      <div class="ms">누를 때마다 다른 카드, 다른 운. 몇 번이고.</div>
+      <div class="ms">매번 새 대본, 새 사고, 새 운. 망해도 또 찍으면 됩니다.</div>
     </button>
   </div>
   <div class="stats-panel" id="my-stats"></div>
-  <div class="howto">
-    <b>예산 · 일정 · 사기</b>가 0이 되면 그 자리에서 끝납니다. <b>완성도 · 화제성</b>은 바닥을 쳐도 영화는 나옵니다. 어떤 영화가 되느냐가 문제일 뿐.<br>
-    같은 날짜의 <b>오늘의 영화</b>는 모두 같은 카드 덱을 받습니다. 결과를 복사해 친구와 비교해 보세요.
-  </div>
+  <ul class="howto">
+    <li><b>예산 · 일정 · 사기</b><span>하나라도 0이 되면 그 자리에서 영화는 끝.</span></li>
+    <li><b>완성도 · 화제성</b><span>바닥을 쳐도 영화는 나온다. 어떤 영화가 되느냐가 문제일 뿐.</span></li>
+    <li><b>14턴 뒤</b><span>관객 수와 한 줄 운명이 적힌 성적표. 복사해서 자랑하거나 숨기거나.</span></li>
+  </ul>
   <div class="footer">실존 인물·회사와 무관한 허구입니다 · <a id="ver"></a></div>
 </section>
 
@@ -579,7 +582,7 @@ const FR = (() => {
     $("#start-random").classList.toggle("primary", !!done);
     $("#daily-badge").classList.toggle("on", !!done);
     $("#daily-badge").textContent = done ? "✓ 완료" : "";
-    $("#start-daily").querySelector(".ms").textContent = done ? "오늘 분은 끝냈습니다. 결과를 다시 보거나, 내일 새 덱으로." : "오늘은 모두 같은 카드. 결과를 복사해 친구와 비교하세요.";
+    $("#start-daily").querySelector(".ms").textContent = done ? "오늘 치 영화는 찍었습니다. 결과 다시 보기, 또는 내일 다시 크랭크인." : "오늘은 전국 제작자가 같은 덱을 받습니다. 누가 덜 망하나 겨뤄 보세요.";
   }
   refreshModes(); renderMyStats();
   $("#start-daily").onclick = () => { const done = loadDaily(); if (done) replay(done); else start(urlSeed || dailySeed, true); };
