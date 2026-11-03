@@ -714,8 +714,11 @@ const FR = (() => {
     const img = $("#ticket .eimg img");
     const top = 560;
     if (img && img.complete && img.naturalWidth) {
+      // 상단 영역(0~top)에만 그리고 넘치는 부분은 잘라낸다 (4:3 이미지가 글자 영역까지 내려오지 않도록)
       const s = Math.max(W / img.naturalWidth, top / img.naturalHeight), w = img.naturalWidth * s, h = img.naturalHeight * s;
+      c.save(); c.beginPath(); c.rect(0, 0, W, top); c.clip();
       c.drawImage(img, (W - w) / 2, (top - h) / 2, w, h);
+      c.restore();
     } else { const g = c.createLinearGradient(0, 0, W, top); g.addColorStop(0, "#2b2f44"); g.addColorStop(1, "#161820"); c.fillStyle = g; c.fillRect(0, 0, W, top); c.font = "200px serif"; c.textAlign = "center"; c.fillText(tierEmoji(end.tier), W / 2, top / 2 + 70); }
     const gg = c.createLinearGradient(0, top - 200, 0, top); gg.addColorStop(0, "rgba(14,15,19,0)"); gg.addColorStop(1, "#0e0f13"); c.fillStyle = gg; c.fillRect(0, top - 200, W, 200);
     c.textAlign = "left"; const F = '"Apple SD Gothic Neo","Pretendard","Noto Sans KR","Malgun Gothic",sans-serif';
