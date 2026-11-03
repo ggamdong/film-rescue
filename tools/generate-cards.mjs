@@ -72,7 +72,7 @@ const schema = {
       slug: { type: "string", description: "영문 소문자/하이픈 짧은 식별자 (예: drone-crash)" },
       type: { type: "string", enum: ["crisis", "chance"], description: "crisis=위기(기본) / chance=기회(행운 또는 함정)" },
       title: { type: "string" }, desc: { type: "string" },
-      cond: { type: "object", additionalProperties: false, properties: Object.fromEntries([...STAT_KEYS.map((k) => [k, { type: "array", items: { type: "integer" }, minItems: 2, maxItems: 2 }]), ["has", { type: "array", items: { type: "string" } }], ["not", { type: "array", items: { type: "string" } }]]) },
+      cond: { type: "object", additionalProperties: false, properties: Object.fromEntries([...STAT_KEYS.map((k) => [k, { type: "array", items: { type: "integer" }, minItems: 2, maxItems: 2 }]), ["has", { type: "array", items: { type: "string" } }], ["any", { type: "array", items: { type: "string" } }], ["not", { type: "array", items: { type: "string" } }]]) },
       choices: { type: "array", minItems: 2, maxItems: 3, items: {
         type: "object", additionalProperties: false, required: ["text", "outcomes"],
         properties: { text: { type: "string" }, outcomes: { type: "array", minItems: 1, maxItems: 3, items: {
@@ -94,10 +94,10 @@ const SYSTEM = `당신은 한국 영화 제작 현장을 잘 아는 블랙코미
 - desc는 2~3문장, 160자 이내. 선택지 text는 20자 이내의 행동. 결과 text는 1~3문장.
 설계 규칙:
 - 선택지 2~3개. 각 선택지의 outcomes 확률 p 합은 정확히 1. 안전한 선택지는 outcomes 1개, 도박성 선택지는 2개(성공/실패).
-- fx는 정수, 보통 ±3~±12, 극적인 경우 최대 ±20. 공짜 이득은 없다: 얻는 게 있으면 잃는 게 있다. 빈 fx({})도 허용.
+- fx는 정수, 보통 ±2~±8, 극적인 경우 최대 ±15. 예산 감소는 특히 가볍게(선택지 평균 -1 수준). 공짜 이득은 없다: 얻는 게 있으면 잃는 게 있다. 빈 fx({})도 허용.
 - 어떤 선택지도 항상 정답이 되면 안 된다. 트레이드오프가 분명해야 한다.
 - 이야기를 잇고 싶으면 set 으로 snake_case 플래그를 켜고, 후속 카드는 cond.has 로 그 플래그를 요구한다. 기존 플래그: star, idol, festival, scandal_star, scandal_light, fake_booking, trailer_lie, director_replaced, injury, city_scene, family_blessing, crowd_cameo, rival_project, director_gone, connection, group_sales, ott_deal, personal_debt, revenue_share, profit_actor, crypto_money, need_star, no_stunt, region_shoot, lawsuit_risk, r_rated, webtoon_ip, new_investor, investor_actor, angel_investor. 새 플래그를 만들어도 된다.
-- cond 는 선택 사항. 상태값 범위([min,max])나 플래그로 등장 조건을 걸 수 있다. 카드의 60% 이상은 cond 없이 언제든 나올 수 있어야 한다.
+- cond 는 선택 사항. 상태값 범위([min,max])나 플래그(has=모두, any=하나라도, not=없어야)로 등장 조건을 걸 수 있다. 톱배우·아이돌·원작·크라우드펀딩·선판매·OTT 계약 같은 전제가 있는 카드는 반드시 해당 플래그를 조건으로 걸어라(star, idol, webtoon_ip, crowdfund, presale, ott_deal, unknown_lead 등). 카드의 60% 이상은 cond 없이 언제든 나올 수 있어야 한다.
 카드 유형 비율(type):
 - crisis(약 70%): 위기. 어느 선택지든 뭔가를 잃는다. 덜 잃는 쪽을 고르는 게임.
 - chance(약 30%): 겉보기엔 좋은 일. 플레이어 화면에는 "기회"로만 표시되어 둘을 구별할 수 없다.

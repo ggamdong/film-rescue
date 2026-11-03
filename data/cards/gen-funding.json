@@ -200,7 +200,12 @@
           }
         ]
       }
-    ]
+    ],
+    "cond": {
+      "has": [
+        "presale"
+      ]
+    }
   },
   {
     "id": "fund-subsidy-receipt-audit",
@@ -234,7 +239,15 @@
           }
         ]
       }
-    ]
+    ],
+    "cond": {
+      "any": [
+        "city_scene",
+        "grant",
+        "local_subsidy",
+        "region_shoot"
+      ]
+    }
   },
   {
     "id": "fund-co-production-forty-percent",
@@ -252,7 +265,10 @@
               "quality": -5,
               "morale": -2
             },
-            "text": "자금이 들어왔다. 엔딩 크레딧에 낯선 이름이 길게 올랐다. 읽는 사람은 없다."
+            "text": "자금이 들어왔다. 엔딩 크레딧에 낯선 이름이 길게 올랐다. 읽는 사람은 없다.",
+            "set": [
+              "revenue_share"
+            ]
           }
         ]
       },
@@ -277,7 +293,12 @@
           }
         ]
       }
-    ]
+    ],
+    "cond": {
+      "not": [
+        "revenue_share"
+      ]
+    }
   },
   {
     "id": "fund-backers-group-chat",
@@ -320,7 +341,12 @@
           }
         ]
       }
-    ]
+    ],
+    "cond": {
+      "has": [
+        "crowdfund"
+      ]
+    }
   },
   {
     "id": "fund-angel-investor-opinion",
@@ -495,7 +521,13 @@
           }
         ]
       }
-    ]
+    ],
+    "cond": {
+      "not": [
+        "tragic_ending",
+        "two_endings"
+      ]
+    }
   },
   {
     "id": "fund-fund-manager-unreachable",
@@ -600,7 +632,10 @@
               "budget": 10,
               "schedule": -3
             },
-            "text": "보고서 양식은 열한 개였다. 입금은 정확했다. 이번에는 정확했다."
+            "text": "보고서 양식은 열한 개였다. 입금은 정확했다. 이번에는 정확했다.",
+            "set": [
+              "grant"
+            ]
           }
         ]
       },
@@ -783,7 +818,10 @@
               "quality": 10,
               "budget": 6
             },
-            "text": "스튜디오가 진짜 실력자였다. 포트폴리오는 우리 영화였다. 서로 이득이었다."
+            "text": "스튜디오가 진짜 실력자였다. 포트폴리오는 우리 영화였다. 서로 이득이었다.",
+            "set": [
+              "free_vfx"
+            ]
           },
           {
             "p": 0.65,
@@ -792,7 +830,10 @@
               "budget": -5,
               "buzz": -3
             },
-            "text": "결과물은 데모 영상과 같지 않았다. 추가 렌더링 비용은 별도다."
+            "text": "결과물은 데모 영상과 같지 않았다. 추가 렌더링 비용은 별도다.",
+            "set": [
+              "free_vfx"
+            ]
           }
         ]
       },

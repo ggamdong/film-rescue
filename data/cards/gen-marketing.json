@@ -115,7 +115,12 @@
           }
         ]
       }
-    ]
+    ],
+    "cond": {
+      "not": [
+        "ott_deal"
+      ]
+    }
   },
   {
     "id": "mkt-premiere-sound-failure",
@@ -233,7 +238,12 @@
           }
         ]
       }
-    ]
+    ],
+    "cond": {
+      "not": [
+        "ott_deal"
+      ]
+    }
   },
   {
     "id": "mkt-actor-food-post",
@@ -352,7 +362,12 @@
           }
         ]
       }
-    ]
+    ],
+    "cond": {
+      "not": [
+        "ott_deal"
+      ]
+    }
   },
   {
     "id": "mkt-review-brigade",
@@ -583,7 +598,12 @@
           }
         ]
       }
-    ]
+    ],
+    "cond": {
+      "not": [
+        "ott_deal"
+      ]
+    }
   },
   {
     "id": "mkt-free-bus-ads",
@@ -707,7 +727,12 @@
           }
         ]
       }
-    ]
+    ],
+    "cond": {
+      "not": [
+        "ott_deal"
+      ]
+    }
   },
   {
     "id": "mkt-influencer-free-review",

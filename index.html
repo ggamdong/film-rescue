@@ -35,6 +35,17 @@ h1,h2,h3{margin:0;line-height:1.25;letter-spacing:-.01em}
 .btn:active{transform:scale(.985)}
 .btn.primary{background:var(--accent);color:#1a1405;font-weight:700;text-align:center;border-color:transparent}
 .btn.ghost{text-align:center;color:var(--mute)}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mode{position:relative;text-align:left;padding:14px 14px 16px;border-radius:14px;background:var(--panel);border:1px solid var(--line);min-height:112px;transition:transform .08s}
+.mode:active{transform:scale(.985)}
+.mode.primary{background:var(--accent);color:#1a1405;border-color:transparent}
+.mode .mt{font-weight:800;font-size:16px}
+.mode .mt span{font-weight:500;font-size:12px;opacity:.7;margin-left:2px}
+.mode .ms{font-size:12px;margin-top:6px;opacity:.8;line-height:1.4}
+.mode .mb{position:absolute;top:10px;right:10px;font-size:11px;padding:2px 7px;border-radius:999px;background:rgba(0,0,0,.25);display:none}
+.mode .mb.on{display:block}
+.mode:has(.mb.on) .mt{padding-right:56px}
+@media (max-width:360px){.modes{grid-template-columns:1fr}.mode{min-height:0}}
 .row{display:flex;gap:8px}.row .btn{flex:1}
 .stack>*+*{margin-top:10px}
 
@@ -156,9 +167,16 @@ h1,h2,h3{margin:0;line-height:1.25;letter-spacing:-.01em}
     <label>장르 <span class="mute" id="genre-note"></span></label>
     <div class="chips" id="genres"></div>
   </div>
-  <div class="stack" style="margin-top:18px">
-    <button class="btn primary" id="start-daily">오늘의 영화 만들기 <span class="mute" id="daily-tag" style="color:#5a4a1a"></span></button>
-    <button class="btn ghost" id="start-random">무작위 영화로 시작</button>
+  <div class="modes" style="margin-top:18px">
+    <button class="mode" id="start-daily">
+      <div class="mt">📅 오늘의 영화 <span id="daily-tag"></span></div>
+      <div class="ms">오늘은 모두 같은 카드. 결과를 복사해 친구와 비교하세요.</div>
+      <div class="mb" id="daily-badge"></div>
+    </button>
+    <button class="mode" id="start-random">
+      <div class="mt">🎲 무작위 영화</div>
+      <div class="ms">누를 때마다 다른 카드, 다른 운. 몇 번이고.</div>
+    </button>
   </div>
   <div class="howto">
     <b>예산 · 일정 · 사기</b>가 0이 되면 그 자리에서 끝납니다. <b>완성도 · 화제성</b>은 바닥을 쳐도 영화는 나옵니다. 어떤 영화가 되느냐가 문제일 뿐.<br>
@@ -185,9 +203,10 @@ h1,h2,h3{margin:0;line-height:1.25;letter-spacing:-.01em}
       <button class="btn" id="save-img" style="text-align:center">🖼 이미지 저장</button>
       <button class="btn" id="share" style="text-align:center">🔗 공유</button>
     </div>
+    <button class="btn primary" id="again-new">🎲 새 영화 만들기 <span style="font-weight:500;opacity:.75;font-size:13px">— 다른 카드, 다른 운</span></button>
     <div class="row">
       <button class="btn ghost" id="again-same">같은 덱으로 다시</button>
-      <button class="btn ghost" id="again-new">새 영화 만들기</button>
+      <button class="btn ghost" id="again-home">처음으로</button>
     </div>
   </div>
   <div class="footer">실존 인물·회사와 무관한 허구입니다</div>
@@ -260,6 +279,7 @@ const FR = (() => {
     const c = card.cond; if (!c) return true;
     for (const k of STAT_KEYS) { if (c[k]) { const [lo, hi] = c[k]; if (st.stats[k] < lo || st.stats[k] > hi) return false; } }
     if (c.has && !c.has.every((f) => st.flags.has(f))) return false;
+    if (c.any && !c.any.some((f) => st.flags.has(f))) return false;   // 둘 중 하나라도
     if (c.not && c.not.some((f) => st.flags.has(f))) return false;
     if (c.genre && !c.genre.includes(st.film.genre)) return false;
     return true;
@@ -287,7 +307,7 @@ const FR = (() => {
     let card;
     if (pool.length) {
       // 플래그로 이어지는 카드(cond.has)는 가중치 3배: 이야기가 이어지는 맛
-      const w = pool.map((c) => (c.weight || 1) * (c.cond && c.cond.has ? 3 : 1));
+      const w = pool.map((c) => (c.weight || 1) * (c.cond && (c.cond.has || c.cond.any) ? 3 : 1));
       let r = st.rng() * w.reduce((a, b) => a + b, 0);
       for (let i = 0; i < pool.length; i++) { r -= w[i]; if (r <= 0) { card = pool[i]; break; } }
       card = card || pool[pool.length - 1];
@@ -307,7 +327,7 @@ const FR = (() => {
     (out.unset || []).forEach((f) => st.flags.delete(f));
     const vals = Object.values(deltas);
     const emoji = !vals.length ? "🟨" : vals.every((v) => v >= 0) ? "🟩" : vals.every((v) => v <= 0) ? "🟥" : "🟨";
-    st.history.push({ turn: st.turn, stage: card.stage, cardId: card.id, title: card.title, choice: ch.text, text: out.text, deltas, emoji });
+    st.history.push({ turn: st.turn, stage: card.stage, cardId: card.id, title: card.title, choice: ch.text, choiceIdx: idx, text: out.text, deltas, emoji });
     for (const k of SURVIVAL) if (st.stats[k] <= 0) { st.over = k; break; }
     return { outcome: out, deltas, emoji, choice: ch };
   }
@@ -468,14 +488,36 @@ const FR = (() => {
   FR.GENRES.forEach((g) => { const b = document.createElement("button"); b.className = "chip" + (g.key === genre ? " on" : ""); b.innerHTML = esc(g.name); b.onclick = () => { genre = g.key; [...gWrap.children].forEach((c) => c.classList.remove("on")); b.classList.add("on"); $("#genre-note").textContent = g.note; }; gWrap.appendChild(b); });
   $("#genre-note").textContent = FR.GENRES[0].note;
   loadImg($("#cover"), ["img/cover.webp"]);
-  $("#start-daily").onclick = () => start(urlSeed || dailySeed);
-  $("#start-random").onclick = () => start(1000 + Math.floor(Math.random() * 899999));
+  // 오늘의 영화 완료 기록 (기기 로컬). 같은 덱은 선택이 같으면 결과가 같으므로 선택만 저장해 두고 다시 재생한다.
+  const DAILY_KEY = "fr_daily_" + (urlSeed || dailySeed);
+  const loadDaily = () => { try { return JSON.parse(localStorage.getItem(DAILY_KEY) || "null"); } catch { return null; } };
+  const saveDaily = (rec) => { try { localStorage.setItem(DAILY_KEY, JSON.stringify(rec)); } catch {} };
+  const randomSeed = () => 1000 + Math.floor(Math.random() * 899999);
+  function refreshModes() {
+    const done = loadDaily();
+    $("#start-daily").classList.toggle("primary", !done);
+    $("#start-random").classList.toggle("primary", !!done);
+    $("#daily-badge").classList.toggle("on", !!done);
+    $("#daily-badge").textContent = done ? "✓ 완료" : "";
+    $("#start-daily").querySelector(".ms").textContent = done ? "오늘 분은 끝냈습니다. 결과를 다시 보거나, 내일 새 덱으로." : "오늘은 모두 같은 카드. 결과를 복사해 친구와 비교하세요.";
+  }
+  refreshModes();
+  $("#start-daily").onclick = () => { const done = loadDaily(); if (done) replay(done); else start(urlSeed || dailySeed, true); };
+  $("#start-random").onclick = () => start(randomSeed(), false);
 
-  function start(seed) {
+  function start(seed, isDaily) {
     st = FR.newGame({ seed, cards: CARDS, title: $("#title-in").value, genre });
+    st.isDaily = !!isDaily;
     end = null;
     $("#g-film").textContent = `《${st.film.title}》 ${st.film.genreName}`;
     show("s-game"); renderStats(); renderTurn();
+  }
+  // 저장된 선택을 그대로 재생해 결과 화면을 복원한다
+  function replay(rec) {
+    st = FR.newGame({ seed: rec.seed, cards: CARDS, title: rec.title, genre: rec.genre });
+    st.isDaily = true;
+    for (const i of rec.choices) { if (FR.isFinished(st)) break; FR.drawCard(st); FR.choose(st, i); FR.nextTurn(st); }
+    showResult();
   }
 
   // ----- 이미지 (없으면 자리만) -----
@@ -554,6 +596,8 @@ const FR = (() => {
         <div class="seed">#${st.seed} · 오늘도 크랭크인!</div>
       </div>`;
     loadImg(t.querySelector(".eimg"), [`img/endings/${end.tier}.webp`], tierEmoji(end.tier));
+    if (st.isDaily && !loadDaily()) saveDaily({ seed: st.seed, title: st.film.title, genre: st.film.genre, choices: st.history.map((h) => h.choiceIdx) });
+    refreshModes();
     show("s-result");
   }
   const tierEmoji = (t) => ({ bankrupt: "💸", boycott: "🚪", delayed: "⏳", ott: "📺", cult: "🪦", flop: "🥀", even: "😮‍💨", hit: "🎉", mega: "👑" }[t] || "🎬");
@@ -563,8 +607,9 @@ const FR = (() => {
   const share = () => FR.shareText(st, end, baseUrl() + "?s=" + st.seed);
   $("#copy").onclick = async () => { try { await navigator.clipboard.writeText(share()); toast("복사했습니다. 어디든 붙여 넣으세요"); } catch { prompt("복사하세요", share()); } };
   $("#share").onclick = async () => { const text = share(); if (navigator.share) { try { await navigator.share({ text }); } catch {} } else { try { await navigator.clipboard.writeText(text); toast("복사했습니다"); } catch {} } };
-  $("#again-same").onclick = () => start(st.seed);
-  $("#again-new").onclick = () => { show("s-title"); };
+  $("#again-same").onclick = () => start(st.seed, st.isDaily);
+  $("#again-new").onclick = () => { $("#title-in").value = FR.suggestTitle(tRng); start(randomSeed(), false); toast("새 덱, 새 제목으로 시작합니다"); };
+  $("#again-home").onclick = () => { show("s-title"); };
   $("#save-img").onclick = () => drawCanvas();
 
   // 결과 카드 PNG (1080x1350)

@@ -34,7 +34,7 @@ export function validateCards(cards, { knownIds = new Set() } = {}) {
     if (c.cond) {
       for (const k of Object.keys(c.cond)) {
         if (STAT_KEYS.includes(k)) { const r = c.cond[k]; if (!Array.isArray(r) || r.length !== 2 || r[0] > r[1]) e(id, `cond.${k}는 [min,max]`); }
-        else if (!["has", "not", "genre"].includes(k)) e(id, `cond에 알 수 없는 키: ${k}`);
+        else if (!["has", "any", "not", "genre"].includes(k)) e(id, `cond에 알 수 없는 키: ${k}`);
       }
     }
     (c.choices || []).forEach((ch, j) => {

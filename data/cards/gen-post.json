@@ -83,7 +83,12 @@
           }
         ]
       }
-    ]
+    ],
+    "cond": {
+      "not": [
+        "free_vfx"
+      ]
+    }
   },
   {
     "id": "post-final-cut-tug",
@@ -300,7 +305,12 @@
           }
         ]
       }
-    ]
+    ],
+    "cond": {
+      "has": [
+        "two_endings"
+      ]
+    }
   },
   {
     "id": "post-rating-reappeal-deadline",
@@ -497,6 +507,10 @@
     "desc": "주연 배우 매니저가 편집본을 봤다. '클로즈업이 조연보다 4초 짧아요.' 4초는 영화에서 길다. 이 편집본에서는 더 길다.",
     "cond": {
       "has": [
+        "star"
+      ],
+      "any": [
+        "idol",
         "star"
       ]
     },
