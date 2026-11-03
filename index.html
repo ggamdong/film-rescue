@@ -85,7 +85,8 @@ h1,h2,h3{margin:0;line-height:1.25;letter-spacing:-.01em}
 
 /* game */
 .top{display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--mute);margin-bottom:10px}
-.top .film{font-weight:700;color:var(--fg);max-width:60%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .film{font-weight:700;color:var(--fg);flex:1 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top #g-turn{flex:0 0 auto;white-space:nowrap;margin-left:8px}
 .stages{display:flex;gap:4px;margin-bottom:12px}
 .stages i{flex:1;height:4px;border-radius:2px;background:var(--line)}
 .stages i.done{background:var(--accent);opacity:.5}.stages i.now{background:var(--accent)}
