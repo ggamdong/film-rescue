@@ -61,6 +61,8 @@ h1,h2,h3{margin:0;line-height:1.25;letter-spacing:-.01em}
 .stages{display:flex;gap:4px;margin-bottom:12px}
 .stages i{flex:1;height:4px;border-radius:2px;background:var(--line)}
 .stages i.done{background:var(--accent);opacity:.5}.stages i.now{background:var(--accent)}
+.stages i.gap{margin-left:8px}
+.top b{color:var(--accent);font-weight:700}
 .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:14px}
 .stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 6px 7px;text-align:center;position:relative;overflow:hidden}
 .stat .l{font-size:11px;color:var(--mute)}
@@ -203,14 +205,14 @@ const FR = (() => {
   const STATS = { budget: "예산", schedule: "일정", morale: "사기", quality: "완성도", buzz: "화제성" };
   const STAT_KEYS = Object.keys(STATS);
   const SURVIVAL = ["budget", "schedule", "morale"];          // 0이 되면 즉시 종료
-  const STAGES = [
-    { key: "planning",  name: "기획",   turns: 2 },
-    { key: "funding",   name: "투자",   turns: 2 },
-    { key: "casting",   name: "캐스팅", turns: 2 },
-    { key: "shooting",  name: "촬영",   turns: 3 },
-    { key: "post",      name: "후반",   turns: 2 },
-    { key: "marketing", name: "마케팅", turns: 2 },
-    { key: "release",   name: "개봉",   turns: 1 },
+  const STAGES = [ // phase: 프리프로덕션(6턴) → 프로덕션(3) → 포스트프로덕션(2) → 개봉 직전(2) → 개봉(1)
+    { key: "planning",  name: "기획",   turns: 2, phase: "프리프로덕션" },
+    { key: "funding",   name: "투자",   turns: 2, phase: "프리프로덕션" },
+    { key: "casting",   name: "캐스팅", turns: 2, phase: "프리프로덕션" },
+    { key: "shooting",  name: "촬영",   turns: 3, phase: "프로덕션" },
+    { key: "post",      name: "후반",   turns: 2, phase: "포스트프로덕션" },
+    { key: "marketing", name: "마케팅", turns: 2, phase: "개봉 직전" },
+    { key: "release",   name: "개봉",   turns: 1, phase: "개봉" },
   ];
   const TOTAL_TURNS = STAGES.reduce((a, s) => a + s.turns, 0);
   const START = { budget: 50, schedule: 55, morale: 60, quality: 40, buzz: 15 };
@@ -344,12 +346,39 @@ const FR = (() => {
     ["injury", ["배우 부상 미담이 영화보다 유명해졌다"]],
     ["director_replaced", ["교체된 감독이 다음 작품으로 상을 받았다"]],
   ];
+  // 한줄평: 완성도(q)와 화제성(b)을 각각 하(≤35)·중·상(≥60)으로 나눈 9칸. {g}=장르, {t}=제목
   const CRITIC = {
-    hq_hb: ["올해 가장 뜨거운 {g}", "평단과 관객이 드물게 합의한 {g}", "{g}의 새 기준"],
-    hq_lb: ["평론가만 울고 간 {g}", "아는 사람만 아는 {g}, 아는 사람이 적다", "완성도는 높았다. 극장은 비었다"],
-    lq_hb: ["욕하면서 보는 {g}", "완성도 대신 밈을 택한 {g}", "'그래도 봤다'가 최고의 평"],
-    lq_lb: ["{g}의 탈을 쓴 무언가", "열심히 찍었다", "감독의 예술혼만 불타오른 {g}"],
-    mid:   ["무난하다는 말이 칭찬이 아닌 {g}", "볼만하다. 딱 거기까지", "나쁘지 않은 {g}, 좋지도 않은"],
+    q2b2: ["올해 가장 뜨거운 {g}", "평단과 관객이 드물게 합의한 {g}", "{g}의 새 기준", "극장에 걸린 이유가 분명한 영화", "소문이 과장이 아니었다", "한국 {g}가 할 수 있는 거의 전부", "두 번 봐야 보이는 것이 있다. 두 번 보게 된다", "이 영화 이후의 {g}는 조금 달라질 것이다"],
+    q2b1: ["조용히 잘 만든 {g}", "입소문이 따라붙기 전에 보는 게 이득", "좋은 영화가 꼭 시끄러울 필요는 없다는 증명", "포스터보다 영화가 낫다. 드문 일이다", "{g}를 안 좋아해도 끝까지 보게 되는 영화", "극장에서 놓치면 후회할 종류", "완성도로 조용히 승부한 {g}", "광고는 없었고 영화는 있었다"],
+    q2b0: ["평론가만 울고 간 {g}", "아는 사람만 아는 {g}, 아는 사람이 적다", "완성도는 높았다. 극장은 비었다", "10년 뒤 재발견될 영화. 지금은 아니다", "잘 만든 영화가 꼭 잘되지는 않는다는 오래된 교훈", "상영관 수보다 별점이 높은 영화", "박수는 길었고 관객은 적었다", "홍보팀만 빼고 전부 제 몫을 했다"],
+    q1b2: ["영화보다 화제가 큰 {g}", "기대를 모았고, 기대만큼은 아니었다", "예고편이 본편의 절반을 가져갔다", "극장을 나오면서 포스터를 다시 본다", "볼 이유는 많았고 남는 건 적었다", "시끄러운 만큼은 아니고, 조용한 만큼도 아니다", "이슈가 영화를 데려왔고 영화는 이슈를 못 따라갔다", "흥행은 했다. 기억은 글쎄"],
+    q1b1: ["무난하다는 말이 칭찬이 아닌 {g}", "볼만하다. 딱 거기까지", "나쁘지 않은 {g}, 좋지도 않은", "장점과 단점이 정확히 상쇄되는 영화", "극장에서 보면 괜찮고, 집에서 보면 더 괜찮다", "모든 장면이 어디서 본 것 같은데 그게 나쁘지는 않다", "{g} 치고는 성실하다", "별 세 개의 정석"],
+    q1b0: ["조용히 왔다가 조용히 간 {g}", "개봉했다는 사실을 아는 사람이 적다", "나쁜 영화는 아니다. 그게 문제다", "홍보도 영화도 중간. 중간은 기억되지 않는다", "{g} 팬이라면. 아니라면 굳이", "이 영화의 가장 큰 적은 무관심이었다", "엔딩크레딧이 올라가도 아무도 일어나지 않았다. 세 명뿐이라서", "극장보다 OTT 목록에서 더 오래 살 영화"],
+    q0b2: ["욕하면서 보는 {g}", "완성도 대신 밈을 택한 {g}", "'그래도 봤다'가 최고의 평", "영화는 망했고 짤은 흥했다", "술자리 안주로는 올해 최고의 영화", "관객이 영화보다 재밌는 희귀 사례", "평점은 낮고 좌석은 찬다. 설명이 안 된다", "'이게 왜 되지'가 가장 많이 달린 댓글"],
+    q0b1: ["열심히 찍었다", "감독의 예술혼만 불타오른 {g}", "의도는 보이는데 영화가 안 보인다", "장르를 바꿨으면 어땠을까 싶은 {g}", "러닝타임이 체감보다 짧은 게 유일한 미덕", "제작 과정이 영화보다 극적이었을 것 같다", "포스터가 가장 잘 만든 장면", "본 사람끼리는 할 말이 많다. 좋은 말은 아니다"],
+    q0b0: ["{g}의 탈을 쓴 무언가", "이 영화를 본 사람을 만나면 악수를 하자", "상영관 하나, 관객 셋, 평점 없음", "제작자의 가족이 가장 열심히 본 영화", "'{t}'라는 제목이 가장 큰 스포일러", "개봉 사실이 가장 큰 반전", "시네마테크 특별전에서 다시 만날 영화. 괴작 섹션에서", "실패도 이렇게 조용할 수 있다"],
+  };
+  // 플래그·손익에 반응하는 한줄평 (해당될 때 40% 확률로 우선)
+  const CRITIC_FLAG = [
+    ["festival", ["영화제가 먼저 알아본 {g}", "해외에서 박수, 국내에서 침묵"]],
+    ["idol", ["팬덤이 세운 영화, 팬덤이 지킨 극장", "연기 논란과 흥행이 같은 주에 왔다"]],
+    ["star", ["주연 배우의 얼굴이 곧 예산이었던 {g}", "배우는 좋았다. 영화는 배우만큼은 아니었다"]],
+    ["director_replaced", ["감독이 바뀌었다는 걸 화면이 먼저 말한다", "두 감독의 영화가 한 편에 들어 있다"]],
+    ["trailer_lie", ["예고편과 본편이 서로 다른 영화를 홍보했다", "예고편은 코미디, 본편은 비극, 관객은 혼란"]],
+    ["scandal_star", ["영화 밖 뉴스가 영화 안 이야기를 덮었다", "스크린보다 포털 댓글창이 더 뜨거웠던 {g}"]],
+    ["fake_booking", ["예매율은 만들어졌고 평점은 만들어지지 않았다", "숫자는 거짓말을 했고 객석은 하지 않았다"]],
+    ["injury", ["배우의 깁스가 가장 진실한 소품", "몸으로 찍은 영화. 말 그대로"]],
+    ["crowd_cameo", ["치과 원장 형사가 가장 기억에 남는 {g}", "후원자 출연 장면에서 극장이 가장 조용했다"]],
+    ["ott_deal", ["극장용으로 찍어 거실에서 끝난 {g}", "큰 화면을 위해 만들고 작은 화면에서 봤다"]],
+    ["r_rated", ["청불 등급이 가장 효과적인 마케팅이었던 {g}", "수위는 높았고 관객 연령도 높았다"]],
+    ["group_sales", ["단체 관람 버스가 흥행의 절반을 실어 왔다"]],
+    ["personal_debt", ["제작자의 통장이 가장 많이 희생한 {g}"]],
+    ["city_scene", ["축제 장면만 빼면 괜찮은 {g}", "시장님이 가장 만족한 영화"]],
+    ["director_gone", ["감독 없는 무대인사가 더 화제였던 {g}"]],
+  ];
+  const CRITIC_PROFIT = {
+    hitLoss: ["관객은 들었는데 돈은 안 남았다. 영화판의 흔한 수학", "흥행과 수익이 다른 말이라는 걸 보여 준 {g}"],
+    flopGain: ["관객은 적었는데 손익은 맞췄다. 선판매의 마법", "조용히 망하고 조용히 남긴 영화"],
   };
   const MULT = { star: 1.3, idol: 1.2, festival: 1.5, scandal_star: 0.6, scandal_light: 0.85, fake_booking: 0.6, trailer_lie: 0.85,
     director_replaced: 0.9, injury: 1.1, city_scene: 0.95, family_blessing: 1.1, crowd_cameo: 1.05, rival_project: 0.85, director_gone: 0.9, connection: 1.05 };
@@ -378,9 +407,6 @@ const FR = (() => {
     if (!fate) fate = pick(rng, FATES[tier]);
     fate = fate.replace("{n}", audience.toLocaleString("ko-KR"));
     // 한줄평
-    const hq = s.quality >= 60, lq = s.quality <= 35, hb = s.buzz >= 60, lb = s.buzz <= 30;
-    const ck = hq && hb ? "hq_hb" : hq && lb ? "hq_lb" : lq && hb ? "lq_hb" : lq && lb ? "lq_lb" : "mid";
-    const critic = pick(rng, CRITIC[ck]).replace("{g}", st.film.genreName);
     const bepPct = st.over ? 0 : Math.round((audience / bep) * 1000) / 10;
     // 평점(10점)·손익(억): 미개봉이면 평점 없음
     const r1 = (v, lo, hi) => Math.round(Math.max(lo, Math.min(hi, v)) * 10) / 10;
@@ -388,6 +414,18 @@ const FR = (() => {
     const audScore = st.over ? null : r1(3 + (0.6 * s.quality + 0.4 * s.buzz) * 0.06 + (rng() - 0.5) * 1.4, 1, 10);
     const profit = st.over ? -st.film.cost : tier === "ott" ? Math.round(st.film.cost * 0.1) : Math.round(audience * 3500 / 1e8 - st.film.cost);
     const bepHit = !st.over && profit >= 0;
+    // 한줄평 고르기: 플래그/손익 문장(40%) → 9칸 기본 문장
+    const lvl = (v, lo, hi) => (v >= hi ? 2 : v <= lo ? 0 : 1);
+    let critic = null;
+    if (!st.over && rng() < 0.4) {
+      const pool = [];
+      CRITIC_FLAG.forEach(([k, lines]) => { if (f.has(k)) pool.push(...lines); });
+      if (audience >= 1500000 && !bepHit) pool.push(...CRITIC_PROFIT.hitLoss);
+      if (audience < 300000 && bepHit) pool.push(...CRITIC_PROFIT.flopGain);
+      if (pool.length) critic = pick(rng, pool);
+    }
+    if (!critic) critic = pick(rng, CRITIC[`q${lvl(s.quality, 35, 60)}b${lvl(s.buzz, 30, 60)}`]);
+    critic = critic.replace(/\{g\}/g, st.film.genreName).replace(/\{t\}/g, st.film.title);
     return { tier, label, audience, fate, critic, bep, bepPct, cost: st.film.cost, luck, mult, flags: [...f], critics, audScore, profit, bepHit };
   }
 
@@ -462,8 +500,8 @@ const FR = (() => {
   }
   function renderTurn() {
     const stage = FR.stageOf(st);
-    $("#g-turn").textContent = `${stage.name} · ${st.turn + 1}/${FR.TOTAL_TURNS}턴`;
-    $("#g-stages").innerHTML = st.plan.map((_, i) => `<i class="${i < st.turn ? "done" : i === st.turn ? "now" : ""}"></i>`).join("");
+    $("#g-turn").innerHTML = `<b>${stage.phase}</b> · ${stage.name} · ${st.turn + 1}/${FR.TOTAL_TURNS}턴`;
+    $("#g-stages").innerHTML = st.plan.map((k, i) => { const ph = FR.STAGES.find((x) => x.key === k).phase, prev = i > 0 ? FR.STAGES.find((x) => x.key === st.plan[i - 1]).phase : ph; return `<i class="${i < st.turn ? "done" : i === st.turn ? "now" : ""}${ph !== prev ? " gap" : ""}"></i>`; }).join("");
     const card = FR.drawCard(st);
     const box = $("#g-card");
     box.innerHTML = `<div class="img"></div><div class="body"><span class="stage">${stage.name}</span>${card.type === "chance" ? `<span class="stage chance">✨ 기회</span>` : ""}<h2>${esc(card.title)}</h2><p class="desc">${esc(card.desc)}</p></div><div class="choices"></div>`;
