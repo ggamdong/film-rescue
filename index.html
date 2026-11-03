@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>오늘도 크랭크인!</title>
+<meta name="description" content="오늘도 크랭크인! 망해 가는 한국 영화의 제작자가 되어 14번의 위기를 넘기고 개봉까지 가 보세요. 끝에는 관객 수와 한 줄 운명이 남습니다.">
+<meta property="og:title" content="오늘도 크랭크인!">
+<meta property="og:description" content="기획부터 개봉까지 14번의 위기. 당신의 영화는 몇 명이 볼까?">
+<meta property="og:image" content="img/og.webp">
+<meta name="theme-color" content="#0e0f13">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
+<style>
+:root{
+  --bg:#0e0f13; --bg2:#15171e; --panel:#1b1e27; --line:#2a2e3a;
+  --fg:#e9e6df; --mute:#8d8f9a; --accent:#f2b134; --accent2:#e4572e;
+  --ok:#62c370; --bad:#e4572e; --mid:#f2b134;
+  --budget:#62c370; --schedule:#4fa3e0; --morale:#e58fd1; --quality:#f2b134; --buzz:#ff7a59;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR","Malgun Gothic",sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+body{min-height:100dvh;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;-webkit-tap-highlight-color:transparent}
+input{font:inherit}
+.wrap{max-width:520px;margin:0 auto;padding:16px}
+.screen{display:none}.screen.on{display:block}
+h1,h2,h3{margin:0;line-height:1.25;letter-spacing:-.01em}
+.mute{color:var(--mute)}
+.btn{display:block;width:100%;padding:14px 16px;border-radius:12px;background:var(--panel);border:1px solid var(--line);text-align:left;transition:transform .08s,background .15s}
+.btn:active{transform:scale(.985)}
+.btn.primary{background:var(--accent);color:#1a1405;font-weight:700;text-align:center;border-color:transparent}
+.btn.ghost{text-align:center;color:var(--mute)}
+.row{display:flex;gap:8px}.row .btn{flex:1}
+.stack>*+*{margin-top:10px}
+
+/* title */
+.logo{padding:36px 0 8px;text-align:center}
+.logo .tag{font-size:12px;letter-spacing:.3em;color:var(--accent);text-transform:uppercase}
+.logo h1{font-size:40px;font-weight:900;margin-top:6px}
+.logo h1 small{display:block;font-size:14px;font-weight:400;color:var(--mute);letter-spacing:0;margin-top:6px}
+.cover{aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:linear-gradient(135deg,#23263a,#0e0f13);border:1px solid var(--line);display:grid;place-items:center;color:var(--mute);font-size:13px;margin:12px 0}
+.cover img{width:100%;height:100%;object-fit:cover;display:block}
+.field label{display:block;font-size:12px;color:var(--mute);margin:14px 0 6px}
+.field input{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--fg);outline:none}
+.field input:focus{border-color:var(--accent)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:var(--panel);font-size:13px}
+.chip.on{background:var(--accent);color:#1a1405;border-color:transparent;font-weight:700}
+.chip small{color:inherit;opacity:.7;margin-left:4px;font-size:11px}
+.howto{font-size:13px;color:var(--mute);margin-top:18px;padding:12px 14px;border:1px dashed var(--line);border-radius:12px}
+.howto b{color:var(--fg)}
+
+/* game */
+.top{display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--mute);margin-bottom:10px}
+.top .film{font-weight:700;color:var(--fg);max-width:60%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stages{display:flex;gap:4px;margin-bottom:12px}
+.stages i{flex:1;height:4px;border-radius:2px;background:var(--line)}
+.stages i.done{background:var(--accent);opacity:.5}.stages i.now{background:var(--accent)}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:14px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 6px 7px;text-align:center;position:relative;overflow:hidden}
+.stat .l{font-size:11px;color:var(--mute)}
+.stat .v{font-size:18px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.2}
+.stat .bar{height:4px;border-radius:2px;background:var(--line);margin-top:6px;overflow:hidden}
+.stat .bar i{display:block;height:100%;width:0;transition:width .5s ease}
+.stat.danger{border-color:var(--bad)}.stat.danger .v{color:var(--bad)}
+.stat .d{position:absolute;top:4px;right:6px;font-size:11px;font-weight:800;opacity:0;transform:translateY(4px);transition:all .3s}
+.stat .d.show{opacity:1;transform:none}
+.stat .d.up{color:var(--ok)}.stat .d.down{color:var(--bad)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;animation:in .3s ease}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.card .img{aspect-ratio:16/9;background:linear-gradient(135deg,#2b2f44,#161820);position:relative;display:grid;place-items:center}
+.card .img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.card .img .ph{font-size:40px;opacity:.5}
+.card .body{padding:16px}
+.card .stage.chance{color:#e58fd1;border-color:#e58fd1;margin-left:6px}
+.card .stage{display:inline-block;font-size:11px;letter-spacing:.15em;color:var(--accent);border:1px solid var(--accent);border-radius:999px;padding:2px 8px;margin-bottom:8px}
+.card h2{font-size:21px;font-weight:800}
+.card p.desc{margin:8px 0 0;color:#cfcdc6;font-size:15px}
+.choices{padding:0 16px 16px}
+.choices .btn{margin-top:8px;font-size:15px}
+.choices .btn::before{content:"▸ ";color:var(--accent)}
+.outcome{padding:0 16px 16px;animation:in .3s ease}
+.outcome .picked{font-size:12px;color:var(--mute);margin-bottom:6px}
+.outcome .txt{font-size:15px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg2);border-radius:0 10px 10px 0}
+.deltas{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 12px}
+.deltas span{font-size:12px;padding:3px 8px;border-radius:6px;background:var(--bg2);border:1px solid var(--line);font-variant-numeric:tabular-nums}
+.deltas span.up{color:var(--ok)}.deltas span.down{color:var(--bad)}
+.hint{font-size:12px;color:var(--mute);text-align:center;margin-top:10px}
+
+/* result ticket */
+.ticket{background:#f4efe4;color:#1b1a17;border-radius:16px;overflow:hidden;position:relative;animation:in .4s ease}
+.ticket .eimg{aspect-ratio:4/3;background:linear-gradient(135deg,#2b2f44,#161820);position:relative;display:grid;place-items:center;color:#8d8f9a}
+.ticket .eimg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ticket .eimg .ph{font-size:56px;opacity:.6}
+.ticket .head{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;font-size:11px;letter-spacing:.12em;color:#6b665c;border-bottom:1px dashed #cfc7b6}
+.ticket .main{padding:16px}
+.ticket .film{font-size:22px;font-weight:900;letter-spacing:-.02em}
+.ticket .film small{display:block;font-size:12px;font-weight:500;color:#6b665c;margin-top:2px}
+.ticket .aud{margin:14px 0 4px;font-size:13px;color:#6b665c}
+.ticket .num{font-size:42px;font-weight:900;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.ticket .num small{font-size:16px;font-weight:700;margin-left:4px}
+.ticket .fate{margin-top:12px;font-size:17px;font-weight:800;padding:10px 12px;background:#1b1a17;color:#f4efe4;border-radius:8px}
+.ticket .fate b{color:var(--accent);font-weight:800;margin-right:6px}
+.ticket .crit{margin-top:10px;font-size:14px;color:#3b3833;font-style:italic}
+.ticket .kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:14px}
+.ticket .kpi>div{background:#e9e2d3;border-radius:8px;padding:8px 6px;text-align:center}
+.ticket .kpi .l{font-size:10px;color:#6b665c}
+.ticket .kpi .v{font-size:18px;font-weight:900;font-variant-numeric:tabular-nums;line-height:1.2}
+.ticket .kpi .v.ok{color:#2d7a3a}.ticket .kpi .v.bad{color:#b4321f}
+.ticket .kpi .s{font-size:10px;color:#6b665c;margin-top:2px}
+.ticket .bep{margin-top:14px;font-size:12px;color:#6b665c}
+.ticket .bep .bar{height:8px;border-radius:4px;background:#ddd5c3;margin-top:4px;overflow:hidden}
+.ticket .bep .bar i{display:block;height:100%;background:#1b1a17}
+.ticket .tear{border-top:2px dashed #cfc7b6;position:relative;margin:4px 0}
+.ticket .tear::before,.ticket .tear::after{content:"";position:absolute;top:-10px;width:18px;height:18px;border-radius:50%;background:var(--bg)}
+.ticket .tear::before{left:-9px}.ticket .tear::after{right:-9px}
+.ticket .foot{padding:12px 16px 16px;font-size:12px;color:#3b3833}
+.ticket .tstats{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:10px}
+.ticket .tstats div{text-align:center}
+.ticket .tstats .l{font-size:10px;color:#6b665c}
+.ticket .tstats .v{font-weight:800;font-size:15px}
+.ticket .tstats .bar{height:4px;background:#ddd5c3;border-radius:2px;margin-top:3px;overflow:hidden}
+.ticket .tstats .bar i{display:block;height:100%}
+.ticket .emo{font-size:18px;letter-spacing:1px;word-break:break-all}
+.ticket .flags{margin-top:8px;color:#6b665c}
+.ticket .seed{font-size:11px;color:#6b665c;margin-top:8px}
+.actions{margin-top:14px}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:#000;color:#fff;padding:10px 16px;border-radius:999px;font-size:13px;opacity:0;transition:all .25s;pointer-events:none;z-index:9}
+.toast.on{opacity:1;transform:translateX(-50%)}
+.footer{text-align:center;font-size:11px;color:var(--mute);margin:26px 0 10px}
+.footer a{color:inherit}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ===== 타이틀 ===== -->
+<section id="s-title" class="screen on">
+  <div class="logo">
+    <div class="tag">Crank In!</div>
+    <h1>오늘도 크랭크인!<small>크랭크인은 했다. 개봉은 글쎄.</small></h1>
+  </div>
+  <div class="cover" id="cover"><span style="font-size:48px;opacity:.5">🎬</span></div>
+  <div class="field">
+    <label>영화 제목 <button class="mute" id="reroll" style="float:right;font-size:12px">🎲 다른 제목</button></label>
+    <input id="title-in" maxlength="20" placeholder="제목을 입력하세요">
+  </div>
+  <div class="field">
+    <label>장르 <span class="mute" id="genre-note"></span></label>
+    <div class="chips" id="genres"></div>
+  </div>
+  <div class="stack" style="margin-top:18px">
+    <button class="btn primary" id="start-daily">오늘의 영화 만들기 <span class="mute" id="daily-tag" style="color:#5a4a1a"></span></button>
+    <button class="btn ghost" id="start-random">무작위 영화로 시작</button>
+  </div>
+  <div class="howto">
+    <b>예산 · 일정 · 사기</b>가 0이 되면 그 자리에서 끝납니다. <b>완성도 · 화제성</b>은 바닥을 쳐도 영화는 나옵니다. 어떤 영화가 되느냐가 문제일 뿐.<br>
+    같은 날짜의 <b>오늘의 영화</b>는 모두 같은 카드 덱을 받습니다. 결과를 복사해 친구와 비교해 보세요.
+  </div>
+  <div class="footer">실존 인물·회사와 무관한 허구입니다 · <a id="ver"></a></div>
+</section>
+
+<!-- ===== 게임 ===== -->
+<section id="s-game" class="screen">
+  <div class="top"><div class="film" id="g-film"></div><div id="g-turn"></div></div>
+  <div class="stages" id="g-stages"></div>
+  <div class="stats" id="g-stats"></div>
+  <div class="card" id="g-card"></div>
+  <div class="hint" id="g-hint"></div>
+</section>
+
+<!-- ===== 결과 ===== -->
+<section id="s-result" class="screen">
+  <div class="ticket" id="ticket"></div>
+  <div class="actions stack">
+    <button class="btn primary" id="copy">📋 결과 복사하기</button>
+    <div class="row">
+      <button class="btn" id="save-img" style="text-align:center">🖼 이미지 저장</button>
+      <button class="btn" id="share" style="text-align:center">🔗 공유</button>
+    </div>
+    <div class="row">
+      <button class="btn ghost" id="again-same">같은 덱으로 다시</button>
+      <button class="btn ghost" id="again-new">새 영화 만들기</button>
+    </div>
+  </div>
+  <div class="footer">실존 인물·회사와 무관한 허구입니다</div>
+</section>
+
+</div>
+<div class="toast" id="toast"></div>
+<canvas id="cv" width="1080" height="1350" style="display:none"></canvas>
+
+<script src="cards.js"></script>
+<script>
+/* CORE-START : 순수 게임 로직. DOM을 쓰지 않으며 tools/simulate.mjs가 이 구간을 그대로 읽어 실행한다. */
+const FR = (() => {
+  const VERSION = "0.1.0";
+  const STATS = { budget: "예산", schedule: "일정", morale: "사기", quality: "완성도", buzz: "화제성" };
+  const STAT_KEYS = Object.keys(STATS);
+  const SURVIVAL = ["budget", "schedule", "morale"];          // 0이 되면 즉시 종료
+  const STAGES = [
+    { key: "planning",  name: "기획",   turns: 2 },
+    { key: "funding",   name: "투자",   turns: 2 },
+    { key: "casting",   name: "캐스팅", turns: 2 },
+    { key: "shooting",  name: "촬영",   turns: 3 },
+    { key: "post",      name: "후반",   turns: 2 },
+    { key: "marketing", name: "마케팅", turns: 2 },
+    { key: "release",   name: "개봉",   turns: 1 },
+  ];
+  const TOTAL_TURNS = STAGES.reduce((a, s) => a + s.turns, 0);
+  const START = { budget: 50, schedule: 55, morale: 60, quality: 40, buzz: 15 };
+  const BURN = { budget: -2, schedule: -1 };                   // 매 턴 자동 소모: 돈과 시간은 가만히 있어도 줄어든다
+  const GENRES = [
+    { key: "thriller", name: "범죄 스릴러",   fx: { quality: 5,  budget: -5 },                 note: "완성도 +5, 예산 -5" },
+    { key: "comedy",   name: "가족 코미디",   fx: { buzz: 5, quality: -5, morale: 5 },         note: "화제성 +5, 사기 +5, 완성도 -5" },
+    { key: "zombie",   name: "좀비 액션",     fx: { budget: -10, buzz: 10, schedule: -5 },     note: "화제성 +10, 예산 -10, 일정 -5" },
+    { key: "melo",     name: "멜로",          fx: { morale: 5, buzz: -5, quality: 3 },         note: "사기 +5, 완성도 +3, 화제성 -5" },
+    { key: "period",   name: "사극",          fx: { budget: -10, schedule: -5, quality: 8 },   note: "완성도 +8, 예산 -10, 일정 -5" },
+    { key: "occult",   name: "오컬트 공포",   fx: { budget: 5, buzz: 5, quality: -3 },         note: "예산 +5, 화제성 +5, 완성도 -3" },
+    { key: "disaster", name: "재난 블록버스터", fx: { budget: -15, buzz: 12, schedule: -8 },   note: "화제성 +12, 예산 -15, 일정 -8" },
+    { key: "sports",   name: "스포츠 실화",   fx: { morale: 8, quality: 2 },                   note: "사기 +8, 완성도 +2" },
+  ];
+  const TITLE_A = ["마지막", "검은", "어느 날의", "완벽한", "그해 여름", "비밀의", "사라진", "불타는", "조용한", "두 번째", "서울의", "밤의"];
+  const TITLE_B = ["택시", "변호사", "동창회", "장례식", "소방관", "편의점", "아파트", "낚시터", "수학여행", "노래방", "세탁소", "부동산", "야간조", "골목"];
+
+  // ---------- RNG (mulberry32) ----------
+  function makeRng(seed) {
+    let a = (seed >>> 0) || 1;
+    return function () {
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  const pick = (rng, arr) => arr[Math.floor(rng() * arr.length)];
+  const clamp = (v) => Math.max(0, Math.min(100, Math.round(v)));
+  const kstDays = () => { const d = new Date(Date.now() + 9 * 3600e3); return Number(`${String(d.getUTCFullYear()).slice(2)}${String(d.getUTCMonth() + 1).padStart(2, "0")}${String(d.getUTCDate()).padStart(2, "0")}`); };
+
+  // 카드가 모자랄 때 쓰는 기본 카드 (단계별 하나)
+  const FALLBACK = {
+    planning:  { title: "조용한 기획 회의", desc: "오늘은 아무 일도 없었다. 영화판에서 아무 일도 없는 날은 뭔가 잘못되고 있다는 뜻이다.", choices: [{ text: "대본을 한 번 더 읽는다", outcomes: [{ p: 1, fx: { quality: 2 }, text: "오타 세 개를 고쳤다." }] }, { text: "일찍 퇴근한다", outcomes: [{ p: 1, fx: { morale: 3 }, text: "다들 집에 갔다. 내일 보자." }] }] },
+    funding:   { title: "조용한 투자 미팅", desc: "미팅은 평범했다. '긍정적으로 검토'라는 말을 들었다. 업계에서 가장 흔한 거절 표현이다.", choices: [{ text: "후속 메일을 보낸다", outcomes: [{ p: 0.5, fx: { budget: 4 }, text: "답이 왔다. 소액이지만 들어왔다." }, { p: 0.5, fx: {}, text: "읽씹." }] }, { text: "다른 곳을 알아본다", outcomes: [{ p: 1, fx: { schedule: -2 }, text: "명함이 한 장 늘었다." }] }] },
+    casting:   { title: "평범한 오디션 날", desc: "오디션 40명. 특별한 사람은 없었고 나쁜 사람도 없었다. 감독은 '느낌이 안 온다'고 했다.", choices: [{ text: "그중 최선을 고른다", outcomes: [{ p: 1, fx: { schedule: 2 }, text: "캐스팅 한 칸이 채워졌다." }] }, { text: "한 번 더 본다", outcomes: [{ p: 1, fx: { schedule: -3, quality: 2 }, text: "두 번째 오디션에서 괜찮은 얼굴을 찾았다." }] }] },
+    shooting:  { title: "사고 없는 촬영일", desc: "오늘은 사고가 없었다. 스태프들이 불안해한다. 이런 날 다음엔 꼭 뭔가 터진다.", choices: [{ text: "예정된 컷을 다 찍는다", outcomes: [{ p: 1, fx: { schedule: 3 }, text: "콜시트대로 끝났다. 기적이다." }] }, { text: "보너스 컷을 찍는다", outcomes: [{ p: 1, fx: { schedule: -2, quality: 3 }, text: "감독이 좋아하는 인서트를 몇 개 더 땄다." }] }] },
+    post:      { title: "편집실의 하루", desc: "편집기사가 커피를 네 잔 마셨다. 감독은 다섯 잔. 영화는 조금씩 영화가 되어 간다.", choices: [{ text: "한 시퀀스를 다듬는다", outcomes: [{ p: 1, fx: { quality: 3 }, text: "3분이 2분 40초가 됐다. 더 좋아졌다." }] }, { text: "오늘은 쉰다", outcomes: [{ p: 1, fx: { morale: 3 }, text: "편집기사가 처음으로 웃었다." }] }] },
+    marketing: { title: "홍보팀 주간 회의", desc: "SNS 팔로워가 12명 늘었다. 그중 셋은 스태프 가족이다.", choices: [{ text: "스틸컷을 하나 푼다", outcomes: [{ p: 1, fx: { buzz: 3 }, text: "좋아요 300. 그중 50은 진짜다." }] }, { text: "아낀다", outcomes: [{ p: 1, fx: { budget: 2 }, text: "홍보비를 아꼈다. 뭘 위해 아꼈는지는 모른다." }] }] },
+    release:   { title: "개봉 첫날 아침", desc: "극장 앞에 서 있다. 첫 회 상영이 시작됐다. 관객은 보인다. 몇 명인지는 세지 않기로 했다.", choices: [{ text: "첫 회를 같이 본다", outcomes: [{ p: 1, fx: { morale: 3 }, text: "뒷자리에서 누가 울었다. 제작자였다." }] }, { text: "SNS 반응을 지켜본다", outcomes: [{ p: 1, fx: { buzz: 2 }, text: "첫 관람평이 올라왔다. '생각보다 괜찮음'. 가장 흔하고 가장 고마운 평." }] }] },
+  };
+
+  // ---------- 조건 ----------
+  function condOk(card, st) {
+    const c = card.cond; if (!c) return true;
+    for (const k of STAT_KEYS) { if (c[k]) { const [lo, hi] = c[k]; if (st.stats[k] < lo || st.stats[k] > hi) return false; } }
+    if (c.has && !c.has.every((f) => st.flags.has(f))) return false;
+    if (c.not && c.not.some((f) => st.flags.has(f))) return false;
+    if (c.genre && !c.genre.includes(st.film.genre)) return false;
+    return true;
+  }
+
+  // ---------- 게임 ----------
+  function suggestTitle(rng) { return `${pick(rng, TITLE_A)} ${pick(rng, TITLE_B)}`; }
+
+  function newGame({ seed, cards, title, genre }) {
+    const rng = makeRng(seed);
+    const g = GENRES.find((x) => x.key === genre) || GENRES[0];
+    const stats = { ...START };
+    for (const k in g.fx) stats[k] = clamp(stats[k] + g.fx[k]);
+    const plan = []; STAGES.forEach((s) => { for (let i = 0; i < s.turns; i++) plan.push(s.key); });
+    const cost = 30 + Math.floor(rng() * 50); // 총제작비(억), 손익분기 계산용
+    const st = { seed, rng, cards, turn: 0, plan, stats, flags: new Set(), used: new Set(), history: [],
+      film: { title: (title || "").trim() || suggestTitle(rng), genre: g.key, genreName: g.name, cost }, card: null, over: null };
+    return st;
+  }
+  const stageOf = (st) => STAGES.find((s) => s.key === st.plan[st.turn]);
+
+  function drawCard(st) {
+    const key = st.plan[st.turn];
+    let pool = st.cards.filter((c) => c.stage === key && !st.used.has(c.id) && condOk(c, st));
+    let card;
+    if (pool.length) {
+      // 플래그로 이어지는 카드(cond.has)는 가중치 3배: 이야기가 이어지는 맛
+      const w = pool.map((c) => (c.weight || 1) * (c.cond && c.cond.has ? 3 : 1));
+      let r = st.rng() * w.reduce((a, b) => a + b, 0);
+      for (let i = 0; i < pool.length; i++) { r -= w[i]; if (r <= 0) { card = pool[i]; break; } }
+      card = card || pool[pool.length - 1];
+    } else {
+      card = { id: `fallback-${key}-${st.turn}`, stage: key, fallback: true, ...FALLBACK[key] };
+    }
+    st.used.add(card.id); st.card = card; return card;
+  }
+
+  function choose(st, idx) {
+    const card = st.card, ch = card.choices[idx];
+    let r = st.rng(), out = ch.outcomes[ch.outcomes.length - 1];
+    for (const o of ch.outcomes) { r -= o.p; if (r <= 0) { out = o; break; } }
+    const deltas = {};
+    for (const k of STAT_KEYS) { const d = (out.fx && out.fx[k] ? out.fx[k] : 0) + (BURN[k] || 0); if (d) { const before = st.stats[k]; st.stats[k] = clamp(before + d); deltas[k] = st.stats[k] - before; } }
+    (out.set || []).forEach((f) => st.flags.add(f));
+    (out.unset || []).forEach((f) => st.flags.delete(f));
+    const vals = Object.values(deltas);
+    const emoji = !vals.length ? "🟨" : vals.every((v) => v >= 0) ? "🟩" : vals.every((v) => v <= 0) ? "🟥" : "🟨";
+    st.history.push({ turn: st.turn, stage: card.stage, cardId: card.id, title: card.title, choice: ch.text, text: out.text, deltas, emoji });
+    for (const k of SURVIVAL) if (st.stats[k] <= 0) { st.over = k; break; }
+    return { outcome: out, deltas, emoji, choice: ch };
+  }
+
+  function nextTurn(st) { st.turn++; st.card = null; return st.turn >= TOTAL_TURNS || !!st.over; }
+  const isFinished = (st) => st.over || st.turn >= TOTAL_TURNS;
+
+  // ---------- 엔딩 ----------
+  const TIERS = [ // [최소 관객, 키, 라벨]
+    [8000000, "mega", "천만급 흥행"], [2000000, "hit", "흥행 성공"], [600000, "even", "본전치기"],
+    [50000, "flop", "쪽박"], [0, "cult", "전설의 괴작"],
+  ];
+  const FATES = {
+    bankrupt: ["투자사 철수, 크랭크인도 못 했다", "제작비 0원, 사무실 보증금으로 스태프 급여 정산", "제작 중단. 대본은 중고 서점에 있다", "파산. 감독은 아직 모른다"],
+    boycott:  ["스태프 전원 보이콧, 촬영장에 감독 혼자", "감독 잠적, 마지막 메시지는 '죄송합니다'", "조명팀부터 떠났다. 다음은 전부였다", "주연 배우 중도 하차, 영화는 중편이 됐다"],
+    delayed:  ["개봉 무기한 연기, 하드디스크 속 영화", "'내년 상반기 개봉'이 4년째", "촬영 분량 70%, 나머지는 영원히", "미완성 필름, 영화제 특별전에서 '발견'될 예정"],
+    ott:      ["OTT 직행, 공개 첫 주 순위권 밖", "OTT 공개, 알고리즘이 외면했다", "OTT 공개 3일 만에 '놓치기 쉬운 영화' 코너로", "OTT 비영어권 2위, 월요일 새벽 기준", "OTT 글로벌 톱10, 극장에 걸었으면 어땠을까"],
+    cult:     ["누적 관객 {n}명, 감독 잠적", "상영관 1개, 그마저도 조조", "제작자 어머니가 세 번 봤다", "개봉 3일 만에 VOD 직행", "시네마테크 '괴작 특별전' 초청"],
+    flop:     ["손익분기점은 다음 생에", "감독, 유튜브 채널 개설", "이름은 남겼다, 돈은 안 남았다", "'저주받은 걸작'이라는 말이 위로가 된다", "투자사 미팅에서 이 영화 얘기는 금지됐다"],
+    even:     ["선방했다는 말이 가장 아픈 말", "속편 기획안이 돌다가 사라졌다", "손익분기점 근처에서 숨 고르기", "'다음엔 더 잘될 것'이라는 투자사의 덕담", "배우 한 명이 떴다. 영화는 안 떴다"],
+    hit:      ["흥행 성공, 투자사 회식 3차", "주연 배우 광고 7개 계약", "감독 차기작 투자 확정, 제작자는 빠졌다", "속편 제작 확정, 예산은 세 배", "올해의 발견. 내년의 부담"],
+    mega:     ["천만 영화, 그리고 소송 시작", "제작자, 영화사 사옥 매입", "천만 돌파 기념 무대인사 1,000회", "국민 영화. 감독은 광고에 나온다", "흥행 신화. 아무도 왜 됐는지 모른다"],
+  };
+  // 플래그가 있을 때 우선 적용되는 운명 (60% 확률)
+  const FLAG_FATES = [
+    ["director_gone", ["감독 잠적, 무대인사는 배우들끼리", "감독은 아직 강릉에 있다"]],
+    ["personal_debt", ["제작자 개인 파산, 영화는 남았다", "대출 상환 20년, 영화 러닝타임 2시간"]],
+    ["fake_booking", ["예매율 조작 적발, 영진위 소환", "관객 수보다 기사 수가 많았다"]],
+    ["scandal_star", ["주연 논란으로 2주 만에 종영", "영화보다 배우 기사가 길었다"]],
+    ["festival", ["해외 영화제 수상, 국내 관객은 못 찾았다", "레드카펫은 걸었다. 극장은 못 걸었다"]],
+    ["revenue_share", ["흥행했는데 수익 30%는 이름값으로 나갔다"]],
+    ["profit_actor", ["조연 배우가 제작자보다 많이 벌었다"]],
+    ["crowd_cameo", ["치과 원장 형사 역, 연기상 후보"]],
+    ["city_scene", ["시장님 재선 성공, 영화는 축제 홍보 영상으로 재활용"]],
+    ["idol", ["팬덤 N차 관람으로 버틴 3주"]],
+    ["injury", ["배우 부상 미담이 영화보다 유명해졌다"]],
+    ["director_replaced", ["교체된 감독이 다음 작품으로 상을 받았다"]],
+  ];
+  const CRITIC = {
+    hq_hb: ["올해 가장 뜨거운 {g}", "평단과 관객이 드물게 합의한 {g}", "{g}의 새 기준"],
+    hq_lb: ["평론가만 울고 간 {g}", "아는 사람만 아는 {g}, 아는 사람이 적다", "완성도는 높았다. 극장은 비었다"],
+    lq_hb: ["욕하면서 보는 {g}", "완성도 대신 밈을 택한 {g}", "'그래도 봤다'가 최고의 평"],
+    lq_lb: ["{g}의 탈을 쓴 무언가", "열심히 찍었다", "감독의 예술혼만 불타오른 {g}"],
+    mid:   ["무난하다는 말이 칭찬이 아닌 {g}", "볼만하다. 딱 거기까지", "나쁘지 않은 {g}, 좋지도 않은"],
+  };
+  const MULT = { star: 1.3, idol: 1.2, festival: 1.5, scandal_star: 0.6, scandal_light: 0.85, fake_booking: 0.6, trailer_lie: 0.85,
+    director_replaced: 0.9, injury: 1.1, city_scene: 0.95, family_blessing: 1.1, crowd_cameo: 1.05, rival_project: 0.85, director_gone: 0.9, connection: 1.05 };
+
+  function finish(st) {
+    const rng = st.rng, s = st.stats, f = st.flags;
+    const bep = Math.round(st.film.cost * 1e8 / 3500); // 관객 1명당 제작사 몫 약 3,500원 기준 손익분기 관객
+    let tier, audience = 0, mult = 1, luck = 0.7 + rng() * 0.6; // 운 ±30%
+    if (st.over === "budget") tier = "bankrupt";
+    else if (st.over === "morale") tier = "boycott";
+    else if (st.over === "schedule") tier = "delayed";
+    else {
+      const score = 0.5 * s.quality + 0.4 * s.buzz + 0.1 * (s.morale + s.schedule) / 2; // 완성도·화제성이 주 변수
+      for (const k in MULT) if (f.has(k)) mult *= MULT[k];
+      // score 25→약 1.4만, 40→16만, 50→80만, 60→400만, 70→1,500만(상한) (운·플래그 적용 전)
+      audience = Math.round(Math.pow(10, 2.4 + 0.07 * score) * mult * luck);
+      if (f.has("group_sales")) audience += 2000;
+      audience = Math.min(audience, 15000000);
+      if (f.has("ott_deal")) tier = "ott";
+      else tier = TIERS.find(([min]) => audience >= min)[1];
+    }
+    const label = { bankrupt: "제작 중단", boycott: "현장 붕괴", delayed: "개봉 연기", ott: "OTT 직행" }[tier] || TIERS.find((t) => t[1] === tier)[2];
+    // 운명 문구
+    let fate = null;
+    if (!st.over && rng() < 0.6) { const c = FLAG_FATES.filter(([k]) => f.has(k)); if (c.length) fate = pick(rng, pick(rng, c)[1]); }
+    if (!fate) fate = pick(rng, FATES[tier]);
+    fate = fate.replace("{n}", audience.toLocaleString("ko-KR"));
+    // 한줄평
+    const hq = s.quality >= 60, lq = s.quality <= 35, hb = s.buzz >= 60, lb = s.buzz <= 30;
+    const ck = hq && hb ? "hq_hb" : hq && lb ? "hq_lb" : lq && hb ? "lq_hb" : lq && lb ? "lq_lb" : "mid";
+    const critic = pick(rng, CRITIC[ck]).replace("{g}", st.film.genreName);
+    const bepPct = st.over ? 0 : Math.round((audience / bep) * 1000) / 10;
+    // 평점(10점)·손익(억): 미개봉이면 평점 없음
+    const r1 = (v, lo, hi) => Math.round(Math.max(lo, Math.min(hi, v)) * 10) / 10;
+    const critics = st.over ? null : r1(2.5 + s.quality * 0.065 + (rng() - 0.5) * 1.4, 1, 10);
+    const audScore = st.over ? null : r1(3 + (0.6 * s.quality + 0.4 * s.buzz) * 0.06 + (rng() - 0.5) * 1.4, 1, 10);
+    const profit = st.over ? -st.film.cost : tier === "ott" ? Math.round(st.film.cost * 0.1) : Math.round(audience * 3500 / 1e8 - st.film.cost);
+    const bepHit = !st.over && profit >= 0;
+    return { tier, label, audience, fate, critic, bep, bepPct, cost: st.film.cost, luck, mult, flags: [...f], critics, audScore, profit, bepHit };
+  }
+
+  // ---------- 공유 텍스트 ----------
+  const BAR = (v) => { const n = Math.round(v / 20); return "▰".repeat(n) + "▱".repeat(5 - n); };
+  function shareText(st, end, url) {
+    const e = ["💰", "📅", "🎭", "🎞", "🔥"];
+    const bars = STAT_KEYS.map((k, i) => e[i] + BAR(st.stats[k])).join(" ");
+    const won = (v) => (v >= 0 ? "+" : "") + v + "억";
+    const aud = st.over ? `${end.label} (${st.turn}턴 만에) · 손실 ${end.cost}억` : end.tier === "ott" ? `OTT 직행 · 극장 관객 0명 · 손익 ${won(end.profit)}` : `누적 관객 ${end.audience.toLocaleString("ko-KR")}명 · 손익 ${won(end.profit)} (BEP ${end.bepHit ? "달성" : "미달"})`;
+    const rating = st.over ? null : `⭐ 평론 ${end.critics} · 관객 ${end.audScore}`;
+    return [`🎬 오늘도 크랭크인! #${st.seed}`, `《${st.film.title}》 ${st.film.genreName}`, `🎟 ${aud}`, rating, `💀 ${end.fate}`,
+      st.history.map((h) => h.emoji).join(""), bars, url || ""].filter(Boolean).join("\n");
+  }
+
+  return { VERSION, STATS, STAT_KEYS, SURVIVAL, STAGES, TOTAL_TURNS, GENRES, START, makeRng, kstDays, suggestTitle, newGame, stageOf, drawCard, choose, nextTurn, isFinished, finish, shareText, condOk };
+})();
+/* CORE-END */
+
+/* ================= UI ================= */
+(() => {
+  const $ = (s) => document.querySelector(s);
+  const CARDS = window.FILM_CARDS || [];
+  const SCREENS = ["s-title", "s-game", "s-result"];
+  const show = (id) => { SCREENS.forEach((s) => $("#" + s).classList.toggle("on", s === id)); window.scrollTo(0, 0); };
+  const toast = (m) => { const t = $("#toast"); t.textContent = m; t.classList.add("on"); clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove("on"), 1800); };
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const baseUrl = () => location.origin + location.pathname;
+  let st = null, end = null, genre = "thriller";
+
+  // ----- 타이틀 -----
+  const urlSeed = Number(new URLSearchParams(location.search).get("s"));
+  const dailySeed = FR.kstDays();
+  $("#daily-tag").textContent = `#${urlSeed || dailySeed}`;
+  $("#ver").textContent = "v" + FR.VERSION + " · 카드 " + CARDS.length + "장";
+  const tRng = FR.makeRng(Date.now() & 0xffffffff);
+  $("#title-in").value = FR.suggestTitle(tRng);
+  $("#reroll").onclick = () => { $("#title-in").value = FR.suggestTitle(tRng); };
+  const gWrap = $("#genres");
+  FR.GENRES.forEach((g) => { const b = document.createElement("button"); b.className = "chip" + (g.key === genre ? " on" : ""); b.innerHTML = esc(g.name); b.onclick = () => { genre = g.key; [...gWrap.children].forEach((c) => c.classList.remove("on")); b.classList.add("on"); $("#genre-note").textContent = g.note; }; gWrap.appendChild(b); });
+  $("#genre-note").textContent = FR.GENRES[0].note;
+  loadImg($("#cover"), ["img/cover.webp"]);
+  $("#start-daily").onclick = () => start(urlSeed || dailySeed);
+  $("#start-random").onclick = () => start(1000 + Math.floor(Math.random() * 899999));
+
+  function start(seed) {
+    st = FR.newGame({ seed, cards: CARDS, title: $("#title-in").value, genre });
+    end = null;
+    $("#g-film").textContent = `《${st.film.title}》 ${st.film.genreName}`;
+    show("s-game"); renderStats(); renderTurn();
+  }
+
+  // ----- 이미지 (없으면 자리만) -----
+  function loadImg(box, candidates, ph) {
+    box.innerHTML = ph ? `<span class="ph">${ph}</span>` : box.innerHTML;
+    const img = new Image(); let i = 0;
+    img.onload = () => { box.innerHTML = ""; box.appendChild(img); box.dataset.src = img.src; };
+    img.onerror = () => { if (++i < candidates.length) img.src = candidates[i]; };
+    img.src = candidates[0];
+  }
+
+  // ----- 게임 화면 -----
+  function renderStats(deltas) {
+    const box = $("#g-stats"); box.innerHTML = "";
+    FR.STAT_KEYS.forEach((k) => {
+      const v = st.stats[k], danger = FR.SURVIVAL.includes(k) && v <= 20, d = deltas && deltas[k];
+      const el = document.createElement("div"); el.className = "stat" + (danger ? " danger" : "");
+      el.innerHTML = `<div class="l">${FR.STATS[k]}${FR.SURVIVAL.includes(k) ? "" : " ·"}</div><div class="v">${v}</div><div class="bar"><i style="background:var(--${k})"></i></div>${d ? `<div class="d ${d > 0 ? "up" : "down"}">${d > 0 ? "+" : ""}${d}</div>` : ""}`;
+      box.appendChild(el);
+      requestAnimationFrame(() => { el.querySelector(".bar i").style.width = v + "%"; const dd = el.querySelector(".d"); if (dd) setTimeout(() => dd.classList.add("show"), 50); });
+    });
+  }
+  function renderTurn() {
+    const stage = FR.stageOf(st);
+    $("#g-turn").textContent = `${stage.name} · ${st.turn + 1}/${FR.TOTAL_TURNS}턴`;
+    $("#g-stages").innerHTML = st.plan.map((_, i) => `<i class="${i < st.turn ? "done" : i === st.turn ? "now" : ""}"></i>`).join("");
+    const card = FR.drawCard(st);
+    const box = $("#g-card");
+    box.innerHTML = `<div class="img"></div><div class="body"><span class="stage">${stage.name}</span>${card.type === "chance" ? `<span class="stage chance">✨ 기회</span>` : ""}<h2>${esc(card.title)}</h2><p class="desc">${esc(card.desc)}</p></div><div class="choices"></div>`;
+    loadImg(box.querySelector(".img"), [`img/cards/${card.id}.webp`, `img/stages/${card.stage}.webp`], stageEmoji(card.stage));
+    const ch = box.querySelector(".choices");
+    card.choices.forEach((c, i) => { const b = document.createElement("button"); b.className = "btn"; b.textContent = c.text; b.onclick = () => onChoose(i); ch.appendChild(b); });
+    $("#g-hint").textContent = FR.SURVIVAL.some((k) => st.stats[k] <= 20) ? "⚠ 생존 수치가 위험합니다" : "";
+  }
+  const stageEmoji = (s) => ({ planning: "📝", funding: "💼", casting: "🎭", shooting: "🎥", post: "✂️", marketing: "📣", release: "🎟" }[s] || "🎬");
+  function onChoose(i) {
+    const card = st.card, r = FR.choose(st, i);
+    renderStats(r.deltas);
+    const box = $("#g-card"); box.querySelector(".choices").remove();
+    const o = document.createElement("div"); o.className = "outcome";
+    const chips = Object.entries(r.deltas).map(([k, d]) => `<span class="${d > 0 ? "up" : "down"}">${FR.STATS[k]} ${d > 0 ? "+" : ""}${d}</span>`).join("") || `<span>변화 없음</span>`;
+    o.innerHTML = `<div class="picked">▸ ${esc(r.choice.text)}</div><div class="txt">${esc(r.outcome.text)}</div><div class="deltas">${chips}</div>`;
+    const b = document.createElement("button"); b.className = "btn primary";
+    const done = st.over || st.turn + 1 >= FR.TOTAL_TURNS;
+    b.textContent = st.over ? "결과 보기" : done ? "개봉 성적 확인" : "다음 →";
+    b.onclick = () => { FR.nextTurn(st); if (FR.isFinished(st)) showResult(); else renderTurn(); };
+    o.appendChild(b); box.appendChild(o);
+    if (st.over) toast({ budget: "예산이 바닥났습니다", morale: "현장이 무너졌습니다", schedule: "일정이 완전히 무너졌습니다" }[st.over]);
+  }
+
+  // ----- 결과 -----
+  function showResult() {
+    end = FR.finish(st);
+    const t = $("#ticket");
+    const aud = st.over ? `<div class="num" style="font-size:30px">${end.label}</div><div class="mute" style="font-size:12px;color:#6b665c">${st.turn}턴 · ${FR.stageOf({ plan: st.plan, turn: Math.min(st.turn - 1, FR.TOTAL_TURNS - 1) }).name} 단계에서 종료</div>`
+      : end.tier === "ott" ? `<div class="num">OTT 직행</div><div style="font-size:12px;color:#6b665c">극장 관객 0명 · 제작비 회수 110%</div>`
+      : `<div class="num">${end.audience.toLocaleString("ko-KR")}<small>명</small></div>`;
+    const bep = st.over || end.tier === "ott" ? "" : `<div class="bep">총제작비 ${end.cost}억 · 손익분기 ${Math.round(end.bep / 10000)}만 명 중 <b>${end.bepPct}%</b><div class="bar"><i style="width:${Math.min(100, end.bepPct)}%"></i></div></div>`;
+    const won = (v) => (v >= 0 ? "+" : "−") + Math.abs(v) + "억";
+    const kpi = st.over
+      ? `<div class="kpi"><div><div class="l">평론 평점</div><div class="v">—</div></div><div><div class="l">관객 평점</div><div class="v">—</div></div><div><div class="l">손익</div><div class="v bad">−${end.cost}억</div><div class="s">제작비 전액 손실</div></div></div>`
+      : `<div class="kpi"><div><div class="l">평론 평점</div><div class="v">★ ${end.critics}</div><div class="s">10점 만점</div></div><div><div class="l">관객 평점</div><div class="v">★ ${end.audScore}</div><div class="s">10점 만점</div></div><div><div class="l">손익</div><div class="v ${end.profit >= 0 ? "ok" : "bad"}">${won(end.profit)}</div><div class="s">${end.tier === "ott" ? "선판매로 회수" : end.bepHit ? "손익분기 달성 ✓" : "손익분기 미달 ✗"}</div></div></div>`;
+    const flagsKo = end.flags.length ? `<div class="flags">기록: ${end.flags.map(flagName).join(" · ")}</div>` : "";
+    t.innerHTML = `<div class="eimg"></div>
+      <div class="head"><span>BOX OFFICE REPORT</span><span>통합전산망 (비공식)</span></div>
+      <div class="main">
+        <div class="film">《${esc(st.film.title)}》<small>${st.film.genreName} · ${st.flags.has("r_rated") ? "청소년 관람불가" : "15세 이상 관람가"} · ${end.label}</small></div>
+        <div class="aud">${st.over ? "최종 상태" : "누적 관객"}</div>${aud}
+        <div class="fate"><b>운명</b>${esc(end.fate)}</div>
+        <div class="crit">“${esc(end.critic)}”</div>${kpi}${bep}
+      </div>
+      <div class="tear"></div>
+      <div class="foot">
+        <div class="tstats">${FR.STAT_KEYS.map((k) => `<div><div class="l">${FR.STATS[k]}</div><div class="v">${st.stats[k]}</div><div class="bar"><i style="width:${st.stats[k]}%;background:var(--${k})"></i></div></div>`).join("")}</div>
+        <div class="emo">${st.history.map((h) => h.emoji).join("")}</div>${flagsKo}
+        <div class="seed">#${st.seed} · 오늘도 크랭크인!</div>
+      </div>`;
+    loadImg(t.querySelector(".eimg"), [`img/endings/${end.tier}.webp`], tierEmoji(end.tier));
+    show("s-result");
+  }
+  const tierEmoji = (t) => ({ bankrupt: "💸", boycott: "🚪", delayed: "⏳", ott: "📺", cult: "🪦", flop: "🥀", even: "😮‍💨", hit: "🎉", mega: "👑" }[t] || "🎬");
+  const FLAG_KO = { star: "톱배우 캐스팅", idol: "아이돌 주연", festival: "영화제 경쟁 진출", scandal_star: "주연 논란", scandal_light: "잡음", fake_booking: "예매율 조작 적발", trailer_lie: "예고편 사기 논란", director_replaced: "감독 교체", injury: "촬영 부상", city_scene: "지자체 홍보 장면", family_blessing: "유족 자문", crowd_cameo: "후원자 출연", rival_project: "경쟁작", director_gone: "감독 잠적", connection: "인맥", group_sales: "단체 관람", ott_deal: "OTT 계약", personal_debt: "제작자 개인 빚", revenue_share: "수익 30% 양도", profit_actor: "지분 배우", crypto_money: "코인 투자금", need_star: "선판매 조건", no_stunt: "대역 없는 액션", region_shoot: "지역 촬영 지원", lawsuit_risk: "소송 위험", r_rated: "청불", webtoon_ip: "웹툰 원작", new_investor: "투자사 교체", investor_actor: "투자사 신인", angel_investor: "큰손" };
+  const flagName = (f) => FLAG_KO[f] || f;
+
+  const share = () => FR.shareText(st, end, baseUrl() + "?s=" + st.seed);
+  $("#copy").onclick = async () => { try { await navigator.clipboard.writeText(share()); toast("복사했습니다. 어디든 붙여 넣으세요"); } catch { prompt("복사하세요", share()); } };
+  $("#share").onclick = async () => { const text = share(); if (navigator.share) { try { await navigator.share({ text }); } catch {} } else { try { await navigator.clipboard.writeText(text); toast("복사했습니다"); } catch {} } };
+  $("#again-same").onclick = () => start(st.seed);
+  $("#again-new").onclick = () => { show("s-title"); };
+  $("#save-img").onclick = () => drawCanvas();
+
+  // 결과 카드 PNG (1080x1350)
+  function drawCanvas() {
+    const cv = $("#cv"), c = cv.getContext("2d"), W = 1080, H = 1350;
+    c.fillStyle = "#0e0f13"; c.fillRect(0, 0, W, H);
+    const img = $("#ticket .eimg img");
+    const top = 560;
+    if (img && img.complete && img.naturalWidth) {
+      const s = Math.max(W / img.naturalWidth, top / img.naturalHeight), w = img.naturalWidth * s, h = img.naturalHeight * s;
+      c.drawImage(img, (W - w) / 2, (top - h) / 2, w, h);
+    } else { const g = c.createLinearGradient(0, 0, W, top); g.addColorStop(0, "#2b2f44"); g.addColorStop(1, "#161820"); c.fillStyle = g; c.fillRect(0, 0, W, top); c.font = "200px serif"; c.textAlign = "center"; c.fillText(tierEmoji(end.tier), W / 2, top / 2 + 70); }
+    const gg = c.createLinearGradient(0, top - 200, 0, top); gg.addColorStop(0, "rgba(14,15,19,0)"); gg.addColorStop(1, "#0e0f13"); c.fillStyle = gg; c.fillRect(0, top - 200, W, 200);
+    c.textAlign = "left"; const F = '"Apple SD Gothic Neo","Pretendard","Noto Sans KR","Malgun Gothic",sans-serif';
+    c.fillStyle = "#f2b134"; c.font = `600 26px ${F}`; c.fillText("오늘도 크랭크인!  #" + st.seed, 72, 620);
+    c.fillStyle = "#e9e6df"; c.font = `900 64px ${F}`; wrap(c, `《${st.film.title}》`, 72, 700, W - 144, 74);
+    c.fillStyle = "#8d8f9a"; c.font = `400 28px ${F}`; c.fillText(`${st.film.genreName} · ${end.label}`, 72, 760);
+    c.fillStyle = "#e9e6df"; c.font = `900 110px ${F}`;
+    const audTxt = st.over ? end.label : end.tier === "ott" ? "OTT 직행" : end.audience.toLocaleString("ko-KR") + "명";
+    c.fillText(audTxt, 72, 890);
+    c.fillStyle = "#8d8f9a"; c.font = `400 28px ${F}`; c.fillText(st.over ? `${st.turn}턴 만에 종료` : end.tier === "ott" ? "극장 관객 0명" : `손익분기 ${end.bepPct}%`, 72, 935);
+    c.fillStyle = "#f2b134"; c.font = `800 40px ${F}`; wrap(c, "운명: " + end.fate, 72, 1010, W - 144, 50);
+    c.fillStyle = "#cfcdc6"; c.font = `italic 400 30px ${F}`; wrap(c, "“" + end.critic + "”", 72, 1100, W - 144, 40);
+    c.fillStyle = "#e9e6df"; c.font = `700 30px ${F}`;
+    c.fillText(st.over ? `손실 ${end.cost}억 · 미개봉` : `평론 ★${end.critics}   관객 ★${end.audScore}   손익 ${(end.profit >= 0 ? "+" : "−") + Math.abs(end.profit)}억 (${end.tier === "ott" ? "선판매" : end.bepHit ? "BEP 달성" : "BEP 미달"})`, 72, 1160);
+    // 스탯 바
+    const keys = FR.STAT_KEYS, cols = { budget: "#62c370", schedule: "#4fa3e0", morale: "#e58fd1", quality: "#f2b134", buzz: "#ff7a59" };
+    keys.forEach((k, i) => { const x = 72 + i * 190, y = 1200; c.fillStyle = "#8d8f9a"; c.font = `400 22px ${F}`; c.fillText(FR.STATS[k], x, y); c.fillStyle = "#e9e6df"; c.font = `800 34px ${F}`; c.fillText(st.stats[k], x, y + 40); c.fillStyle = "#2a2e3a"; c.fillRect(x, y + 56, 150, 8); c.fillStyle = cols[k]; c.fillRect(x, y + 56, 150 * st.stats[k] / 100, 8); });
+    c.fillStyle = "#e9e6df"; c.font = `400 34px serif`; c.fillText(st.history.map((h) => h.emoji).join(""), 72, 1310);
+    c.fillStyle = "#8d8f9a"; c.font = `400 22px ${F}`; c.textAlign = "right"; c.fillText(baseUrl().replace(/^https?:\/\//, ""), W - 72, 1310); c.textAlign = "left";
+    try {
+      const a = document.createElement("a"); a.download = `film-rescue-${st.seed}.png`; a.href = cv.toDataURL("image/png"); a.click(); toast("이미지를 저장했습니다");
+    } catch { toast("이미지 저장에 실패했습니다"); }
+  }
+  function wrap(c, text, x, y, maxW, lh) { let line = "", yy = y; for (const ch of text) { const t = line + ch; if (c.measureText(t).width > maxW && line) { c.fillText(line, x, yy); line = ch; yy += lh; } else line = t; } c.fillText(line, x, yy); return yy; }
+})();
+</script>
+</body>
+</html>

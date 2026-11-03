@@ -1,0 +1,15 @@
+{
+  "name": "film-rescue",
+  "version": "0.1.0",
+  "private": true,
+  "description": "오늘도 크랭크인! — 사전 생성 카드로 돌아가는 정적 웹게임",
+  "scripts": {
+    "build": "node tools/build-cards.mjs",
+    "validate": "node tools/validate-cards.mjs",
+    "generate": "node tools/generate-cards.mjs",
+    "simulate": "node tools/simulate.mjs",
+    "images": "node tools/import-images.mjs",
+    "prompts": "node tools/image-prompts.mjs",
+    "serve": "npx --yes serve -l 8787 ."
+  }
+}
