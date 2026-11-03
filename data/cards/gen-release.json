@@ -686,9 +686,9 @@
   },
   {
     "id": "rel-empty-preview-seats",
-    "stage": "release",
+    "stage": "marketing",
     "title": "시사회 빈자리",
-    "desc": "VIP 시사회 초대장을 이백 장 보냈다. 서른 명이 왔다. 그중 열 명은 주차 정산을 물었다.",
+    "desc": "개봉 전 VIP 시사회 초대장을 이백 장 보냈다. 서른 명이 왔다. 그중 열 명은 주차 정산을 물었다.",
     "choices": [
       {
         "text": "일반 관객 현장 초대",
@@ -809,7 +809,7 @@
   },
   {
     "id": "rel-popcorn-collab",
-    "stage": "release",
+    "stage": "marketing",
     "type": "chance",
     "title": "팝콘 브랜드 무료 콜라보",
     "desc": "스낵 회사가 영화 캐릭터 팝콘통을 전량 무료로 만들어 주겠다고 했다. 계약서는 두 쪽이다. 두 번째 쪽이 더 길다.",
@@ -855,7 +855,7 @@
   },
   {
     "id": "rel-variety-show-offer",
-    "stage": "release",
+    "stage": "marketing",
     "type": "chance",
     "title": "예능 프로그램 출연 제안",
     "desc": "인기 예능에서 출연진 전원을 초대했다. 조건은 '편집은 맡겨 달라'였다. 작가가 웃었다. 웃음이 너무 넓었다.",
@@ -901,9 +901,6 @@
     "title": "팬덤의 단체 대관",
     "desc": "주연배우의 팬클럽이 상영관 세 개를 통째로 빌렸다. 회장이 말했다. '저희가 알아서 할게요.' 알아서 하는 건 처음이다.",
     "cond": {
-      "has": [
-        "star"
-      ],
       "any": [
         "idol",
         "star"

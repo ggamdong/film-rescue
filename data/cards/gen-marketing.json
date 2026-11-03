@@ -331,7 +331,7 @@
   },
   {
     "id": "mkt-empty-stage-greeting",
-    "stage": "marketing",
+    "stage": "release",
     "title": "텅 빈 무대인사",
     "desc": "주말 무대인사 현장. 객석 절반이 비었다. 배우들은 환하게 웃는다. 눈은 웃지 않는다.",
     "choices": [
@@ -371,7 +371,7 @@
   },
   {
     "id": "mkt-review-brigade",
-    "stage": "marketing",
+    "stage": "release",
     "title": "리뷰 알바 의혹",
     "desc": "별점 만점 후기가 한 시간에 백 개 달렸다. 말투가 전부 같다. 누군가 캡처를 올렸다.",
     "cond": {
@@ -418,7 +418,7 @@
   },
   {
     "id": "mkt-trailer-backlash",
-    "stage": "marketing",
+    "stage": "release",
     "title": "예고편 환불 소동",
     "desc": "예고편에는 폭파 장면이 있었다. 본편에는 폭파 후 장면만 있다. 관객이 환불 창구에 줄을 섰다.",
     "cond": {
@@ -464,7 +464,7 @@
   },
   {
     "id": "mkt-scandal-opening-week",
-    "stage": "marketing",
+    "stage": "release",
     "title": "개봉 주 열애설",
     "desc": "주연 배우 스캔들 기사가 개봉 주에 다시 나왔다. 기자는 시기를 맞춘 우연이라 한다. 우연은 늘 정확하다.",
     "cond": {
@@ -512,7 +512,7 @@
   },
   {
     "id": "mkt-ott-window-squeeze",
-    "stage": "marketing",
+    "stage": "release",
     "title": "극장 상영 기간 단축",
     "desc": "OTT 측이 공개 시점을 앞당기자고 했다. 극장은 반대한다. 이틀 뒤에도 극장은 반대하고, OTT는 웃는다.",
     "cond": {
@@ -647,7 +647,7 @@
   },
   {
     "id": "mkt-viral-fan-edit",
-    "stage": "marketing",
+    "stage": "release",
     "type": "chance",
     "title": "관객이 만든 짧은 영상",
     "desc": "한 관객이 영화 장면을 15초로 편집해 올렸다. 조회수가 이미 백만을 넘었다. 원작자는 모른다.",
