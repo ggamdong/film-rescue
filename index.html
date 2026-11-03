@@ -46,6 +46,21 @@ h1,h2,h3{margin:0;line-height:1.25;letter-spacing:-.01em}
 .mode .mb.on{display:block}
 .mode:has(.mb.on) .mt{padding-right:56px}
 @media (max-width:360px){.modes{grid-template-columns:1fr}.mode{min-height:0}}
+.stats-panel{margin-top:14px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:var(--bg2);display:none}
+.stats-panel.on{display:block}
+.stats-panel .h{display:flex;justify-content:space-between;align-items:baseline;font-size:12px;color:var(--mute)}
+.stats-panel .h b{color:var(--fg);font-size:13px}
+.stats-panel .kv{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}
+.stats-panel .kv div{text-align:center;background:var(--panel);border-radius:8px;padding:6px 4px}
+.stats-panel .kv .l{font-size:10px;color:var(--mute)}
+.stats-panel .kv .v{font-weight:800;font-size:14px;font-variant-numeric:tabular-nums}
+.dex{display:grid;grid-template-columns:repeat(9,1fr);gap:4px;margin-top:10px}
+.dex div{aspect-ratio:1;border-radius:8px;background:var(--panel);display:grid;place-items:center;font-size:18px;position:relative}
+.dex div.off{opacity:.3;filter:grayscale(1)}
+.dex div.off::after{content:"?";position:absolute;font-size:13px;color:var(--fg);opacity:.9}
+.dex div.off span{visibility:hidden}
+.dex div small{position:absolute;right:2px;bottom:1px;font-size:9px;color:var(--mute)}
+.ticket .newend{margin-top:8px;font-size:12px;color:#8a5a00;background:#f7e2a6;border-radius:6px;padding:4px 8px;display:inline-block}
 .row{display:flex;gap:8px}.row .btn{flex:1}
 .stack>*+*{margin-top:10px}
 
@@ -178,6 +193,7 @@ h1,h2,h3{margin:0;line-height:1.25;letter-spacing:-.01em}
       <div class="ms">누를 때마다 다른 카드, 다른 운. 몇 번이고.</div>
     </button>
   </div>
+  <div class="stats-panel" id="my-stats"></div>
   <div class="howto">
     <b>예산 · 일정 · 사기</b>가 0이 되면 그 자리에서 끝납니다. <b>완성도 · 화제성</b>은 바닥을 쳐도 영화는 나옵니다. 어떤 영화가 되느냐가 문제일 뿐.<br>
     같은 날짜의 <b>오늘의 영화</b>는 모두 같은 카드 덱을 받습니다. 결과를 복사해 친구와 비교해 보세요.
@@ -217,6 +233,9 @@ h1,h2,h3{margin:0;line-height:1.25;letter-spacing:-.01em}
 <canvas id="cv" width="1080" height="1350" style="display:none"></canvas>
 
 <script src="cards.js"></script>
+<!-- 방문·이벤트 집계 (GoatCounter, 무료). 계정을 만들고 아래 data-goatcounter 의 사이트 코드를 바꾸면 켜진다. 비워 두면 아무것도 보내지 않는다. -->
+<script data-goatcounter="" async src="https://gc.zgo.at/count.js" data-goatcounter-settings='{"no_onload": false, "allow_local": false}' id="gc"></script>
+<script>(function(){var g=document.getElementById("gc");if(!g.getAttribute("data-goatcounter"))g.remove();})();</script>
 <script>
 /* CORE-START : 순수 게임 로직. DOM을 쓰지 않으며 tools/simulate.mjs가 이 구간을 그대로 읽어 실행한다. */
 const FR = (() => {
@@ -474,6 +493,8 @@ const FR = (() => {
   const toast = (m) => { const t = $("#toast"); t.textContent = m; t.classList.add("on"); clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove("on"), 1800); };
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const baseUrl = () => location.origin + location.pathname;
+  // 이벤트 집계: GoatCounter 스크립트가 로드돼 있을 때만 보낸다 (없으면 조용히 무시)
+  const track = (name, detail) => { try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: "ev/" + name + (detail ? "/" + detail : ""), title: name, event: true }); } catch {} };
   let st = null, end = null, genre = "thriller";
 
   // ----- 타이틀 -----
@@ -488,6 +509,32 @@ const FR = (() => {
   FR.GENRES.forEach((g) => { const b = document.createElement("button"); b.className = "chip" + (g.key === genre ? " on" : ""); b.innerHTML = esc(g.name); b.onclick = () => { genre = g.key; [...gWrap.children].forEach((c) => c.classList.remove("on")); b.classList.add("on"); $("#genre-note").textContent = g.note; }; gWrap.appendChild(b); });
   $("#genre-note").textContent = FR.GENRES[0].note;
   loadImg($("#cover"), ["img/cover.webp"]);
+  // ----- 내 기록 / 엔딩 도감 (기기 로컬) -----
+  const STATS_KEY = "fr_stats";
+  const TIER_ORDER = ["bankrupt", "boycott", "delayed", "cult", "flop", "even", "hit", "mega", "ott"];
+  const TIER_KO = { bankrupt: "제작 중단", boycott: "현장 붕괴", delayed: "개봉 연기", cult: "전설의 괴작", flop: "쪽박", even: "본전치기", hit: "흥행 성공", mega: "천만급", ott: "OTT 직행" };
+  const loadStats = () => { try { return Object.assign({ plays: 0, best: null, endings: {}, cards: [] }, JSON.parse(localStorage.getItem(STATS_KEY) || "{}")); } catch { return { plays: 0, best: null, endings: {}, cards: [] }; } };
+  const saveStats = (x) => { try { localStorage.setItem(STATS_KEY, JSON.stringify(x)); } catch {} };
+  function recordStats(st, end) {
+    const x = loadStats();
+    x.plays++;
+    const isNewEnding = !x.endings[end.tier];
+    x.endings[end.tier] = (x.endings[end.tier] || 0) + 1;
+    const cards = new Set(x.cards); st.history.forEach((h) => { if (!h.cardId.startsWith("fallback-")) cards.add(h.cardId); }); x.cards = [...cards];
+    if (!st.over && end.tier !== "ott" && (!x.best || end.audience > x.best.audience)) x.best = { audience: end.audience, title: st.film.title, seed: st.seed, genre: st.film.genreName };
+    saveStats(x);
+    return { isNewEnding, stats: x };
+  }
+  function renderMyStats() {
+    const x = loadStats(), box = $("#my-stats");
+    if (!x.plays) { box.classList.remove("on"); return; }
+    const seen = TIER_ORDER.filter((t) => x.endings[t]).length;
+    box.classList.add("on");
+    box.innerHTML = `<div class="h"><b>내 기록</b><span>엔딩 도감 ${seen}/9 · 만난 카드 ${x.cards.length}/${CARDS.length}</span></div>
+      <div class="kv"><div><div class="l">플레이</div><div class="v">${x.plays}판</div></div><div><div class="l">최고 관객</div><div class="v">${x.best ? x.best.audience.toLocaleString("ko-KR") : "—"}</div></div><div><div class="l">최고작</div><div class="v" style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${x.best ? "《" + esc(x.best.title) + "》" : "—"}</div></div></div>
+      <div class="dex">${TIER_ORDER.map((t) => `<div class="${x.endings[t] ? "" : "off"}" title="${TIER_KO[t]}"><span>${tierEmoji(t)}</span>${x.endings[t] > 1 ? `<small>×${x.endings[t]}</small>` : ""}</div>`).join("")}</div>`;
+  }
+
   // 오늘의 영화 완료 기록 (기기 로컬). 같은 덱은 선택이 같으면 결과가 같으므로 선택만 저장해 두고 다시 재생한다.
   const DAILY_KEY = "fr_daily_" + (urlSeed || dailySeed);
   const loadDaily = () => { try { return JSON.parse(localStorage.getItem(DAILY_KEY) || "null"); } catch { return null; } };
@@ -501,11 +548,12 @@ const FR = (() => {
     $("#daily-badge").textContent = done ? "✓ 완료" : "";
     $("#start-daily").querySelector(".ms").textContent = done ? "오늘 분은 끝냈습니다. 결과를 다시 보거나, 내일 새 덱으로." : "오늘은 모두 같은 카드. 결과를 복사해 친구와 비교하세요.";
   }
-  refreshModes();
+  refreshModes(); renderMyStats();
   $("#start-daily").onclick = () => { const done = loadDaily(); if (done) replay(done); else start(urlSeed || dailySeed, true); };
   $("#start-random").onclick = () => start(randomSeed(), false);
 
   function start(seed, isDaily) {
+    track("start", isDaily ? "daily" : "random");
     st = FR.newGame({ seed, cards: CARDS, title: $("#title-in").value, genre });
     st.isDaily = !!isDaily;
     end = null;
@@ -515,7 +563,7 @@ const FR = (() => {
   // 저장된 선택을 그대로 재생해 결과 화면을 복원한다
   function replay(rec) {
     st = FR.newGame({ seed: rec.seed, cards: CARDS, title: rec.title, genre: rec.genre });
-    st.isDaily = true;
+    st.isDaily = true; st.replayed = true;
     for (const i of rec.choices) { if (FR.isFinished(st)) break; FR.drawCard(st); FR.choose(st, i); FR.nextTurn(st); }
     showResult();
   }
@@ -597,7 +645,12 @@ const FR = (() => {
       </div>`;
     loadImg(t.querySelector(".eimg"), [`img/endings/${end.tier}.webp`], tierEmoji(end.tier));
     if (st.isDaily && !loadDaily()) saveDaily({ seed: st.seed, title: st.film.title, genre: st.film.genre, choices: st.history.map((h) => h.choiceIdx) });
-    refreshModes();
+    if (!st.replayed) {
+      const r = recordStats(st, end);
+      if (r.isNewEnding) t.querySelector(".crit").insertAdjacentHTML("afterend", `<div class="newend">🏆 새 엔딩 발견: ${TIER_KO[end.tier]} (도감 ${TIER_ORDER.filter((k) => r.stats.endings[k]).length}/9)</div>`);
+      track("finish", end.tier);
+    }
+    refreshModes(); renderMyStats();
     show("s-result");
   }
   const tierEmoji = (t) => ({ bankrupt: "💸", boycott: "🚪", delayed: "⏳", ott: "📺", cult: "🪦", flop: "🥀", even: "😮‍💨", hit: "🎉", mega: "👑" }[t] || "🎬");
@@ -605,12 +658,12 @@ const FR = (() => {
   const flagName = (f) => FLAG_KO[f] || f;
 
   const share = () => FR.shareText(st, end, baseUrl() + "?s=" + st.seed);
-  $("#copy").onclick = async () => { try { await navigator.clipboard.writeText(share()); toast("복사했습니다. 어디든 붙여 넣으세요"); } catch { prompt("복사하세요", share()); } };
-  $("#share").onclick = async () => { const text = share(); if (navigator.share) { try { await navigator.share({ text }); } catch {} } else { try { await navigator.clipboard.writeText(text); toast("복사했습니다"); } catch {} } };
+  $("#copy").onclick = async () => { track("copy"); try { await navigator.clipboard.writeText(share()); toast("복사했습니다. 어디든 붙여 넣으세요"); } catch { prompt("복사하세요", share()); } };
+  $("#share").onclick = async () => { track("share"); const text = share(); if (navigator.share) { try { await navigator.share({ text }); } catch {} } else { try { await navigator.clipboard.writeText(text); toast("복사했습니다"); } catch {} } };
   $("#again-same").onclick = () => start(st.seed, st.isDaily);
   $("#again-new").onclick = () => { $("#title-in").value = FR.suggestTitle(tRng); start(randomSeed(), false); toast("새 덱, 새 제목으로 시작합니다"); };
   $("#again-home").onclick = () => { show("s-title"); };
-  $("#save-img").onclick = () => drawCanvas();
+  $("#save-img").onclick = () => { track("save_img"); drawCanvas(); };
 
   // 결과 카드 PNG (1080x1350)
   function drawCanvas() {
