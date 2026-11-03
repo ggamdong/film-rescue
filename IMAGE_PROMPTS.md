@@ -3,7 +3,7 @@
 각 코드 블록을 통째로 복사해 붙여 넣으면 됩니다(공통 스타일 문장 포함). 생성한 PNG는 `assets/raw/inbox/` 에 아무 이름으로 넣어도 되고,
 블록 위의 파일명으로 저장해 두면 더 빠릅니다. `node tools/import-images.mjs` 가 워터마크를 잘라 webp로 `img/` 에 넣습니다.
 
-- **1부: 새로 만들 것** (없는 이미지 0장 + 다시 만들기 권장 1장)
+- **1부: 새로 만들 것** (없는 이미지 0장 + 다시 만들기 권장 0장)
 - **2부: 이미 있음** 245장 — 맨 아래, 접혀 있음. 다시 뽑을 때만 펼치세요.
 
 ---
@@ -14,17 +14,9 @@
 
 ## 1-2. 조건부 카드 — 특정 상황에서만 등장 (0장)
 
-## 1-3. 다시 만들기 권장 (1장)
+## 1-3. 다시 만들기 권장 (0장)
 
 이미 그림은 있지만 장면이 안 맞거나 글자가 보이는 것들. 새 그림이 들어오면 교체합니다.
-
-#### 팝콘 브랜드 무료 콜라보 (rel-popcorn-collab)
-
-**`assets/raw/cards/rel-popcorn-collab.png`** — 이유: 생성 결과 두 장 모두 돼지 저금통 장면이 나옴(팝콘통 콜라보 장면이 아님)
-
-```text
-A snack company rep presenting colorful popcorn buckets shaped like the film's characters, the second page of a contract unfolding into a very long scroll behind him, a cinema manager frowning in the distance. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
-```
 
 ---
 
