@@ -7,9 +7,9 @@
 <meta name="description" content="오늘도 크랭크인! 망해 가는 한국 영화의 제작자가 되어 14번의 위기를 넘기고 개봉까지 가 보세요. 끝에는 관객 수와 한 줄 운명이 남습니다.">
 <meta property="og:title" content="오늘도 크랭크인!">
 <meta property="og:description" content="기획부터 개봉까지 14번의 위기. 당신의 영화는 몇 명이 볼까?">
-<meta property="og:url" content="https://ggamdong.github.io/film-rescue/">
+<meta property="og:url" content="https://crank-in.today/">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://ggamdong.github.io/film-rescue/img/og.webp">
+<meta property="og:image" content="https://crank-in.today/img/og.webp">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -169,6 +169,15 @@ h1,h2,h3{margin:0;line-height:1.25;letter-spacing:-.01em}
 .lb .lbtop{list-style:none;margin:8px 0 0;padding:0;font-size:12px;color:var(--mute)}
 .lb .lbtop li{display:flex;justify-content:space-between;padding:3px 2px}
 .lb .lbtop b{color:var(--fg);font-variant-numeric:tabular-nums}
+.lb .dist{margin-top:10px}
+.lb .dist .bar{display:flex;height:14px;border-radius:7px;overflow:hidden;background:var(--panel);border:1px solid var(--line)}
+.lb .dist .bar i{display:block;height:100%;min-width:0;transition:width .4s}
+.lb .dist .bar i.me{box-shadow:inset 0 0 0 2px #fff}
+.lb .dist .lg{display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:6px;font-size:11px;color:var(--mute)}
+.lb .dist .lg span::before{content:"";display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:4px;background:var(--c);vertical-align:-1px}
+.lb .dist .lg span.me{color:var(--fg);font-weight:700}
+.streak{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:999px;background:rgba(242,177,52,.14);color:var(--accent);font-size:11px;font-weight:700}
+.streak.off{background:var(--panel);color:var(--mute);font-weight:500}
 .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:#000;color:#fff;padding:10px 16px;border-radius:999px;font-size:13px;opacity:0;transition:all .25s;pointer-events:none;z-index:9}
 .toast.on{opacity:1;transform:translateX(-50%)}
 .footer{text-align:center;font-size:11px;color:var(--mute);margin:26px 0 10px}
@@ -490,7 +499,8 @@ const FR = (() => {
     const aud = st.over ? `${end.label} (${st.turn}턴 만에) · 손실 ${end.cost}억` : end.tier === "ott" ? `OTT 직행 · 극장 관객 0명 · 손익 ${won(end.profit)}` : `누적 관객 ${end.audience.toLocaleString("ko-KR")}명 · 손익 ${won(end.profit)} (BEP ${end.bepHit ? "달성" : "미달"})`;
     const rating = st.over ? null : `⭐ 평론 ${end.critics} · 관객 ${end.audScore}`;
     const lbLine = end.lb && end.lb.count > 1 ? `🏆 오늘의 영화 ${end.lb.count.toLocaleString("ko-KR")}명 중 상위 ${Math.max(1, 100 - end.lb.beat)}%` : null;
-    return [`🎬 오늘도 크랭크인! #${st.seed}`, `《${st.film.title}》 ${st.film.genreName}`, `🎟 ${aud}`, rating, lbLine, `💀 ${end.fate}`,
+    const streakLine = end.streak >= 2 ? `🔥 ${end.streak}일 연속 크랭크인` : null;
+    return [`🎬 오늘도 크랭크인! #${st.seed}`, `《${st.film.title}》 ${st.film.genreName}`, `🎟 ${aud}`, rating, lbLine, streakLine, `💀 ${end.fate}`,
       st.history.map((h) => h.emoji).join(""), bars, url || ""].filter(Boolean).join("\n");
   }
 
@@ -521,12 +531,30 @@ const FR = (() => {
     if (!LEADERBOARD_URL) return null;
     try { const r = await fetch(`${LEADERBOARD_URL.replace(/\/$/, "")}/stats?seed=${seed}&audience=${audience}`); if (!r.ok) return null; return await r.json(); } catch { return null; }
   }
-  function renderLb(lb) {
+  // 오늘의 결과 분포: 엔딩 9종을 6구간으로 묶어 막대 하나로 보여 준다
+  const DIST_GROUPS = [
+    { key: "early", name: "조기 종료", tiers: ["bankrupt", "boycott", "delayed"], color: "#6b6f7e" },
+    { key: "ott", name: "OTT 직행", tiers: ["ott"], color: "#8e7cc3" },
+    { key: "cult", name: "괴작", tiers: ["cult"], color: "#b05d4a" },
+    { key: "flop", name: "쪽박", tiers: ["flop"], color: "#e4572e" },
+    { key: "even", name: "본전", tiers: ["even"], color: "#f2b134" },
+    { key: "hit", name: "흥행", tiers: ["hit", "mega"], color: "#4fb286" },
+  ];
+  function renderDist(lb, myTier) {
+    const d = lb.dist || {}, total = Object.values(d).reduce((a, b) => a + b, 0);
+    if (total < 3) return "";
+    const rows = DIST_GROUPS.map((g) => ({ ...g, n: g.tiers.reduce((a, t) => a + (d[t] || 0), 0), me: g.tiers.includes(myTier) })).filter((g) => g.n);
+    const pct = (n) => Math.round((100 * n) / total);
+    return `<div class="dist"><div class="bar">${rows.map((g) => `<i class="${g.me ? "me" : ""}" style="width:${(100 * g.n) / total}%;background:${g.color}" title="${g.name} ${pct(g.n)}%"></i>`).join("")}</div>
+      <div class="lg">${rows.map((g) => `<span class="${g.me ? "me" : ""}" style="--c:${g.color}">${g.name} ${pct(g.n)}%${g.me ? " ← 나" : ""}</span>`).join("")}</div></div>`;
+  }
+  function renderLb(lb, myTier) {
     const box = $("#lb"); if (!box) return;
     if (!lb || !lb.count) { box.innerHTML = ""; return; }
     const top = (lb.top || []).slice(0, 3).map((t, i) => `<li><span>${["🥇", "🥈", "🥉"][i]} 《${esc(t.title)}》</span><b>${t.audience.toLocaleString("ko-KR")}명</b></li>`).join("");
     box.innerHTML = `<div class="lbh">📅 오늘의 영화 리더보드 <span>${lb.count.toLocaleString("ko-KR")}명 참가</span></div>
       <div class="lbme">${lb.count > 1 ? `당신은 <b>상위 ${Math.max(1, 100 - lb.beat)}%</b> · ${lb.rank}위` : "첫 참가자입니다. 친구를 불러오세요"} · 오늘 평균 ${lb.avg.toLocaleString("ko-KR")}명</div>
+      ${renderDist(lb, myTier)}
       ${top ? `<ol class="lbtop">${top}</ol>` : ""}`;
   }
   // 이벤트 집계: GoatCounter 스크립트가 로드돼 있을 때만 보낸다 (없으면 조용히 무시)
@@ -550,7 +578,18 @@ const FR = (() => {
   const TIER_ORDER = ["bankrupt", "boycott", "delayed", "cult", "flop", "even", "hit", "mega", "ott"];
   const tierEmoji = (t) => ({ bankrupt: "💸", boycott: "🚪", delayed: "⏳", ott: "📺", cult: "🪦", flop: "🥀", even: "😮‍💨", hit: "🎉", mega: "👑" }[t] || "🎬");
   const TIER_KO = { bankrupt: "제작 중단", boycott: "현장 붕괴", delayed: "개봉 연기", cult: "전설의 괴작", flop: "쪽박", even: "본전치기", hit: "흥행 성공", mega: "천만급", ott: "OTT 직행" };
-  const loadStats = () => { try { return Object.assign({ plays: 0, best: null, endings: {}, cards: [] }, JSON.parse(localStorage.getItem(STATS_KEY) || "{}")); } catch { return { plays: 0, best: null, endings: {}, cards: [] }; } };
+  const EMPTY_STATS = () => ({ plays: 0, best: null, endings: {}, cards: [], streak: { cur: 0, best: 0, last: 0 } });
+  const loadStats = () => { try { const x = Object.assign(EMPTY_STATS(), JSON.parse(localStorage.getItem(STATS_KEY) || "{}")); x.streak = Object.assign({ cur: 0, best: 0, last: 0 }, x.streak); return x; } catch { return EMPTY_STATS(); } };
+  // 연속 출석: 오늘의 영화(오늘 날짜 덱)를 끝낸 날이 어제와 이어지면 +1. 하루 건너뛰면 0부터.
+  const currentStreak = (x = loadStats()) => (x.streak.last === dailySeed || x.streak.last === dailySeed - 1 ? x.streak.cur : 0);
+  function recordStreak() {
+    const x = loadStats(), k = x.streak;
+    if (k.last === dailySeed) return k.cur;
+    k.cur = k.last === dailySeed - 1 ? k.cur + 1 : 1;
+    k.best = Math.max(k.best, k.cur); k.last = dailySeed;
+    saveStats(x);
+    return k.cur;
+  }
   const saveStats = (x) => { try { localStorage.setItem(STATS_KEY, JSON.stringify(x)); } catch {} };
   function recordStats(st, end) {
     const x = loadStats();
@@ -567,7 +606,9 @@ const FR = (() => {
     if (!x.plays) { box.classList.remove("on"); return; }
     const seen = TIER_ORDER.filter((t) => x.endings[t]).length;
     box.classList.add("on");
-    box.innerHTML = `<div class="h"><b>내 기록</b><span>엔딩 도감 ${seen}/9 · 만난 카드 ${x.cards.length}/${CARDS.length}</span></div>
+    const sk = currentStreak(x);
+    const chip = sk ? `<span class="streak">🔥 ${sk}일 연속</span>` : x.streak.best ? `<span class="streak off">연속 끊김 · 최고 ${x.streak.best}일</span>` : "";
+    box.innerHTML = `<div class="h"><b>내 기록${chip}</b><span>엔딩 도감 ${seen}/9 · 만난 카드 ${x.cards.length}/${CARDS.length}</span></div>
       <div class="kv"><div><div class="l">플레이</div><div class="v">${x.plays}판</div></div><div><div class="l">최고 관객</div><div class="v">${x.best ? x.best.audience.toLocaleString("ko-KR") : "—"}</div></div><div><div class="l">최고작</div><div class="v" style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${x.best ? "《" + esc(x.best.title) + "》" : "—"}</div></div></div>
       <div class="dex">${TIER_ORDER.map((t) => `<div class="${x.endings[t] ? "" : "off"}" title="${TIER_KO[t]}"><span>${tierEmoji(t)}</span>${x.endings[t] > 1 ? `<small>×${x.endings[t]}</small>` : ""}</div>`).join("")}</div>`;
   }
@@ -687,12 +728,15 @@ const FR = (() => {
       if (r.isNewEnding) t.querySelector(".crit").insertAdjacentHTML("afterend", `<div class="newend">🏆 새 엔딩 발견: ${TIER_KO[end.tier]} (도감 ${TIER_ORDER.filter((k) => r.stats.endings[k]).length}/9)</div>`);
       track("finish", end.tier);
     }
+    // 오늘 날짜 덱만 연속 출석으로 친다 (?s= 로 지난 덱을 돌린 건 제외)
+    end.streak = st.isDaily && st.seed === dailySeed ? (st.replayed ? currentStreak() : recordStreak()) : 0;
+    if (end.streak >= 2) t.querySelector(".crit").insertAdjacentHTML("afterend", `<div class="newend">🔥 ${end.streak}일 연속 크랭크인${end.streak === loadStats().streak.best && end.streak >= 3 ? " · 최고 기록" : ""}</div>`);
     refreshModes(); renderMyStats();
     $("#lb").innerHTML = "";
     end.lb = null;
     if (LEADERBOARD_URL && st.isDaily) {
       const aud = st.over || end.tier === "ott" ? 0 : end.audience;
-      (st.replayed ? fetchScore(st.seed, aud) : submitScore(st, end)).then((lb) => { end.lb = lb; renderLb(lb); });
+      (st.replayed ? fetchScore(st.seed, aud) : submitScore(st, end)).then((lb) => { end.lb = lb; renderLb(lb, end.tier); });
     }
     show("s-result");
   }

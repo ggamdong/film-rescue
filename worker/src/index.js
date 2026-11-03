@@ -1,7 +1,7 @@
 // 오늘도 크랭크인! 리더보드 API (Cloudflare Worker + D1)
 //   POST /submit  {seed, audience, tier, title, genre}  → 저장 후 그 시드의 통계 반환
 //   GET  /stats?seed=261103&audience=120000             → 통계만 반환
-// 응답: { count, avg, median, beat (내가 이긴 비율 0~100), rank, top: [{title, genre, audience, tier}] }
+// 응답: { count, avg, median, beat (내가 이긴 비율 0~100), rank, top: [{title, genre, audience, tier}], dist: {tier: n} }
 const TIERS = new Set(["bankrupt", "boycott", "delayed", "ott", "cult", "flop", "even", "hit", "mega"]);
 
 function cors(req, env) {
@@ -38,7 +38,9 @@ async function stats(env, seed, audience) {
   const top = (await env.DB.prepare("SELECT title, genre, audience, tier FROM scores WHERE seed = ?1 ORDER BY audience DESC, id ASC LIMIT 5").bind(seed).all()).results || [];
   const beat = n ? Math.round((100 * (agg.below || 0)) / n) : 0;          // 내가 이긴 사람 비율
   const rank = n ? n - (agg.belowEq || 0) + 1 : 1;                         // 공동 순위(높은 관객이 1위)
-  return { count: n, avg: Math.round(agg?.avg || 0), median, beat, rank, top };
+  const dist = {};                                                          // 엔딩별 인원 {tier: n}
+  for (const r of (await env.DB.prepare("SELECT tier, COUNT(*) AS n FROM scores WHERE seed = ?1 GROUP BY tier").bind(seed).all()).results || []) dist[r.tier] = r.n;
+  return { count: n, avg: Math.round(agg?.avg || 0), median, beat, rank, top, dist };
 }
 
 export default {
