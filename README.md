@@ -132,7 +132,7 @@ node tools/simulate.mjs --n 1000 --policy random
 
 ## 이미지 넣기
 
-1. `node tools/image-prompts.mjs --cards` → `IMAGE_PROMPTS.md` 에 파일명별 프롬프트가 나온다.
+1. `node tools/image-prompts.mjs` → `IMAGE_PROMPTS.md` 에 없는 이미지 프롬프트가 위에, 이미 있는 것은 맨 아래 접혀서 나온다. 다시 만들 이미지는 스크립트의 `REDO` 에 id와 이유를 적는다.
 2. 생성한 PNG를 표의 파일명대로 `assets/raw/…` 에 둔다 (예: `assets/raw/endings/flop.png`).
 3. `node tools/import-images.mjs` (ffmpeg 필요). 우측 하단 10%를 잘라 워터마크를 없애고 webp로 `img/…` 에 넣는다. 원본이 더 새로운 파일만 변환하며 `--force` 로 전부 다시 한다. `cards/` 는 960px·품질 75(장당 약 80KB), 나머지는 1280px·품질 85. `--crop 10 --max 1600` 식으로 조절.
 4. 이미지가 없는 자리는 이모지(카드는 단계 표지)로 대체되므로 일부만 넣어도 된다. 현재 타이틀·OG·단계 7·엔딩 9·카드 93장이 모두 들어 있다(`img/` 약 11MB). 새 카드를 추가하면 `IMAGE_PROMPTS.md` 를 다시 뽑아 "있음" 표시가 없는 카드만 만들면 된다.
