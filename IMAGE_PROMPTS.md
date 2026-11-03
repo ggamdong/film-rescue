@@ -3,78 +3,14 @@
 각 코드 블록을 통째로 복사해 붙여 넣으면 됩니다(공통 스타일 문장 포함). 생성한 PNG는 `assets/raw/inbox/` 에 아무 이름으로 넣어도 되고,
 블록 위의 파일명으로 저장해 두면 더 빠릅니다. `node tools/import-images.mjs` 가 워터마크를 잘라 webp로 `img/` 에 넣습니다.
 
-- **1부: 새로 만들 것** (없는 이미지 123장 + 다시 만들기 권장 4장)
-- **2부: 이미 있음** 122장 — 맨 아래, 접혀 있음. 다시 뽑을 때만 펼치세요.
+- **1부: 새로 만들 것** (없는 이미지 116장 + 다시 만들기 권장 4장)
+- **2부: 이미 있음** 129장 — 맨 아래, 접혀 있음. 다시 뽑을 때만 펼치세요.
 
 ---
 
 # 1부. 새로 만들 것
 
-## 1-1. 자주 나오는 카드 — 등장 조건 없음 (111장)
-
-#### 발굴된 과거 인터뷰 (cast-old-interview-dig)
-
-**`assets/raw/cards/cast-old-interview-dig.png`**
-
-```text
-A director replaying an old interview clip on a laptop for the third time, the young actor in the clip shrugging with a script tossed over the shoulder, the current actor hiding behind a plant. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
-```
-
-#### 팬덤의 캐스팅 반대 청원 (cast-fandom-petition)
-
-**`assets/raw/cards/cast-fandom-petition.png`**
-
-```text
-A crowd of webtoon fans holding blank protest signs and pointing at an actor's hair, the actor touching their hair in confusion, the director holding up a color swatch helplessly. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
-```
-
-#### 원로 배우의 우정 출연 (cast-veteran-cameo-offer)
-
-**`assets/raw/cards/cast-veteran-cameo-offer.png`**
-
-```text
-A dignified elderly actor arriving at a tiny set with only a lunchbox, the whole crew standing at attention with jaws dropped, the director bowing deeply. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
-```
-
-#### 오디션의 재발견 (cast-hidden-gem-audition)
-
-**`assets/raw/cards/cast-hidden-gem-audition.png`**
-
-```text
-An audition room at closing time, an applicant pulled back in from the hallway with a crooked number tag, three judges leaning forward in unison with sparkles in their eyes, a misplaced folder on the floor. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
-```
-
-#### 의상 협찬 제안 (cast-wardrobe-sponsor-offer)
-
-**`assets/raw/cards/cast-wardrobe-sponsor-offer.png`**
-
-```text
-A fashion brand rep wheeling in a rack of flashy clothes all bearing the same oversized abstract emblem, the costume designer fainting, the lead actor dressed head to toe in logos. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
-```
-
-#### 무료 연기 코치 제안 (cast-free-acting-coach)
-
-**`assets/raw/cards/cast-free-acting-coach.png`**
-
-```text
-An acting academy headmaster in a cape dramatically coaching a lead actor on set, the director watching from the monitor with crossed arms, the actor performing two different expressions at once. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
-```
-
-#### 팬클럽의 단체 선결제 (cast-fanclub-prepay)
-
-**`assets/raw/cards/cast-fanclub-prepay.png`**
-
-```text
-A fan club president in a headband handing a brick of cash to the producer with a sweet smile, behind her a wall of fans holding light sticks, a tiny note card pinned to the cash. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
-```
-
-#### 소속사의 파격 제안 (cast-agency-free-lead)
-
-**`assets/raw/cards/cast-agency-free-lead.png`**
-
-```text
-A big agency CEO on the phone being suspiciously polite with a halo and tiny devil horns, a famous actor gift-wrapped in a box with a giant bow on the producer's desk. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
-```
+## 1-1. 자주 나오는 카드 — 등장 조건 없음 (80장)
 
 #### 투자사 이름이 틀렸다 (fund-pitch-deck-wrong-name)
 
@@ -108,38 +44,6 @@ A new investment manager pushing a film reel away with a disgusted face while a 
 A tearful breakup scene shot inside a gleaming brand-new sedan, the car's steering wheel emblem shining brighter than the actor's tears, a car company rep giving thumbs up through the windshield. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
 ```
 
-#### 선판매 대금 인하 요청 (fund-presale-price-cut)
-
-**`assets/raw/cards/fund-presale-price-cut.png`**
-
-```text
-A distributor handing over a contract where only one number box is visibly shrunk with a tiny scissor cut, the producer holding yesterday's identical contract for comparison. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
-```
-
-#### 지원금 영수증 증빙 (fund-subsidy-receipt-audit)
-
-**`assets/raw/cards/fund-subsidy-receipt-audit.png`**
-
-```text
-A production team drowning in a mountain of crumpled receipts, one person holding a card statement upside down, a government official with a stamp waiting at the door with a kind but firm smile. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
-```
-
-#### 공동제작사의 40% (fund-co-production-forty-percent)
-
-**`assets/raw/cards/fund-co-production-forty-percent.png`**
-
-```text
-A foreign co-producer in a video call cutting a cake-shaped film reel into a huge slice for himself, the Korean producer left with a sliver, the director hugging the editing scissors protectively. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
-```
-
-#### 후원자 단톡방 (fund-backers-group-chat)
-
-**`assets/raw/cards/fund-backers-group-chat.png`**
-
-```text
-A giant phone screen showing a group chat exploding with hundreds of avatars voting with raised hands, the producer buried under notification bubbles, the director hiding the script behind his back. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
-```
-
 #### 입금이 사흘 늦는다 (fund-deposit-delayed-again)
 
 **`assets/raw/cards/fund-deposit-delayed-again.png`**
@@ -154,14 +58,6 @@ A producer staring at a bank app on a phone showing an empty balance, three iden
 
 ```text
 An insurance agent reading the script and his glasses popping off, a premium figure on a calculator doubling with smoke, the producer holding a tiny umbrella labeled by a shield icon. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
-```
-
-#### 투자사의 해피엔딩 (fund-investor-happy-ending)
-
-**`assets/raw/cards/fund-investor-happy-ending.png`**
-
-```text
-An investor executive cheerfully suggesting a group hug ending while the script's dead protagonist, drawn as a ghost, floats behind him shaking his head, the director speechless. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
 ```
 
 #### 펀드 담당자가 사라졌다 (fund-fund-manager-unreachable)
@@ -244,14 +140,6 @@ A film actor on a colorful variety show set being hit with a toy hammer in a gam
 A director happily explaining the ending to a journalist with big hand gestures, the journalist's eyes wide, the publicist diving across the table to cover the director's mouth too late. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
 ```
 
-#### 스크린이 줄었다 (mkt-screen-count-cut)
-
-**`assets/raw/cards/mkt-screen-count-cut.png`**
-
-```text
-A cinema lobby where a staff member replaces the film's tiny poster frame with a giant rival poster, a schedule board with the film squeezed into one corner slot. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
-```
-
 #### 시사회 음향 사고 (mkt-premiere-sound-failure)
 
 **`assets/raw/cards/mkt-premiere-sound-failure.png`**
@@ -266,14 +154,6 @@ A VIP premiere where the on-screen actor's mouth is open while the sound enginee
 
 ```text
 A producer at a fork in the road: one path leads to a room full of critics sharpening pencils, the other to a locked door with reporters peeking through the keyhole. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
-```
-
-#### 굿즈 5천 개 (mkt-goods-overstock)
-
-**`assets/raw/cards/mkt-goods-overstock.png`**
-
-```text
-A warehouse stacked with five thousand acrylic keyrings all showing the smiling face of the protagonist, the producer holding one up next to a script page marked with a skull doodle. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
 ```
 
 #### 배우의 맛집 게시물 (mkt-actor-food-post)
@@ -292,22 +172,6 @@ A lead actor happily eating a steaming bowl of soup in a small restaurant while 
 A cinema wall covered with posters, a director staring at his own misspelled name with a photo in hand, the marketing team sweating behind him holding a roll of tape. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
 ```
 
-#### 텅 빈 무대인사 (mkt-empty-stage-greeting)
-
-**`assets/raw/cards/mkt-empty-stage-greeting.png`**
-
-```text
-Actors on a cinema stage smiling brightly at a half-empty auditorium, their eyes clearly not smiling, a single fan waving a light stick from the back row. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
-```
-
-#### 개봉 주 광고 몰빵 (mkt-all-in-ad-week)
-
-**`assets/raw/cards/mkt-all-in-ad-week.png`**
-
-```text
-A city street where every bus, subway wall and billboard shows the same film poster face, the marketing team cheering on the sidewalk, the producer holding an empty piggy bank. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
-```
-
 #### 버스 광고 면 무상 제공 (mkt-free-bus-ads)
 
 **`assets/raw/cards/mkt-free-bus-ads.png`**
@@ -322,14 +186,6 @@ An outdoor advertising boss handing over keys to an empty bus-side billboard wit
 
 ```text
 A teenager's fifteen-second fan edit of the film playing on phones all over a subway car, the view counter spinning, the editor of the film watching over a stranger's shoulder with pride and confusion. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
-```
-
-#### 극장 추천작 선정 (mkt-theater-pick-banner)
-
-**`assets/raw/cards/mkt-theater-pick-banner.png`**
-
-```text
-A cinema chain employee hanging a huge banner of the film in a bright lobby, moviegoers below buying popcorn and looking up, the producer pinching themselves. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
 ```
 
 #### 무료 리뷰 인플루언서 (mkt-influencer-free-review)
@@ -500,14 +356,6 @@ A famous screenwriter arriving with sunglasses and an entourage, his name alread
 A junior staffer frozen in front of a subtitle monitor two hours before the premiere, a single wrong character glowing red in a love confession scene, the whole team rushing in with coffee. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
 ```
 
-#### CG 업체의 잔금 독촉 (post-vfx-final-payment)
-
-**`assets/raw/cards/post-vfx-final-payment.png`**
-
-```text
-A VFX company holding a glowing hard drive hostage behind a glass door, a cheerful goodbye note from the departed manager taped on the glass, the producer pressing a bank app. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
-```
-
 #### 감독의 분량 사수 (post-final-cut-tug)
 
 **`assets/raw/cards/post-final-cut-tug.png`**
@@ -530,14 +378,6 @@ A director shrugging about a friend's song while a map on the wall shows a pin o
 
 ```text
 A color grading suite gone dark with only emergency lights, the colorist staring out the window serenely, the producer frantically pressing a save key on a dead keyboard. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
-```
-
-#### 엔딩이 두 개다 (post-two-endings-screening)
-
-**`assets/raw/cards/post-two-endings-screening.png`**
-
-```text
-A test screening survey result drawn as a perfectly split pie, six people on each side of the aisle in a tiny theater, the director and investor each holding a different ending reel. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
 ```
 
 #### 렌더팜 추가 청구서 (post-render-overtime-bill)
@@ -628,14 +468,6 @@ A startup video team presenting a dazzling trailer full of car chases and firewo
 A distributor pointing at a golden empty slot on a release calendar with a huge smile, the post-production team behind holding a progress bar that is barely over half full. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
 ```
 
-#### 월요일 아침, 상영관 삭감 (rel-monday-screen-cut)
-
-**`assets/raw/cards/rel-monday-screen-cut.png`**
-
-```text
-A producer on a Monday morning phone call with a very polite cinema manager whose politeness is drawn as sparkles, a screening schedule behind losing slots like falling leaves. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
-```
-
 #### 결말을 방송한 스트리머 (rel-spoiler-streamer)
 
 **`assets/raw/cards/rel-spoiler-streamer.png`**
@@ -660,54 +492,6 @@ A director and an actor whispering sharply backstage after a Q&A, a microphone o
 Two hundred identical five-star review cards raining down on a cinema lobby, the producer and marketing team looking at each other with raised hands of innocence, an investor employee whistling nearby. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
 ```
 
-#### 2주차 생존 회의 (rel-second-week-survival)
-
-**`assets/raw/cards/rel-second-week-survival.png`**
-
-```text
-A tiny production team gathered around a cinema's weekly schedule board like a hospital chart, a heart-monitor line drawn above the film's row barely blipping, popcorn as snacks. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
-```
-
-#### 관객 이벤트 굿즈 품절 (rel-goods-sold-out)
-
-**`assets/raw/cards/rel-goods-sold-out.png`**
-
-```text
-A line of fans wrapping twice around a cinema building clutching photo card sleeves, an empty goods box at the front, the auditorium behind the glass nearly empty. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
-```
-
-#### 무대인사 지각 (rel-stage-greeting-late)
-
-**`assets/raw/cards/rel-stage-greeting-late.png`**
-
-```text
-Supporting actors on a cinema stage bowing to a waiting audience, the lead actor's silhouette visible on a giant screen at a different cinema across the street, a manager pointing at traffic. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
-```
-
-#### 자막 밀린 상영 (rel-projection-subtitle-error)
-
-**`assets/raw/cards/rel-projection-subtitle-error.png`**
-
-```text
-A weekend screening where the actress on screen cries while the audience bursts out laughing, a subtitle bar dangling several seconds behind like a loose tail. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
-```
-
-#### 평론가 별점 한 개 (rel-critic-one-star)
-
-**`assets/raw/cards/rel-critic-one-star.png`**
-
-```text
-A famous critic holding up a single star like a tiny lantern in front of a cinema, the runtime on the poster very short, the production team measuring the poster with a tape. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
-```
-
-#### 폭우 주의보 (rel-heavy-rain-weekend)
-
-**`assets/raw/cards/rel-heavy-rain-weekend.png`**
-
-```text
-A torrential downpour outside a cinema, an usher holding a basket of umbrellas at the door, a family across the street cozy on their couch watching the rain through the window. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
-```
-
 #### 불법 유출본 등장 (rel-piracy-leak)
 
 **`assets/raw/cards/rel-piracy-leak.png`**
@@ -724,30 +508,6 @@ A film playing crisply on a laptop in a dark room with a pirate flag sticker on 
 A director mid-sentence in an interview with a speech bubble that explodes into a storm of angry phone notifications across the city skyline, the publicist fainting. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
 ```
 
-#### 시사회 빈자리 (rel-empty-preview-seats)
-
-**`assets/raw/cards/rel-empty-preview-seats.png`**
-
-```text
-A grand VIP premiere hall with two hundred reserved seat covers and only thirty people, one guest raising a hand to ask about parking, actors on stage smiling bravely. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
-```
-
-#### 역주행 올인 제안 (rel-all-in-late-screens)
-
-**`assets/raw/cards/rel-all-in-late-screens.png`**
-
-```text
-A producer dumping an entire piggy bank onto a cinema booking desk in week three, the distribution team leader shrugging with a 'maybe' expression, a tiny upward arrow drawn on a napkin. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
-```
-
-#### 팝콘 브랜드 무료 콜라보 (rel-popcorn-collab)
-
-**`assets/raw/cards/rel-popcorn-collab.png`**
-
-```text
-A snack company rep presenting colorful popcorn buckets shaped like the film's characters, the second page of a contract unfolding into a very long scroll behind him, a cinema manager frowning in the distance. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
-```
-
 #### 예능 프로그램 출연 제안 (rel-variety-show-offer)
 
 **`assets/raw/cards/rel-variety-show-offer.png`**
@@ -762,14 +522,6 @@ A variety show writer grinning far too wide while holding an invitation card, th
 
 ```text
 A supporting actor failing to open a door in a three-second clip shown on countless phone screens on a subway, the same actor on the street being recognized and asked to open a door. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
-```
-
-#### 통신사 할인 제휴 (rel-telecom-discount-tie)
-
-**`assets/raw/cards/rel-telecom-discount-tie.png`**
-
-```text
-A telecom company marketing team presenting a stack of discount coupons featuring the film, a tiny logo line sliding into the end credits on a monitor, moviegoers lining up with their phones. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
 ```
 
 #### 밤샘 사흘째 (shoot-third-night-shoot)
@@ -900,7 +652,47 @@ A rental company rep presenting a shiny new cinema camera on a velvet cushion, t
 A food company secretary waving goodbye after dropping off a bag of money on the set, in the next shot the protagonist eating instant noodles in every scene including a funeral. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
 ```
 
-## 1-2. 조건부 카드 — 특정 상황에서만 등장 (12장)
+## 1-2. 조건부 카드 — 특정 상황에서만 등장 (36장)
+
+#### 소속사의 파격 제안 (cast-agency-free-lead)
+
+**`assets/raw/cards/cast-agency-free-lead.png`**
+
+```text
+A big agency CEO on the phone being suspiciously polite with a halo and tiny devil horns, a famous actor gift-wrapped in a box with a giant bow on the producer's desk. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
+```
+
+#### 선판매 대금 인하 요청 (fund-presale-price-cut)
+
+**`assets/raw/cards/fund-presale-price-cut.png`**
+
+```text
+A distributor handing over a contract where only one number box is visibly shrunk with a tiny scissor cut, the producer holding yesterday's identical contract for comparison. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
+```
+
+#### 지원금 영수증 증빙 (fund-subsidy-receipt-audit)
+
+**`assets/raw/cards/fund-subsidy-receipt-audit.png`**
+
+```text
+A production team drowning in a mountain of crumpled receipts, one person holding a card statement upside down, a government official with a stamp waiting at the door with a kind but firm smile. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
+```
+
+#### 공동제작사의 40% (fund-co-production-forty-percent)
+
+**`assets/raw/cards/fund-co-production-forty-percent.png`**
+
+```text
+A foreign co-producer in a video call cutting a cake-shaped film reel into a huge slice for himself, the Korean producer left with a sliver, the director hugging the editing scissors protectively. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
+```
+
+#### 후원자 단톡방 (fund-backers-group-chat)
+
+**`assets/raw/cards/fund-backers-group-chat.png`**
+
+```text
+A giant phone screen showing a group chat exploding with hundreds of avatars voting with raised hands, the producer buried under notification bubbles, the director hiding the script behind his back. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
+```
 
 #### 엔젤의 시나리오 의견 (fund-angel-investor-opinion)
 
@@ -908,6 +700,38 @@ A food company secretary waving goodbye after dropping off a bag of money on the
 
 ```text
 An angel investor with little wings reading a script and pointing at a skyscraper office through the window, the producer nodding with a frozen smile while the writer silently screams. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
+```
+
+#### 투자사의 해피엔딩 (fund-investor-happy-ending)
+
+**`assets/raw/cards/fund-investor-happy-ending.png`**
+
+```text
+An investor executive cheerfully suggesting a group hug ending while the script's dead protagonist, drawn as a ghost, floats behind him shaking his head, the director speechless. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
+```
+
+#### 스크린이 줄었다 (mkt-screen-count-cut)
+
+**`assets/raw/cards/mkt-screen-count-cut.png`**
+
+```text
+A cinema lobby where a staff member replaces the film's tiny poster frame with a giant rival poster, a schedule board with the film squeezed into one corner slot. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
+```
+
+#### 굿즈 5천 개 (mkt-goods-overstock)
+
+**`assets/raw/cards/mkt-goods-overstock.png`**
+
+```text
+A warehouse stacked with five thousand acrylic keyrings all showing the smiling face of the protagonist, the producer holding one up next to a script page marked with a skull doodle. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
+```
+
+#### 텅 빈 무대인사 (mkt-empty-stage-greeting)
+
+**`assets/raw/cards/mkt-empty-stage-greeting.png`**
+
+```text
+Actors on a cinema stage smiling brightly at a half-empty auditorium, their eyes clearly not smiling, a single fan waving a light stick from the back row. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
 ```
 
 #### 리뷰 알바 의혹 (mkt-review-brigade)
@@ -942,12 +766,44 @@ A lead actor surrounded by camera flashes outside a cinema on opening day, the f
 A tug of war over a film reel between a streaming platform executive in a hoodie and a cinema manager in a uniform, the producer stretched in the middle like a rubber band. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
 ```
 
+#### 개봉 주 광고 몰빵 (mkt-all-in-ad-week)
+
+**`assets/raw/cards/mkt-all-in-ad-week.png`**
+
+```text
+A city street where every bus, subway wall and billboard shows the same film poster face, the marketing team cheering on the sidewalk, the producer holding an empty piggy bank. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
+```
+
+#### 극장 추천작 선정 (mkt-theater-pick-banner)
+
+**`assets/raw/cards/mkt-theater-pick-banner.png`**
+
+```text
+A cinema chain employee hanging a huge banner of the film in a bright lobby, moviegoers below buying popcorn and looking up, the producer pinching themselves. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
+```
+
 #### 웹툰 팬들의 청원 (plan-webtoon-fans-petition)
 
 **`assets/raw/cards/plan-webtoon-fans-petition.png`**
 
 ```text
 A crowd of webtoon fans holding up a height chart and a silver wig toward a confused lead actor, the director holding the webtoon and the actor side by side with a measuring tape. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
+```
+
+#### CG 업체의 잔금 독촉 (post-vfx-final-payment)
+
+**`assets/raw/cards/post-vfx-final-payment.png`**
+
+```text
+A VFX company holding a glowing hard drive hostage behind a glass door, a cheerful goodbye note from the departed manager taped on the glass, the producer pressing a bank app. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
+```
+
+#### 엔딩이 두 개다 (post-two-endings-screening)
+
+**`assets/raw/cards/post-two-endings-screening.png`**
+
+```text
+A test screening survey result drawn as a perfectly split pie, six people on each side of the aisle in a tiny theater, the director and investor each holding a different ending reel. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
 ```
 
 #### 등급 재심의 접수 (post-rating-reappeal-deadline)
@@ -974,12 +830,100 @@ A star's manager measuring close-up shots on a monitor with a ruler and a stopwa
 An editor racing a calendar with three days circled, a festival submission portal glowing on one screen and a blank green-screen shot on the other, the director pressing refresh. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
 ```
 
+#### 월요일 아침, 상영관 삭감 (rel-monday-screen-cut)
+
+**`assets/raw/cards/rel-monday-screen-cut.png`**
+
+```text
+A producer on a Monday morning phone call with a very polite cinema manager whose politeness is drawn as sparkles, a screening schedule behind losing slots like falling leaves. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
+```
+
+#### 2주차 생존 회의 (rel-second-week-survival)
+
+**`assets/raw/cards/rel-second-week-survival.png`**
+
+```text
+A tiny production team gathered around a cinema's weekly schedule board like a hospital chart, a heart-monitor line drawn above the film's row barely blipping, popcorn as snacks. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
+```
+
+#### 관객 이벤트 굿즈 품절 (rel-goods-sold-out)
+
+**`assets/raw/cards/rel-goods-sold-out.png`**
+
+```text
+A line of fans wrapping twice around a cinema building clutching photo card sleeves, an empty goods box at the front, the auditorium behind the glass nearly empty. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
+```
+
+#### 무대인사 지각 (rel-stage-greeting-late)
+
+**`assets/raw/cards/rel-stage-greeting-late.png`**
+
+```text
+Supporting actors on a cinema stage bowing to a waiting audience, the lead actor's silhouette visible on a giant screen at a different cinema across the street, a manager pointing at traffic. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
+```
+
+#### 자막 밀린 상영 (rel-projection-subtitle-error)
+
+**`assets/raw/cards/rel-projection-subtitle-error.png`**
+
+```text
+A weekend screening where the actress on screen cries while the audience bursts out laughing, a subtitle bar dangling several seconds behind like a loose tail. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
+```
+
+#### 평론가 별점 한 개 (rel-critic-one-star)
+
+**`assets/raw/cards/rel-critic-one-star.png`**
+
+```text
+A famous critic holding up a single star like a tiny lantern in front of a cinema, the runtime on the poster very short, the production team measuring the poster with a tape. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
+```
+
+#### 폭우 주의보 (rel-heavy-rain-weekend)
+
+**`assets/raw/cards/rel-heavy-rain-weekend.png`**
+
+```text
+A torrential downpour outside a cinema, an usher holding a basket of umbrellas at the door, a family across the street cozy on their couch watching the rain through the window. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
+```
+
+#### 시사회 빈자리 (rel-empty-preview-seats)
+
+**`assets/raw/cards/rel-empty-preview-seats.png`**
+
+```text
+A grand VIP premiere hall with two hundred reserved seat covers and only thirty people, one guest raising a hand to ask about parking, actors on stage smiling bravely. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
+```
+
+#### 역주행 올인 제안 (rel-all-in-late-screens)
+
+**`assets/raw/cards/rel-all-in-late-screens.png`**
+
+```text
+A producer dumping an entire piggy bank onto a cinema booking desk in week three, the distribution team leader shrugging with a 'maybe' expression, a tiny upward arrow drawn on a napkin. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
+```
+
+#### 팝콘 브랜드 무료 콜라보 (rel-popcorn-collab)
+
+**`assets/raw/cards/rel-popcorn-collab.png`**
+
+```text
+A snack company rep presenting colorful popcorn buckets shaped like the film's characters, the second page of a contract unfolding into a very long scroll behind him, a cinema manager frowning in the distance. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
+```
+
 #### 팬덤의 단체 대관 (rel-fan-group-screening)
 
 **`assets/raw/cards/rel-fan-group-screening.png`**
 
 ```text
 Three cinema auditoriums packed with a fan club waving matching light sticks, the fan club president with a headset directing like a general, the producer watching from the back with awe. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
+```
+
+#### 통신사 할인 제휴 (rel-telecom-discount-tie)
+
+**`assets/raw/cards/rel-telecom-discount-tie.png`**
+
+```text
+A telecom company marketing team presenting a stack of discount coupons featuring the film, a tiny logo line sliding into the end credits on a monitor, moviegoers lining up with their phones. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
 ```
 
 #### 붕대 풀고 복귀 (shoot-actor-comeback-shoot)
@@ -1036,7 +980,7 @@ A producer at a cinema on opening morning staring at a showtime board where thei
 
 ---
 
-# 2부. 이미 있음 (122장)
+# 2부. 이미 있음 (129장)
 
 <details><summary>타이틀·단계·엔딩 17장 펼치기</summary>
 
@@ -1212,7 +1156,7 @@ A stage greeting in a packed auditorium, hundreds of phone flashes like stars, a
 
 </details>
 
-<details><summary>카드 105장 펼치기</summary>
+<details><summary>카드 112장 펼치기</summary>
 
 **폐업 제작사의 대본 창고** (plan-11)
 
@@ -1444,12 +1388,32 @@ A production team staring at a giant breaking-news style screen showing a star's
 
 </details>
 
+**발굴된 과거 인터뷰** (cast-old-interview-dig)
+
+<details><summary><code>assets/raw/cards/cast-old-interview-dig.png</code></summary>
+
+```text
+A director replaying an old interview clip on a laptop for the third time, the young actor in the clip shrugging with a script tossed over the shoulder, the current actor hiding behind a plant. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
+```
+
+</details>
+
 **배우의 이중 스케줄** (cast-double-booking-star)
 
 <details><summary><code>assets/raw/cards/cast-double-booking-star.png</code></summary>
 
 ```text
 A lead actor split down the middle: left half in a period costume on a film set, right half in a TV drama costume, two assistant directors tugging each arm with overlapping calendars. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
+```
+
+</details>
+
+**팬덤의 캐스팅 반대 청원** (cast-fandom-petition)
+
+<details><summary><code>assets/raw/cards/cast-fandom-petition.png</code></summary>
+
+```text
+A crowd of webtoon fans holding blank protest signs and pointing at an actor's hair, the actor touching their hair in confusion, the director holding up a color swatch helplessly. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
 ```
 
 </details>
@@ -1470,6 +1434,56 @@ A director pushing a stack of poker chips across a table toward an unknown actor
 
 ```text
 A midnight negotiation at a dim office, a top star's agent sliding a contract back across the table with a mysterious sealed envelope, the producer squinting at the clock showing late hours. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
+```
+
+</details>
+
+**원로 배우의 우정 출연** (cast-veteran-cameo-offer)
+
+<details><summary><code>assets/raw/cards/cast-veteran-cameo-offer.png</code></summary>
+
+```text
+A dignified elderly actor arriving at a tiny set with only a lunchbox, the whole crew standing at attention with jaws dropped, the director bowing deeply. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
+```
+
+</details>
+
+**오디션의 재발견** (cast-hidden-gem-audition)
+
+<details><summary><code>assets/raw/cards/cast-hidden-gem-audition.png</code></summary>
+
+```text
+An audition room at closing time, an applicant pulled back in from the hallway with a crooked number tag, three judges leaning forward in unison with sparkles in their eyes, a misplaced folder on the floor. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
+```
+
+</details>
+
+**의상 협찬 제안** (cast-wardrobe-sponsor-offer)
+
+<details><summary><code>assets/raw/cards/cast-wardrobe-sponsor-offer.png</code></summary>
+
+```text
+A fashion brand rep wheeling in a rack of flashy clothes all bearing the same oversized abstract emblem, the costume designer fainting, the lead actor dressed head to toe in logos. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
+```
+
+</details>
+
+**무료 연기 코치 제안** (cast-free-acting-coach)
+
+<details><summary><code>assets/raw/cards/cast-free-acting-coach.png</code></summary>
+
+```text
+An acting academy headmaster in a cape dramatically coaching a lead actor on set, the director watching from the monitor with crossed arms, the actor performing two different expressions at once. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
+```
+
+</details>
+
+**팬클럽의 단체 선결제** (cast-fanclub-prepay)
+
+<details><summary><code>assets/raw/cards/cast-fanclub-prepay.png</code></summary>
+
+```text
+A fan club president in a headband handing a brick of cash to the producer with a sweet smile, behind her a wall of fans holding light sticks, a tiny note card pinned to the cash. Bright flat 2D animation style, Korean webtoon meets Ghibli-like background art, clean linework, soft cel shading, warm saturated colors, cheerful daylight, comedic exaggerated poses and expressions, slightly chibi proportions, wide shot, no real people. IMPORTANT: absolutely no text of any kind — no letters, no words, no numbers, no typography in any language; every paper, screen, sign, banner, poster and label is either blank or filled only with meaningless wavy scribbles.
 ```
 
 </details>
