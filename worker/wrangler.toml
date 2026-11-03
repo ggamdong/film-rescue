@@ -1,0 +1,13 @@
+name = "film-rescue-lb"
+main = "src/index.js"
+compatibility_date = "2025-10-01"
+
+# 허용 출처 (쉼표 구분). 배포 주소가 바뀌면 여기만 고친다.
+[vars]
+ALLOWED_ORIGINS = "https://ggamdong.github.io,http://localhost:8787,http://127.0.0.1:8787"
+
+# `npx wrangler d1 create film-rescue-lb` 실행 후 출력된 database_id 를 아래에 넣는다.
+[[d1_databases]]
+binding = "DB"
+database_name = "film-rescue-lb"
+database_id = "REPLACE_ME"

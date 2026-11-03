@@ -158,6 +158,15 @@ h1,h2,h3{margin:0;line-height:1.25;letter-spacing:-.01em}
 .ticket .flags{margin-top:8px;color:#6b665c}
 .ticket .seed{font-size:11px;color:#6b665c;margin-top:8px}
 .actions{margin-top:14px}
+.lb{margin-top:12px}
+.lb:empty{display:none}
+.lb .lbh{font-size:13px;font-weight:800;display:flex;justify-content:space-between;align-items:baseline}
+.lb .lbh span{font-size:11px;color:var(--mute);font-weight:500}
+.lb .lbme{margin-top:6px;font-size:14px;padding:10px 12px;background:var(--panel);border:1px solid var(--line);border-radius:10px}
+.lb .lbme b{color:var(--accent)}
+.lb .lbtop{list-style:none;margin:8px 0 0;padding:0;font-size:12px;color:var(--mute)}
+.lb .lbtop li{display:flex;justify-content:space-between;padding:3px 2px}
+.lb .lbtop b{color:var(--fg);font-variant-numeric:tabular-nums}
 .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:#000;color:#fff;padding:10px 16px;border-radius:999px;font-size:13px;opacity:0;transition:all .25s;pointer-events:none;z-index:9}
 .toast.on{opacity:1;transform:translateX(-50%)}
 .footer{text-align:center;font-size:11px;color:var(--mute);margin:26px 0 10px}
@@ -213,6 +222,7 @@ h1,h2,h3{margin:0;line-height:1.25;letter-spacing:-.01em}
 <!-- ===== 결과 ===== -->
 <section id="s-result" class="screen">
   <div class="ticket" id="ticket"></div>
+  <div class="lb" id="lb"></div>
   <div class="actions stack">
     <button class="btn primary" id="copy">📋 결과 복사하기</button>
     <div class="row">
@@ -476,7 +486,8 @@ const FR = (() => {
     const won = (v) => (v >= 0 ? "+" : "") + v + "억";
     const aud = st.over ? `${end.label} (${st.turn}턴 만에) · 손실 ${end.cost}억` : end.tier === "ott" ? `OTT 직행 · 극장 관객 0명 · 손익 ${won(end.profit)}` : `누적 관객 ${end.audience.toLocaleString("ko-KR")}명 · 손익 ${won(end.profit)} (BEP ${end.bepHit ? "달성" : "미달"})`;
     const rating = st.over ? null : `⭐ 평론 ${end.critics} · 관객 ${end.audScore}`;
-    return [`🎬 오늘도 크랭크인! #${st.seed}`, `《${st.film.title}》 ${st.film.genreName}`, `🎟 ${aud}`, rating, `💀 ${end.fate}`,
+    const lbLine = end.lb && end.lb.count > 1 ? `🏆 오늘의 영화 ${end.lb.count.toLocaleString("ko-KR")}명 중 상위 ${Math.max(1, 100 - end.lb.beat)}%` : null;
+    return [`🎬 오늘도 크랭크인! #${st.seed}`, `《${st.film.title}》 ${st.film.genreName}`, `🎟 ${aud}`, rating, lbLine, `💀 ${end.fate}`,
       st.history.map((h) => h.emoji).join(""), bars, url || ""].filter(Boolean).join("\n");
   }
 
@@ -493,6 +504,28 @@ const FR = (() => {
   const toast = (m) => { const t = $("#toast"); t.textContent = m; t.classList.add("on"); clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove("on"), 1800); };
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const baseUrl = () => location.origin + location.pathname;
+  // 오늘의 영화 리더보드 (worker/ 참고). 비워 두면 기능이 숨겨진다.
+  const LEADERBOARD_URL = "";
+  async function submitScore(st, end) {
+    if (!LEADERBOARD_URL) return null;
+    try {
+      const r = await fetch(LEADERBOARD_URL.replace(/\/$/, "") + "/submit", { method: "POST", headers: { "content-type": "application/json" },
+        body: JSON.stringify({ seed: st.seed, audience: st.over || end.tier === "ott" ? 0 : end.audience, tier: end.tier, title: st.film.title, genre: st.film.genreName }) });
+      if (!r.ok) return null; return await r.json();
+    } catch { return null; }
+  }
+  async function fetchScore(seed, audience) {
+    if (!LEADERBOARD_URL) return null;
+    try { const r = await fetch(`${LEADERBOARD_URL.replace(/\/$/, "")}/stats?seed=${seed}&audience=${audience}`); if (!r.ok) return null; return await r.json(); } catch { return null; }
+  }
+  function renderLb(lb) {
+    const box = $("#lb"); if (!box) return;
+    if (!lb || !lb.count) { box.innerHTML = ""; return; }
+    const top = (lb.top || []).slice(0, 3).map((t, i) => `<li><span>${["🥇", "🥈", "🥉"][i]} 《${esc(t.title)}》</span><b>${t.audience.toLocaleString("ko-KR")}명</b></li>`).join("");
+    box.innerHTML = `<div class="lbh">📅 오늘의 영화 리더보드 <span>${lb.count.toLocaleString("ko-KR")}명 참가</span></div>
+      <div class="lbme">${lb.count > 1 ? `당신은 <b>상위 ${Math.max(1, 100 - lb.beat)}%</b> · ${lb.rank}위` : "첫 참가자입니다. 친구를 불러오세요"} · 오늘 평균 ${lb.avg.toLocaleString("ko-KR")}명</div>
+      ${top ? `<ol class="lbtop">${top}</ol>` : ""}`;
+  }
   // 이벤트 집계: GoatCounter 스크립트가 로드돼 있을 때만 보낸다 (없으면 조용히 무시)
   const track = (name, detail) => { try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: "ev/" + name + (detail ? "/" + detail : ""), title: name, event: true }); } catch {} };
   let st = null, end = null, genre = "thriller";
@@ -651,6 +684,12 @@ const FR = (() => {
       track("finish", end.tier);
     }
     refreshModes(); renderMyStats();
+    $("#lb").innerHTML = "";
+    end.lb = null;
+    if (LEADERBOARD_URL && st.isDaily) {
+      const aud = st.over || end.tier === "ott" ? 0 : end.audience;
+      (st.replayed ? fetchScore(st.seed, aud) : submitScore(st, end)).then((lb) => { end.lb = lb; renderLb(lb); });
+    }
     show("s-result");
   }
   const tierEmoji = (t) => ({ bankrupt: "💸", boycott: "🚪", delayed: "⏳", ott: "📺", cult: "🪦", flop: "🥀", even: "😮‍💨", hit: "🎉", mega: "👑" }[t] || "🎬");
