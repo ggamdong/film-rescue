@@ -214,7 +214,7 @@ const FR = (() => {
   ];
   const TOTAL_TURNS = STAGES.reduce((a, s) => a + s.turns, 0);
   const START = { budget: 50, schedule: 55, morale: 60, quality: 40, buzz: 15 };
-  const BURN = { budget: -2, schedule: -1 };                   // 매 턴 자동 소모: 돈과 시간은 가만히 있어도 줄어든다
+  const BURN = { budget: -1, schedule: -1 };                   // 매 턴 자동 소모: 돈과 시간은 가만히 있어도 줄어든다
   const GENRES = [
     { key: "thriller", name: "범죄 스릴러",   fx: { quality: 5,  budget: -5 },                 note: "완성도 +5, 예산 -5" },
     { key: "comedy",   name: "가족 코미디",   fx: { buzz: 5, quality: -5, morale: 5 },         note: "화제성 +5, 사기 +5, 완성도 -5" },
