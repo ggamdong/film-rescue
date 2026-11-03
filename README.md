@@ -156,6 +156,12 @@ node tools/simulate.mjs --n 1000 --policy random
 
 배포 전 체크리스트: `node tools/build-cards.mjs` 로 `cards.js` 를 최신으로, `img/og.webp` 가 있으면 링크 미리보기가 생긴다, `index.html` 의 `og:url`·`og:image` 는 절대 주소(ggamdong.github.io/film-rescue)로 박혀 있으니 다른 주소로 옮기면 두 줄을 바꾼다.
 
+## 리더보드 · 집계 · 기록
+
+- **오늘의 영화 리더보드**: `worker/` 의 Cloudflare Worker + D1. 배포 주소는 `index.html` 의 `LEADERBOARD_URL`(현재 `https://film-rescue-lb.ggamdong.workers.dev`). 비우면 UI가 숨겨진다. 오늘의 영화 결과만 제출하며 같은 IP는 시드당 첫 결과만 집계된다. 운영 방법은 `worker/README.md`.
+- **방문·이벤트 집계**: GoatCounter(무료) 스크립트가 들어 있고 `data-goatcounter` 가 비어 있으면 스스로 제거된다. https://www.goatcounter.com 에서 사이트를 만들고 그 주소(`https://<code>.goatcounter.com/count`)를 `index.html` 의 `data-goatcounter` 에 넣으면 시작·완료·복사·공유·이미지 저장 이벤트가 `ev/...` 경로로 쌓인다.
+- **내 기록 / 엔딩 도감**: 기기 `localStorage`(`fr_stats`)에 플레이 수, 최고 관객, 엔딩 9종 발견 여부, 만난 카드 id를 저장해 첫 화면에 보여 준다. 서버로 보내지 않는다.
+
 ## 수정 포인트 빠른 안내
 
 | 바꾸고 싶은 것 | 위치 |
@@ -165,5 +171,6 @@ node tools/simulate.mjs --n 1000 --policy random
 | 엔딩 구간·운명 문구·한줄평 | `TIERS`, `FATES`, `FLAG_FATES`, `CRITIC` |
 | 플래그가 관객 수에 주는 배수 | `MULT` |
 | 플래그 한글 이름(결과 카드 '기록') | UI 쪽 `FLAG_KO` |
-| 공유 텍스트 포맷 | `shareText` |
+| 공유 텍스트 포맷 | `shareText` (리더보드 순위 줄 포함) |
+| 리더보드 주소 / 집계 코드 | UI 쪽 `LEADERBOARD_URL`, `<script data-goatcounter>` |
 | 결과 이미지(PNG 1080×1350) 레이아웃 | UI 쪽 `drawCanvas` |
