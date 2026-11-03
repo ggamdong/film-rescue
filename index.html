@@ -482,10 +482,10 @@ const FR = (() => {
   }
 
   // ---------- 공유 텍스트 ----------
-  const BAR = (v) => { const n = Math.round(v / 20); return "▰".repeat(n) + "▱".repeat(5 - n); };
+  // 상태값 줄: 특수문자(▰▱)는 카카오톡 등에서 깨져 보여 이모지+숫자로만 쓴다
   function shareText(st, end, url) {
     const e = ["💰", "📅", "🎭", "🎞", "🔥"];
-    const bars = STAT_KEYS.map((k, i) => e[i] + BAR(st.stats[k])).join(" ");
+    const bars = STAT_KEYS.map((k, i) => e[i] + st.stats[k]).join("  ");
     const won = (v) => (v >= 0 ? "+" : "") + v + "억";
     const aud = st.over ? `${end.label} (${st.turn}턴 만에) · 손실 ${end.cost}억` : end.tier === "ott" ? `OTT 직행 · 극장 관객 0명 · 손익 ${won(end.profit)}` : `누적 관객 ${end.audience.toLocaleString("ko-KR")}명 · 손익 ${won(end.profit)} (BEP ${end.bepHit ? "달성" : "미달"})`;
     const rating = st.over ? null : `⭐ 평론 ${end.critics} · 관객 ${end.audScore}`;
