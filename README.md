@@ -156,6 +156,13 @@ node tools/simulate.mjs --n 1000 --policy random
 
 배포 전 체크리스트: `node tools/build-cards.mjs` 로 `cards.js` 를 최신으로, `img/og.webp` 가 있으면 링크 미리보기가 생긴다, `index.html` 의 `og:url`·`og:image` 는 절대 주소(crank-in.today)로 박혀 있으니 다른 주소로 옮기면 두 줄을 바꾼다. 커스텀 도메인은 루트의 `CNAME` 파일(GitHub Pages가 읽음)과 HOSTING.KR 의 DNS 레코드(A 4개 → GitHub Pages IP, www CNAME → ggamdong.github.io)로 연결되어 있다. 리더보드 Worker 의 `ALLOWED_ORIGINS` 에도 같은 주소가 들어가야 한다.
 
+## 카드 정합성 체크리스트 (검수 때 반드시)
+
+- **단계**: 단어가 아니라 시점으로 판단한다. 대본 리딩은 캐스팅 이후, 예고편·기자 시사는 마케팅, 관객 반응·무대인사는 개봉. 촬영 중 추가 투자 유치처럼 투자 얘기라도 촬영 시점이면 촬영 카드다.
+- **플래그**: `cond.has/any` 로 요구하는 플래그는 그 단계보다 앞(또는 같은 단계)에서 켜져야 한다. 생성기 프롬프트에 플래그별 단계표가 있다.
+- **장르**: 사극·범인·좀비·귀신·폭발·실화·'코미디가 아니다'처럼 장르를 전제한 문장이 있으면 `cond.genre: ["period", ...]` 로 묶는다. 가족 코미디로 시작했는데 "이 영화는 조선 시대 사극이다"가 뜨면 안 된다. 중립 표현으로 고칠 수 있으면 그쪽이 낫다(모든 장르에서 쓰이므로).
+- 검사 스크립트는 없고 눈으로 본다. `node tools/simulate.mjs --genre comedy` 처럼 장르별로 돌려 기본(대체) 카드가 안 나오는지 확인한다.
+
 ## 리더보드 · 집계 · 기록
 
 - **오늘의 영화 리더보드**: `worker/` 의 Cloudflare Worker + D1. 배포 주소는 `index.html` 의 `LEADERBOARD_URL`(현재 `https://film-rescue-lb.ggamdong.workers.dev`). 비우면 UI가 숨겨진다. 오늘의 영화 결과만 제출하며 같은 IP는 시드당 첫 결과만 집계된다. 운영 방법은 `worker/README.md`.

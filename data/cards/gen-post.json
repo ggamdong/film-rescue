@@ -400,7 +400,14 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "genre": [
+    "thriller",
+    "zombie",
+    "disaster"
+   ]
+  }
  },
  {
   "id": "post-credits-name-missing",

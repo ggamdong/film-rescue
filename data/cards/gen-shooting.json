@@ -126,6 +126,13 @@
   "cond": {
    "has": [
     "injury"
+   ],
+   "genre": [
+    "thriller",
+    "zombie",
+    "period",
+    "disaster",
+    "sports"
    ]
   },
   "desc": "부상 배우가 의사 허락 없이 복귀했다. '프로는 아프다고 안 한다'는 것이다. 보험사는 이미 아프다.",
@@ -524,7 +531,12 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "genre": [
+    "period"
+   ]
+  }
  },
  {
   "id": "shoot-subcontractor-demand",

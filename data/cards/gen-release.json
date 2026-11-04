@@ -451,6 +451,15 @@
   "cond": {
    "not": [
     "ott_deal"
+   ],
+   "genre": [
+    "thriller",
+    "zombie",
+    "melo",
+    "period",
+    "occult",
+    "disaster",
+    "sports"
    ]
   }
  },
@@ -1357,7 +1366,12 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "genre": [
+    "thriller"
+   ]
+  }
  },
  {
   "id": "rel-banner-takedown",

@@ -1385,6 +1385,17 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "genre": [
+    "thriller",
+    "zombie",
+    "melo",
+    "period",
+    "occult",
+    "disaster",
+    "sports"
+   ]
+  }
  }
 ]

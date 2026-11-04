@@ -40,7 +40,12 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "genre": [
+    "thriller"
+   ]
+  }
  },
  {
   "id": "plan-ending-fight",
@@ -278,7 +283,13 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "genre": [
+    "sports",
+    "thriller"
+   ]
+  }
  },
  {
   "id": "plan-ai-pitch-demand",
@@ -334,7 +345,12 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "genre": [
+    "period"
+   ]
+  }
  },
  {
   "id": "plan-synopsis-spoiled",
@@ -549,7 +565,18 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "genre": [
+    "thriller",
+    "zombie",
+    "melo",
+    "period",
+    "occult",
+    "disaster",
+    "sports"
+   ]
+  }
  },
  {
   "id": "plan-rival-poach-writer",
@@ -982,7 +1009,13 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "genre": [
+    "sports",
+    "thriller"
+   ]
+  }
  },
  {
   "id": "plan-director-dp-demand",

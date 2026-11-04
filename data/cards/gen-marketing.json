@@ -823,7 +823,7 @@
   "id": "mkt-trailer-spoiler",
   "stage": "marketing",
   "title": "예고편에 결말이 나왔다",
-  "desc": "편집자가 예고편 마지막 컷에 반전 장면을 넣었다. 조회수는 300만. 댓글 1위는 \"아, 그 사람이 범인이구나\"다.",
+  "desc": "편집자가 예고편 마지막 컷에 반전 장면을 넣었다. 조회수는 300만. 댓글 1위는 \"아, 그렇게 끝나는구나\"다.",
   "choices": [
    {
     "text": "예고편을 내린다",
@@ -1030,7 +1030,12 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "genre": [
+    "comedy"
+   ]
+  }
  },
  {
   "id": "mkt-street-promo-allin",
@@ -1236,7 +1241,16 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "genre": [
+    "thriller",
+    "zombie",
+    "period",
+    "occult",
+    "disaster"
+   ]
+  }
  },
  {
   "id": "post-embargo-leak",
