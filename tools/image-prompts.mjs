@@ -48,7 +48,7 @@ const fixed = [ // 타이틀·단계·엔딩
 ];
 
 let scenes = {}; try { scenes = JSON.parse(readFileSync(path.join(ROOT, "data", "card-scenes.json"), "utf8")); } catch {}
-const cardPrompt = (c) => `${scenes[c.id] ? scenes[c.id] + "." : `A comedic scene from a Korean film-production story: ${c.desc}`} ${STYLE}`;
+const cardPrompt = (c) => `${scenes[c.id] ? scenes[c.id].replace(/[.\s]+$/, "") + "." : `A comedic scene from a Korean film-production story: ${c.desc}`} ${STYLE}`;
 const cardFile = (c) => `assets/raw/cards/${c.id}.png`;
 const cardHas = (c) => haveImg(`cards/${c.id}.webp`);
 
