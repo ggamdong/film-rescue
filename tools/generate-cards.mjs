@@ -98,6 +98,9 @@ const SYSTEM = `당신은 한국 영화 제작 현장을 잘 아는 블랙코미
 - 어떤 선택지도 항상 정답이 되면 안 된다. 트레이드오프가 분명해야 한다.
 - 이야기를 잇고 싶으면 set 으로 snake_case 플래그를 켜고, 후속 카드는 cond.has 로 그 플래그를 요구한다. 기존 플래그: star, idol, festival, scandal_star, scandal_light, fake_booking, trailer_lie, director_replaced, injury, city_scene, family_blessing, crowd_cameo, rival_project, director_gone, connection, group_sales, ott_deal, personal_debt, revenue_share, profit_actor, crypto_money, need_star, no_stunt, region_shoot, lawsuit_risk, r_rated, webtoon_ip, new_investor, investor_actor, angel_investor. 새 플래그를 만들어도 된다.
 - cond 는 선택 사항. 상태값 범위([min,max])나 플래그(has=모두, any=하나라도, not=없어야)로 등장 조건을 걸 수 있다. 톱배우·아이돌·원작·크라우드펀딩·선판매·OTT 계약 같은 전제가 있는 카드는 반드시 해당 플래그를 조건으로 걸어라(star, idol, webtoon_ip, crowdfund, presale, ott_deal, unknown_lead 등). 카드의 60% 이상은 cond 없이 언제든 나올 수 있어야 한다.
+단계 정합성(중요):
+- 카드는 지정된 단계에서 '실제로 그 시점에 벌어지는 일'이어야 한다. 단어가 아니라 시점으로 판단한다. 예: 투자는 기본적으로 프리 단계지만 '촬영 중 추가 투자 유치'는 촬영 카드, '대본 리딩'은 배우가 있어야 하니 캐스팅 이후, '예고편·기자 시사·평점'은 마케팅 이후, '관객 반응·무대인사·N차 관람'은 개봉 카드.
+- cond.has 로 요구하는 플래그는 이 단계보다 앞 단계(또는 같은 단계)에서 켜지는 것만 쓴다. 플래그가 켜지는 단계: 기획 webtoon_ip·region_shoot·rival_project·lawsuit_risk·r_rated / 투자 presale·crowdfund·grant·local_subsidy·angel_investor·chairman_money·patron·crypto_money·personal_debt·revenue_share·new_investor·investor_actor·need_star·connection / 캐스팅 star·idol·unknown_lead·profit_actor·star_control·scandal_star / 촬영 injury·no_stunt·director_replaced·director_gone·city_scene·crowd_cameo·family_blessing / 후반 festival·two_endings·tragic_ending·free_vfx·ai_dub / 마케팅 ott_deal·fake_booking·trailer_lie·viral_scam·group_sales·scandal_light.
 카드 유형 비율(type):
 - crisis(약 70%): 위기. 어느 선택지든 뭔가를 잃는다. 덜 잃는 쪽을 고르는 게임.
 - chance(약 30%): 겉보기엔 좋은 일. 플레이어 화면에는 "기회"로만 표시되어 둘을 구별할 수 없다.

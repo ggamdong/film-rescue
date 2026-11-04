@@ -869,67 +869,6 @@
   "type": "chance"
  },
  {
-  "id": "plan-table-read-laughter",
-  "stage": "planning",
-  "title": "대본 리딩에서 터진 웃음",
-  "desc": "첫 리딩. 배우들이 비장한 이별 장면을 읽다 웃음을 터뜨렸다. 작가는 조용히 메모한다. 웃음이 가장 컸던 페이지에 별표를 친다.",
-  "choices": [
-   {
-    "text": "웃긴 장면 전면 수정",
-    "outcomes": [
-     {
-      "p": 1,
-      "fx": {
-       "quality": 4,
-       "schedule": -5,
-       "morale": -2
-      },
-      "text": "일주일 만에 이별 장면이 다시 나왔다. 이번엔 아무도 웃지 않았다. 아무도 울지도 않았다."
-     }
-    ]
-   },
-   {
-    "text": "장르를 코미디로 튼다",
-    "outcomes": [
-     {
-      "p": 0.5,
-      "fx": {
-       "buzz": 8,
-       "quality": -2,
-       "morale": 2
-      },
-      "text": "웃음 포인트를 살리자 현장이 살아났다. 포스터 문구는 '눈물 나게 웃기다'가 되었다.",
-      "set": [
-       "comedy_pivot"
-      ]
-     },
-     {
-      "p": 0.5,
-      "fx": {
-       "quality": -6,
-       "morale": -3,
-       "schedule": -3
-      },
-      "text": "투자사가 비명을 질렀다. 배우는 이미 울 준비를 마쳤다. 우는 코미디는 장르가 아니다."
-     }
-    ]
-   },
-   {
-    "text": "원래대로 밀어붙인다",
-    "outcomes": [
-     {
-      "p": 1,
-      "fx": {
-       "morale": -4,
-       "quality": -2
-      },
-      "text": "배우들은 진지한 얼굴로 대사를 읽었다. 입꼬리 단속이 연출의 전부가 되었다."
-     }
-    ]
-   }
-  ]
- },
- {
   "id": "plan-sequel-clause",
   "stage": "planning",
   "title": "판권 계약서의 속편 조항",
