@@ -74,8 +74,8 @@ h1,h2,h3{margin:0;line-height:1.25;letter-spacing:-.01em}
 .field label{display:block;font-size:12px;color:var(--mute);margin:14px 0 6px}
 .field input{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--fg);outline:none}
 .field input:focus{border-color:var(--accent)}
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:var(--panel);font-size:13px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{padding:8px 11px;white-space:nowrap;border-radius:999px;border:1px solid var(--line);background:var(--panel);font-size:13px}
 .chip.on{background:var(--accent);color:#1a1405;border-color:transparent;font-weight:700}
 .chip small{color:inherit;opacity:.7;margin-left:4px;font-size:11px}
 .howto{font-size:13px;color:var(--mute);margin:18px 0 0;padding:10px 14px;border:1px dashed var(--line);border-radius:12px;list-style:none}
@@ -279,14 +279,16 @@ const FR = (() => {
   const START = { budget: 50, schedule: 55, morale: 60, quality: 40, buzz: 15 };
   const BURN = { budget: -1, schedule: -1 };                   // 매 턴 자동 소모: 돈과 시간은 가만히 있어도 줄어든다
   const GENRES = [
-    { key: "thriller", name: "범죄 스릴러",   fx: { quality: 5,  budget: -5 },                 note: "완성도 +5, 예산 -5" },
-    { key: "comedy",   name: "가족 코미디",   fx: { buzz: 5, quality: -5, morale: 5 },         note: "화제성 +5, 사기 +5, 완성도 -5" },
-    { key: "zombie",   name: "좀비 액션",     fx: { budget: -10, buzz: 10, schedule: -5 },     note: "화제성 +10, 예산 -10, 일정 -5" },
-    { key: "melo",     name: "멜로",          fx: { morale: 5, buzz: -5, quality: 3 },         note: "사기 +5, 완성도 +3, 화제성 -5" },
-    { key: "period",   name: "사극",          fx: { budget: -10, schedule: -5, quality: 8 },   note: "완성도 +8, 예산 -10, 일정 -5" },
-    { key: "occult",   name: "오컬트 공포",   fx: { budget: 5, buzz: 5, quality: -3 },         note: "예산 +5, 화제성 +5, 완성도 -3" },
-    { key: "disaster", name: "재난 블록버스터", fx: { budget: -15, buzz: 12, schedule: -8 },   note: "화제성 +12, 예산 -15, 일정 -8" },
-    { key: "sports",   name: "스포츠 실화",   fx: { morale: 8, quality: 2 },                   note: "사기 +8, 완성도 +2" },
+    { key: "thriller",    name: "스릴러", fx: { quality: 5,  budget: -5 },                 note: "완성도 +5, 예산 -5" },
+    { key: "comedy",      name: "코미디",      fx: { buzz: 5, quality: -5, morale: 5 },         note: "화제성 +5, 사기 +5, 완성도 -5" },
+    { key: "drama",       name: "드라마", fx: { quality: 4, morale: 4, buzz: -6 },         note: "완성도 +4, 사기 +4, 화제성 -6" },
+    { key: "melo",        name: "멜로",        fx: { morale: 5, buzz: -5, quality: 3 },         note: "사기 +5, 완성도 +3, 화제성 -5" },
+    { key: "zombie",      name: "좀비",        fx: { budget: -10, buzz: 10, schedule: -5 },     note: "화제성 +10, 예산 -10, 일정 -5" },
+    { key: "period",      name: "사극",        fx: { budget: -10, schedule: -5, quality: 8 },   note: "완성도 +8, 예산 -10, 일정 -5" },
+    { key: "occult",      name: "오컬트", fx: { budget: 5, buzz: 5, quality: -3 },         note: "예산 +5, 화제성 +5, 완성도 -3" },
+    { key: "disaster",    name: "블록버스터",  fx: { budget: -15, buzz: 12, schedule: -8 },     note: "화제성 +12, 예산 -15, 일정 -8" },
+    { key: "sports",      name: "스포츠",      fx: { morale: 8, quality: 2 },                   note: "사기 +8, 완성도 +2" },
+    { key: "docu",        name: "다큐",        fx: { budget: 10, buzz: -10, quality: 3 },       note: "예산 +10, 완성도 +3, 화제성 -10" },
   ];
   const TITLE_A = ["마지막", "검은", "어느 날의", "완벽한", "그해 여름", "비밀의", "사라진", "불타는", "조용한", "두 번째", "서울의", "밤의"];
   const TITLE_B = ["택시", "변호사", "동창회", "장례식", "소방관", "편의점", "아파트", "낚시터", "수학여행", "노래방", "세탁소", "부동산", "야간조", "골목"];

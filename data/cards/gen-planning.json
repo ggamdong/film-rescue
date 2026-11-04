@@ -286,8 +286,15 @@
   ],
   "cond": {
    "genre": [
+    "thriller",
+    "comedy",
+    "drama",
+    "melo",
+    "period",
+    "occult",
+    "disaster",
     "sports",
-    "thriller"
+    "docu"
    ]
   }
  },
@@ -569,8 +576,9 @@
   "cond": {
    "genre": [
     "thriller",
-    "zombie",
+    "drama",
     "melo",
+    "zombie",
     "period",
     "occult",
     "disaster",
@@ -1012,8 +1020,15 @@
   ],
   "cond": {
    "genre": [
+    "thriller",
+    "comedy",
+    "drama",
+    "melo",
+    "period",
+    "occult",
+    "disaster",
     "sports",
-    "thriller"
+    "docu"
    ]
   }
  },

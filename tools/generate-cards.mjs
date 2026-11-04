@@ -101,7 +101,7 @@ const SYSTEM = `당신은 한국 영화 제작 현장을 잘 아는 블랙코미
 단계 정합성(중요):
 - 카드는 지정된 단계에서 '실제로 그 시점에 벌어지는 일'이어야 한다. 단어가 아니라 시점으로 판단한다. 예: 투자는 기본적으로 프리 단계지만 '촬영 중 추가 투자 유치'는 촬영 카드, '대본 리딩'은 배우가 있어야 하니 캐스팅 이후, '예고편·기자 시사·평점'은 마케팅 이후, '관객 반응·무대인사·N차 관람'은 개봉 카드.
 - cond.has 로 요구하는 플래그는 이 단계보다 앞 단계(또는 같은 단계)에서 켜지는 것만 쓴다. 플래그가 켜지는 단계: 기획 webtoon_ip·region_shoot·rival_project·lawsuit_risk·r_rated / 투자 presale·crowdfund·grant·local_subsidy·angel_investor·chairman_money·patron·crypto_money·personal_debt·revenue_share·new_investor·investor_actor·need_star·connection / 캐스팅 star·idol·unknown_lead·profit_actor·star_control·scandal_star / 촬영 injury·no_stunt·director_replaced·director_gone·city_scene·crowd_cameo·family_blessing / 후반 festival·two_endings·tragic_ending·free_vfx·ai_dub / 마케팅 ott_deal·fake_booking·trailer_lie·viral_scam·group_sales·scandal_light.
-장르 정합성(중요): 플레이어는 8개 장르(thriller 범죄 스릴러, comedy 가족 코미디, zombie 좀비 액션, melo 멜로, period 사극, occult 오컬트 공포, disaster 재난 블록버스터, sports 스포츠 실화) 중 하나를 고른다. 카드 문장이 특정 장르를 전제하면(사극·범인·살인·좀비·귀신·폭발·실화·'코미디가 아니다' 등) 반드시 cond.genre 에 해당 장르 키 배열을 넣어 그 장르에서만 나오게 한다. 가능하면 장르에 묶이지 않는 표현을 써서 cond.genre 없이 모든 장르에 쓰이게 하는 쪽이 낫다.
+장르 정합성(중요): 플레이어는 10개 장르(thriller 스릴러, comedy 코미디, drama 드라마, melo 멜로, zombie 좀비, period 사극, occult 오컬트, disaster 블록버스터, sports 스포츠, docu 다큐) 중 하나를 고른다. 카드 문장이 특정 장르를 전제하면(사극·범인·살인·좀비·귀신·폭발·실화·'코미디가 아니다' 등) 반드시 cond.genre 에 해당 장르 키 배열을 넣어 그 장르에서만 나오게 한다. 가능하면 장르에 묶이지 않는 표현을 써서 cond.genre 없이 모든 장르에 쓰이게 하는 쪽이 낫다.
 카드 유형 비율(type):
 - crisis(약 70%): 위기. 어느 선택지든 뭔가를 잃는다. 덜 잃는 쪽을 고르는 게임.
 - chance(약 30%): 겉보기엔 좋은 일. 플레이어 화면에는 "기회"로만 표시되어 둘을 구별할 수 없다.

@@ -248,8 +248,9 @@
    "genre": [
     "thriller",
     "comedy",
-    "zombie",
+    "drama",
     "melo",
+    "zombie",
     "period",
     "disaster",
     "sports"
@@ -513,8 +514,15 @@
   ],
   "cond": {
    "genre": [
+    "thriller",
+    "comedy",
+    "drama",
+    "melo",
+    "period",
+    "occult",
+    "disaster",
     "sports",
-    "thriller"
+    "docu"
    ]
   }
  },
@@ -2507,8 +2515,15 @@
     "lawsuit_risk"
    ],
    "genre": [
+    "thriller",
+    "comedy",
+    "drama",
+    "melo",
+    "period",
+    "occult",
+    "disaster",
     "sports",
-    "thriller"
+    "docu"
    ]
   },
   "choices": [
@@ -2862,12 +2877,14 @@
   "cond": {
    "genre": [
     "thriller",
-    "zombie",
+    "drama",
     "melo",
+    "zombie",
     "period",
     "occult",
     "disaster",
-    "sports"
+    "sports",
+    "docu"
    ]
   }
  },
