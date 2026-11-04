@@ -169,6 +169,8 @@ node tools/simulate.mjs --n 1000 --policy random
 - **방문·이벤트 집계**: GoatCounter(무료) 스크립트가 들어 있고 `data-goatcounter` 가 비어 있으면 스스로 제거된다. https://www.goatcounter.com 에서 사이트를 만들고 그 주소(`https://<code>.goatcounter.com/count`)를 `index.html` 의 `data-goatcounter` 에 넣으면 시작·완료·복사·공유·이미지 저장 이벤트가 `ev/...` 경로로 쌓인다.
 - **내 기록 / 엔딩 도감**: 기기 `localStorage`(`fr_stats`)에 플레이 수, 최고 관객, 엔딩 9종 발견 여부, 만난 카드 id를 저장해 첫 화면에 보여 준다. 서버로 보내지 않는다.
 - **연속 출석(스트릭)**: `fr_stats.streak = {cur, best, last}`. 오늘 날짜 덱의 오늘의 영화를 끝내면 `last`가 어제(KST 일수 −1)일 때 +1, 아니면 1부터. 하루 건너뛰면 0으로 보이고 최고 기록만 남는다. 2일 이상이면 결과 화면과 공유 텍스트에 `🔥 N일 연속 크랭크인` 줄이 붙는다.
+- **상태가 확률을 흔든다**: `luckShift`(사기 ±12%, 일정 ±5%, 예산 ±3% 가중, −18%~+12%)만큼 선택지의 가장 좋은 결과와 가장 나쁜 결과 사이에서 확률이 이동한다(`effectiveOdds`). 어느 쪽도 5% 밑으로는 안 내려간다. 플레이어에게는 숫자 대신 힌트 문장(현장 분위기)만 보인다. 바꾸면 시뮬레이터로 다시 맞춘다.
+- **소수파 선택**: 오늘의 영화 제출 시 `picks:[[cardId, choiceIdx]...]` 를 함께 보내고, `/stats` 가 카드별 선택 분포 `picks` 를 돌려준다. 같은 카드를 5명 이상 받았을 때 내 선택 비율이 40% 미만이면 소수파로 세고, 결과 화면에 상위 3개와 공유 텍스트 한 줄(`🧭 소수파 선택 N회 / M턴`)을 붙인다. 기존 DB는 `ALTER TABLE scores ADD COLUMN picks TEXT` 가 필요하다(적용됨).
 - **오늘의 결과 분포**: Worker `/stats` 의 `dist`(엔딩별 인원)를 받아 리더보드 아래에 조기 종료·OTT·괴작·쪽박·본전·흥행 6구간 막대로 그린다(`DIST_GROUPS`). 참가자 3명 미만이면 숨긴다.
 
 ## 수정 포인트 빠른 안내

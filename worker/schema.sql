@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS scores (
   tier TEXT NOT NULL,
   title TEXT NOT NULL,
   genre TEXT NOT NULL,
+  picks TEXT,                     -- [[cardId, choiceIdx], ...] 소수파 선택 집계용 (기존 DB는 ALTER TABLE scores ADD COLUMN picks TEXT)
   created_at TEXT NOT NULL DEFAULT (datetime('now')),
   UNIQUE (seed, ip_hash)
 );

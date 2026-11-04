@@ -1,7 +1,7 @@
 // 오늘도 크랭크인! 리더보드 API (Cloudflare Worker + D1)
-//   POST /submit  {seed, audience, tier, title, genre}  → 저장 후 그 시드의 통계 반환
+//   POST /submit  {seed, audience, tier, title, genre, picks:[[cardId, choiceIdx], ...]}  → 저장 후 그 시드의 통계 반환
 //   GET  /stats?seed=261103&audience=120000             → 통계만 반환
-// 응답: { count, avg, median, beat (내가 이긴 비율 0~100), rank, top: [{title, genre, audience, tier}], dist: {tier: n} }
+// 응답: { count, avg, median, beat (내가 이긴 비율 0~100), rank, top: [{title, genre, audience, tier}], dist: {tier: n}, picks: {cardId: [n0,n1,n2,n3]} }
 const TIERS = new Set(["bankrupt", "boycott", "delayed", "ott", "cult", "flop", "even", "hit", "mega"]);
 
 function cors(req, env) {
@@ -40,7 +40,13 @@ async function stats(env, seed, audience) {
   const rank = n ? n - (agg.belowEq || 0) + 1 : 1;                         // 공동 순위(높은 관객이 1위)
   const dist = {};                                                          // 엔딩별 인원 {tier: n}
   for (const r of (await env.DB.prepare("SELECT tier, COUNT(*) AS n FROM scores WHERE seed = ?1 GROUP BY tier").bind(seed).all()).results || []) dist[r.tier] = r.n;
-  return { count: n, avg: Math.round(agg?.avg || 0), median, beat, rank, top, dist };
+  // 카드별 선택 분포 {cardId: [n0, n1, n2]} — 같은 덱에서 다른 제작자들이 뭘 골랐나
+  const picks = {};
+  for (const r of (await env.DB.prepare("SELECT picks FROM scores WHERE seed = ?1 AND picks IS NOT NULL LIMIT 3000").bind(seed).all()).results || []) {
+    let arr; try { arr = JSON.parse(r.picks); } catch { continue; }
+    for (const [cid, idx] of arr) { if (typeof cid !== "string" || !Number.isInteger(idx) || idx < 0 || idx > 3) continue; (picks[cid] ||= [0, 0, 0, 0])[idx]++; }
+  }
+  return { count: n, avg: Math.round(agg?.avg || 0), median, beat, rank, top, dist, picks };
 }
 
 export default {
@@ -61,10 +67,12 @@ export default {
         const title = String(b.title || "").slice(0, 24), genre = String(b.genre || "").slice(0, 16), tier = String(b.tier || "");
         if (!Number.isInteger(seed) || seed < 0 || !Number.isFinite(audience) || audience < 0 || audience > 15_000_000 || !TIERS.has(tier) || !title)
           return json({ error: "bad payload" }, 400, h);
+        const picks = Array.isArray(b.picks) && b.picks.length <= 20 && b.picks.every((p) => Array.isArray(p) && typeof p[0] === "string" && p[0].length <= 64 && Number.isInteger(p[1]) && p[1] >= 0 && p[1] <= 3)
+          ? JSON.stringify(b.picks.map((p) => [p[0], p[1]])) : null;
         const hash = await ipHash(req, env.SALT || "crank-in");
         // 같은 IP는 시드당 첫 결과만 저장 (오늘의 영화는 하루 한 번이 기본)
-        const r = await env.DB.prepare("INSERT OR IGNORE INTO scores (seed, ip_hash, audience, tier, title, genre) VALUES (?1, ?2, ?3, ?4, ?5, ?6)")
-          .bind(seed, hash, audience, tier, title, genre).run();
+        const r = await env.DB.prepare("INSERT OR IGNORE INTO scores (seed, ip_hash, audience, tier, title, genre, picks) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)")
+          .bind(seed, hash, audience, tier, title, genre, picks).run();
         const mine = await env.DB.prepare("SELECT audience FROM scores WHERE seed = ?1 AND ip_hash = ?2").bind(seed, hash).first();
         const s = await stats(env, seed, mine?.audience ?? audience);
         return json({ ...s, accepted: !!r.meta?.changes, recorded: mine?.audience ?? audience }, 200, h);

@@ -177,6 +177,17 @@ h1,h2,h3{margin:0;line-height:1.25;letter-spacing:-.01em}
 .lb .dist .lg{display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:6px;font-size:11px;color:var(--mute)}
 .lb .dist .lg span::before{content:"";display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:4px;background:var(--c);vertical-align:-1px}
 .lb .dist .lg span.me{color:var(--fg);font-weight:700}
+.lb .picks{margin-top:12px;padding:10px 12px;background:var(--panel);border:1px solid var(--line);border-radius:10px}
+.lb .pkh{font-size:13px;font-weight:800}
+.lb .pkh b{color:var(--accent)}
+.lb .pkh span{font-size:11px;color:var(--mute);font-weight:500;margin-left:6px}
+.lb .picks ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:8px}
+.lb .picks li{border-top:1px dashed var(--line);padding-top:8px;font-size:12px}
+.lb .pk-card{color:var(--mute)}
+.lb .pk-me{margin-top:2px}
+.lb .pk-me b{color:var(--accent);margin-left:4px}
+.lb .pk-maj{color:var(--mute);font-size:11px;margin-top:2px}
+.lb .pk-none{margin-top:6px;font-size:12px;color:var(--mute)}
 .streak{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:999px;background:rgba(242,177,52,.14);color:var(--accent);font-size:11px;font-weight:700}
 .streak.off{background:var(--panel);color:var(--mute);font-weight:500}
 .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:#000;color:#fff;padding:10px 16px;border-radius:999px;font-size:13px;opacity:0;transition:all .25s;pointer-events:none;z-index:9}
@@ -346,6 +357,7 @@ const FR = (() => {
   const stageOf = (st) => STAGES.find((s) => s.key === st.plan[st.turn]);
 
   function drawCard(st) {
+    if (st.card) return st.card;                       // 이미 뽑아 둔 카드가 있으면 그대로 (미리 뽑기용)
     const key = st.plan[st.turn];
     let pool = st.cards.filter((c) => c.stage === key && !st.used.has(c.id) && condOk(c, st));
     let card;
@@ -361,10 +373,24 @@ const FR = (() => {
     st.used.add(card.id); st.card = card; return card;
   }
 
+  // 상태가 확률을 흔든다: 사기가 높으면 도박이 잘 풀리고 낮으면 더 자주 틀어진다. 일정·예산 여유도 조금. (숨은 규칙, 힌트만 보여 준다)
+  const MOOD = { morale: 0.12, schedule: 0.05, budget: 0.03 };
+  function luckShift(st) { let v = 0; for (const k in MOOD) v += ((st.stats[k] - 50) / 50) * MOOD[k]; return Math.max(-0.18, Math.min(0.12, v)); }
+  function effectiveOdds(st, ch) {
+    const ps = ch.outcomes.map((o) => o.p);
+    if (ps.length < 2) return ps;
+    const score = (o) => Object.values(o.fx || {}).reduce((a, b) => a + b, 0);
+    const sc = ch.outcomes.map(score), best = sc.indexOf(Math.max(...sc)), worst = sc.indexOf(Math.min(...sc));
+    if (best === worst) return ps;
+    const v = luckShift(st), move = Math.max(-(ps[best] - 0.05), Math.min(ps[worst] - 0.05, v)); // 어느 쪽도 5% 밑으로는 안 내려간다
+    ps[best] += move; ps[worst] -= move;
+    return ps;
+  }
   function choose(st, idx) {
     const card = st.card, ch = card.choices[idx];
+    const ps = effectiveOdds(st, ch);
     let r = st.rng(), out = ch.outcomes[ch.outcomes.length - 1];
-    for (const o of ch.outcomes) { r -= o.p; if (r <= 0) { out = o; break; } }
+    for (let i = 0; i < ch.outcomes.length; i++) { r -= ps[i]; if (r <= 0) { out = ch.outcomes[i]; break; } }
     const deltas = {};
     for (const k of STAT_KEYS) { const d = (out.fx && out.fx[k] ? out.fx[k] : 0) + (BURN[k] || 0); if (d) { const before = st.stats[k]; st.stats[k] = clamp(before + d); deltas[k] = st.stats[k] - before; } }
     (out.set || []).forEach((f) => st.flags.add(f));
@@ -503,11 +529,12 @@ const FR = (() => {
     const rating = st.over ? null : `⭐ 평론 ${end.critics} · 관객 ${end.audScore}`;
     const lbLine = end.lb && end.lb.count > 1 ? `🏆 오늘의 영화 ${end.lb.count.toLocaleString("ko-KR")}명 중 상위 ${Math.max(1, 100 - end.lb.beat)}%` : null;
     const streakLine = end.streak >= 2 ? `🔥 ${end.streak}일 연속 크랭크인` : null;
-    return [`🎬 오늘도 크랭크인! #${st.seed}`, `《${st.film.title}》 ${st.film.genreName}`, `🎟 ${aud}`, rating, lbLine, streakLine, `💀 ${end.fate}`,
+    const minorityLine = end.minority != null && end.minority.total >= 5 ? `🧭 소수파 선택 ${end.minority.count}회 / ${end.minority.turns}턴` : null;
+    return [`🎬 오늘도 크랭크인! #${st.seed}`, `《${st.film.title}》 ${st.film.genreName}`, `🎟 ${aud}`, rating, lbLine, streakLine, minorityLine, `💀 ${end.fate}`,
       st.history.map((h) => h.emoji).join(""), bars, url || ""].filter(Boolean).join("\n");
   }
 
-  return { VERSION, STATS, STAT_KEYS, SURVIVAL, STAGES, TOTAL_TURNS, GENRES, START, makeRng, kstDays, suggestTitle, newGame, stageOf, drawCard, choose, nextTurn, isFinished, finish, shareText, condOk };
+  return { VERSION, STATS, STAT_KEYS, SURVIVAL, STAGES, TOTAL_TURNS, GENRES, START, makeRng, kstDays, suggestTitle, newGame, stageOf, drawCard, choose, nextTurn, isFinished, finish, shareText, condOk, luckShift };
 })();
 /* CORE-END */
 
@@ -526,7 +553,7 @@ const FR = (() => {
     if (!LEADERBOARD_URL) return null;
     try {
       const r = await fetch(LEADERBOARD_URL.replace(/\/$/, "") + "/submit", { method: "POST", headers: { "content-type": "application/json" },
-        body: JSON.stringify({ seed: st.seed, audience: st.over || end.tier === "ott" ? 0 : end.audience, tier: end.tier, title: st.film.title, genre: st.film.genreName }) });
+        body: JSON.stringify({ seed: st.seed, audience: st.over || end.tier === "ott" ? 0 : end.audience, tier: end.tier, title: st.film.title, genre: st.film.genreName, picks: st.history.map((h) => [h.cardId, h.choiceIdx]) }) });
       if (!r.ok) return null; return await r.json();
     } catch { return null; }
   }
@@ -551,6 +578,26 @@ const FR = (() => {
     return `<div class="dist"><div class="bar">${rows.map((g) => `<i class="${g.me ? "me" : ""}" style="width:${(100 * g.n) / total}%;background:${g.color}" title="${g.name} ${pct(g.n)}%"></i>`).join("")}</div>
       <div class="lg">${rows.map((g) => `<span class="${g.me ? "me" : ""}" style="--c:${g.color}">${g.name} ${pct(g.n)}%${g.me ? " ← 나" : ""}</span>`).join("")}</div></div>`;
   }
+  // 같은 덱을 받은 다른 제작자들은 같은 카드에서 뭘 골랐나. 내 선택이 40% 미만이면 소수파.
+  function minorityStats(lb) {
+    const picks = lb.picks || {}; const rows = [];
+    for (const h of st.history) {
+      const arr = picks[h.cardId]; if (!arr) continue;
+      const total = arr.reduce((a, b) => a + b, 0); if (total < 5) continue;
+      const mine = (arr[h.choiceIdx] || 0) / total, majIdx = arr.indexOf(Math.max(...arr));
+      const card = CARDS.find((c) => c.id === h.cardId);
+      rows.push({ h, total, mine, majIdx, majText: card ? card.choices[majIdx].text : "", majShare: arr[majIdx] / total });
+    }
+    const minority = rows.filter((r) => r.mine < 0.4);
+    return { count: minority.length, turns: rows.length, total: rows.length ? Math.min(...rows.map((r) => r.total)) : 0, rows: minority.sort((a, b) => a.mine - b.mine).slice(0, 3) };
+  }
+  function renderPicks(lb) {
+    const m = minorityStats(lb); end.minority = m.turns ? m : null;
+    if (!m.turns) return "";
+    const pct = (v) => Math.round(v * 100);
+    const items = m.rows.map((r) => `<li><div class="pk-card">${esc(r.h.title)}</div><div class="pk-me">▸ ${esc(r.h.choice)} <b>${pct(r.mine)}%</b></div>${r.majIdx !== r.h.choiceIdx ? `<div class="pk-maj">다수는 "${esc(r.majText)}" ${pct(r.majShare)}%</div>` : ""}</li>`).join("");
+    return `<div class="picks"><div class="pkh">🧭 소수파 선택 <b>${m.count}</b>/${m.turns}턴 <span>같은 덱을 받은 제작자들과 비교</span></div>${items ? `<ul>${items}</ul>` : `<div class="pk-none">전부 다수와 같은 길을 갔습니다. 안전한 제작자군요.</div>`}</div>`;
+  }
   function renderLb(lb, myTier) {
     const box = $("#lb"); if (!box) return;
     if (!lb || !lb.count) { box.innerHTML = ""; return; }
@@ -558,7 +605,8 @@ const FR = (() => {
     box.innerHTML = `<div class="lbh">📅 오늘의 영화 리더보드 <span>${lb.count.toLocaleString("ko-KR")}명 참가</span></div>
       <div class="lbme">${lb.count > 1 ? `당신은 <b>상위 ${Math.max(1, 100 - lb.beat)}%</b> · ${lb.rank}위` : "첫 참가자입니다. 친구를 불러오세요"} · 오늘 평균 ${lb.avg.toLocaleString("ko-KR")}명</div>
       ${renderDist(lb, myTier)}
-      ${top ? `<ol class="lbtop">${top}</ol>` : ""}`;
+      ${top ? `<ol class="lbtop">${top}</ol>` : ""}
+      ${renderPicks(lb)}`;
   }
   // 이벤트 집계: GoatCounter 스크립트가 로드돼 있을 때만 보낸다 (없으면 조용히 무시)
   const track = (name, detail) => { try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: "ev/" + name + (detail ? "/" + detail : ""), title: name, event: true }); } catch {} };
@@ -679,7 +727,8 @@ const FR = (() => {
     loadImg(box.querySelector(".img"), [`img/cards/${card.id}.webp`, `img/stages/${card.stage}.webp`], stageEmoji(card.stage));
     const ch = box.querySelector(".choices");
     card.choices.forEach((c, i) => { const b = document.createElement("button"); b.className = "btn"; b.textContent = c.text; b.onclick = () => onChoose(i); ch.appendChild(b); });
-    $("#g-hint").textContent = FR.SURVIVAL.some((k) => st.stats[k] <= 20) ? "⚠ 생존 수치가 위험합니다" : "";
+    const shift = FR.luckShift(st);
+    $("#g-hint").textContent = FR.SURVIVAL.some((k) => st.stats[k] <= 20) ? "⚠ 생존 수치가 위험합니다" : shift <= -0.07 ? "😰 현장 분위기가 가라앉아 도박성 선택이 더 자주 틀어집니다" : shift >= 0.06 ? "😊 현장 분위기가 좋아 도박이 잘 풀리는 편입니다" : "";
   }
   const stageEmoji = (s) => ({ planning: "📝", funding: "💼", casting: "🎭", shooting: "🎥", post: "✂️", marketing: "📣", release: "🎟" }[s] || "🎬");
   function onChoose(i) {
@@ -692,7 +741,10 @@ const FR = (() => {
     const b = document.createElement("button"); b.className = "btn primary";
     const done = st.over || st.turn + 1 >= FR.TOTAL_TURNS;
     b.textContent = st.over ? "결과 보기" : done ? "개봉 성적 확인" : "다음 →";
-    b.onclick = () => { FR.nextTurn(st); if (FR.isFinished(st)) showResult(); else renderTurn(); };
+    // 결과 문장을 읽는 동안 다음 카드를 미리 뽑아 그림을 받아 둔다 (순서는 choose→nextTurn→drawCard 그대로라 결과는 같다)
+    FR.nextTurn(st);
+    if (!FR.isFinished(st)) { const next = FR.drawCard(st); const pre = new Image(); pre.src = `img/cards/${next.id}.webp`; }
+    b.onclick = () => { if (FR.isFinished(st)) showResult(); else renderTurn(); };
     o.appendChild(b); box.appendChild(o);
     if (st.over) toast({ budget: "예산이 바닥났습니다", morale: "현장이 무너졌습니다", schedule: "일정이 완전히 무너졌습니다" }[st.over]);
   }
