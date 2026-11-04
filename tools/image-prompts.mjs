@@ -37,24 +37,6 @@ const haveImg = (rel) => existsSync(path.join(ROOT, "img", rel));
 
 // 다시 만들기를 권하는 이미지: id → 이유 (검수하며 추가/삭제)
 const REDO = {
-  "cast-13": "사무실 책상 구도가 다른 카드와 비슷해 장소·시간을 바꿔 다시 생성",
-  "cast-free-casting-director": "사무실 책상 구도가 다른 카드와 비슷해 장소·시간을 바꿔 다시 생성",
-  "cast-lead-script-veto": "사무실 책상 구도가 다른 카드와 비슷해 장소·시간을 바꿔 다시 생성",
-  "fund-title-change-demand": "사무실 책상 구도가 다른 카드와 비슷해 장소·시간을 바꿔 다시 생성",
-  "cast-star-reprice": "사무실 책상 구도가 다른 카드와 비슷해 장소·시간을 바꿔 다시 생성",
-  "mkt-bgm-copyright-claim": "사무실 책상 구도가 다른 카드와 비슷해 장소·시간을 바꿔 다시 생성",
-  "post-subtitle-typo-premiere": "사무실 책상 구도가 다른 카드와 비슷해 장소·시간을 바꿔 다시 생성",
-  "fund-backers-group-chat": "사무실 책상 구도가 다른 카드와 비슷해 장소·시간을 바꿔 다시 생성",
-  "plan-07": "사무실 책상 구도가 다른 카드와 비슷해 장소·시간을 바꿔 다시 생성",
-  "fund-committee-nap": "사무실 책상 구도가 다른 카드와 비슷해 장소·시간을 바꿔 다시 생성",
-  "mkt-influencer-free-review": "사무실 책상 구도가 다른 카드와 비슷해 장소·시간을 바꿔 다시 생성",
-  "mkt-02": "사무실 책상 구도가 다른 카드와 비슷해 장소·시간을 바꿔 다시 생성",
-  "plan-12": "사무실 책상 구도가 다른 카드와 비슷해 장소·시간을 바꿔 다시 생성",
-  "mkt-10": "사무실 책상 구도가 다른 카드와 비슷해 장소·시간을 바꿔 다시 생성",
-  "cast-wardrobe-sponsor-offer": "사무실 책상 구도가 다른 카드와 비슷해 장소·시간을 바꿔 다시 생성",
-  "fund-deposit-delayed-again": "사무실 책상 구도가 다른 카드와 비슷해 장소·시간을 바꿔 다시 생성",
-  "plan-08": "사무실 책상 구도가 다른 카드와 비슷해 장소·시간을 바꿔 다시 생성",
-  "fund-fund-manager-unreachable": "사무실 책상 구도가 다른 카드와 비슷해 장소·시간을 바꿔 다시 생성",
 };
 
 const COVER_PROMPT = `A small Korean cinema at golden hour with a blank marquee, a hopeful producer in a wrinkled suit standing in front of it holding a giant film reel like a steering wheel, crew members peeking from behind, pigeons on the marquee. ${STYLE}`;
