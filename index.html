@@ -395,8 +395,9 @@ const FR = (() => {
     for (const k of STAT_KEYS) { const d = (out.fx && out.fx[k] ? out.fx[k] : 0) + (BURN[k] || 0); if (d) { const before = st.stats[k]; st.stats[k] = clamp(before + d); deltas[k] = st.stats[k] - before; } }
     (out.set || []).forEach((f) => st.flags.add(f));
     (out.unset || []).forEach((f) => st.flags.delete(f));
-    const vals = Object.values(deltas);
-    const emoji = !vals.length ? "🟨" : vals.every((v) => v >= 0) ? "🟩" : vals.every((v) => v <= 0) ? "🟥" : "🟨";
+    // 턴 색깔은 카드 결과(fx)만 본다. 매 턴 자동 소모(BURN)는 빼야 "좋은 결과"가 초록으로 나온다.
+    const vals = Object.values(out.fx || {}).filter((v) => v);
+    const emoji = !vals.length ? "🟨" : vals.every((v) => v > 0) ? "🟩" : vals.every((v) => v < 0) ? "🟥" : "🟨";
     st.history.push({ turn: st.turn, stage: card.stage, cardId: card.id, title: card.title, choice: ch.text, choiceIdx: idx, text: out.text, deltas, emoji });
     for (const k of SURVIVAL) if (st.stats[k] <= 0) { st.over = k; break; }
     return { outcome: out, deltas, emoji, choice: ch };

@@ -182,6 +182,7 @@ node tools/simulate.mjs --n 1000 --policy random
 | 엔딩 구간·운명 문구·한줄평 | `TIERS`, `FATES`, `FLAG_FATES`, `CRITIC` |
 | 플래그가 관객 수에 주는 배수 | `MULT` |
 | 플래그 한글 이름(결과 카드 '기록') | UI 쪽 `FLAG_KO` |
+| 턴 색깔(🟩🟨🟥) 기준 | `choose` 안의 `emoji` — 카드 결과 fx만 보고 자동 소모는 제외 |
 | 공유 텍스트 포맷 | `shareText` (리더보드 순위 줄 포함) |
 | 리더보드 주소 / 집계 코드 | UI 쪽 `LEADERBOARD_URL`, `<script data-goatcounter>` |
 | 결과 이미지(PNG 1080×1350) 레이아웃 | UI 쪽 `drawCanvas` |
