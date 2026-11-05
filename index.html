@@ -611,7 +611,8 @@ const FR = (() => {
   }
   // 이벤트 집계: GoatCounter 스크립트가 로드돼 있을 때만 보낸다 (없으면 조용히 무시)
   const track = (name, detail) => { try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: "ev/" + name + (detail ? "/" + detail : ""), title: name, event: true }); } catch {} };
-  let st = null, end = null, genre = "thriller";
+  // 기본 장르는 들어올 때마다 무작위 (첫 칸 고정이면 안 바꾸고 시작하는 사람이 전부 같은 장르가 된다). 시드 난수는 쓰지 않는다.
+  let st = null, end = null, genre = FR.GENRES[Math.floor(Math.random() * FR.GENRES.length)].key;
 
   // ----- 타이틀 -----
   const urlSeed = Number(new URLSearchParams(location.search).get("s"));
@@ -623,7 +624,7 @@ const FR = (() => {
   $("#reroll").onclick = () => { $("#title-in").value = FR.suggestTitle(tRng); };
   const gWrap = $("#genres");
   FR.GENRES.forEach((g) => { const b = document.createElement("button"); b.className = "chip" + (g.key === genre ? " on" : ""); b.innerHTML = esc(g.name); b.onclick = () => { genre = g.key; [...gWrap.children].forEach((c) => c.classList.remove("on")); b.classList.add("on"); $("#genre-note").textContent = g.note; }; gWrap.appendChild(b); });
-  $("#genre-note").textContent = FR.GENRES[0].note;
+  $("#genre-note").textContent = FR.GENRES.find((g) => g.key === genre).note;
   loadImg($("#cover"), ["img/cover.webp"]);
   // ----- 내 기록 / 엔딩 도감 (기기 로컬) -----
   const STATS_KEY = "fr_stats";
