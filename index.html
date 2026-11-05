@@ -93,13 +93,13 @@ h1,h2,h3{margin:0;line-height:1.25;letter-spacing:-.01em}
 .stages i.gap{margin-left:8px}
 .top b{color:var(--accent);font-weight:700}
 .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:14px}
-.stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 6px 7px;text-align:center;position:relative;overflow:hidden}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 3px 7px;text-align:center;position:relative;overflow:hidden}
 .stat .l{font-size:11px;color:var(--mute)}
-.stat .v{font-size:18px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.2}
-.stat .bar{height:4px;border-radius:2px;background:var(--line);margin-top:6px;overflow:hidden}
+.stat .v{font-size:18px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.2;white-space:nowrap}
+.stat .bar{height:4px;border-radius:2px;background:var(--line);margin:6px 3px 0;overflow:hidden}
 .stat .bar i{display:block;height:100%;width:0;transition:width .5s ease}
 .stat.danger{border-color:var(--bad)}.stat.danger .v{color:var(--bad)}
-.stat .d{position:absolute;top:4px;right:6px;font-size:11px;font-weight:800;opacity:0;transform:translateY(4px);transition:all .3s}
+.stat .d{display:inline-block;margin-left:2px;vertical-align:top;font-size:10px;line-height:1.5;font-weight:800;opacity:0;transform:translateY(4px);transition:all .3s}
 .stat .d.show{opacity:1;transform:none}
 .stat .d.up{color:var(--ok)}.stat .d.down{color:var(--bad)}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;animation:in .3s ease}
@@ -467,6 +467,13 @@ const FR = (() => {
     ["city_scene", ["축제 장면만 빼면 괜찮은 {g}", "시장님이 가장 만족한 영화"]],
     ["director_gone", ["감독 없는 무대인사가 더 화제였던 {g}"]],
   ];
+  // 극장에 걸리지 못한 영화(조기 종료·OTT 직행)의 한줄평: 개봉을 전제한 문장을 쓰지 않는다
+  const CRITIC_END = {
+    bankrupt: ["평할 영화가 없다. 예산서만 남았다", "시나리오는 좋았다고 한다. 읽은 사람은 투자사뿐이다", "완성됐다면 어땠을까. 그 질문이 유일한 관람평", "제작 중단 공지가 이 영화의 유일한 공식 발표", "{g} 한 편이 통장 잔고 앞에서 멈췄다"],
+    boycott:  ["카메라보다 사람이 먼저 꺼졌다", "현장을 끝까지 지킨 건 대본뿐이었다", "찍은 분량보다 떠난 사람이 많은 {g}", "메이킹 필름이 본편보다 길 뻔했다", "영화는 못 봤다. 현장 얘기는 다들 들었다"],
+    delayed:  ["'곧 개봉'이라는 말만 개봉했다", "완성본을 본 사람은 편집기사 한 명", "개봉일 대신 연기 공지가 세 번 나온 {g}", "언젠가 볼 수 있기를. 평은 그때 쓰겠다", "하드디스크 안에서 가장 오래 상영 중인 영화"],
+    ott:      ["극장용으로 찍어 거실에서 끝난 {g}", "큰 화면을 위해 만들고 작은 화면에서 봤다", "극장 대신 추천 목록에서 만나는 {g}", "개봉일은 없고 공개일만 있었다", "일시정지 버튼이 가장 큰 경쟁자였다", "팝콘 없이 본 사람이 전부인 영화"],
+  };
   const CRITIC_PROFIT = {
     hitLoss: ["관객은 들었는데 돈은 안 남았다. 영화판의 흔한 수학", "흥행과 수익이 다른 말이라는 걸 보여 준 {g}"],
     flopGain: ["관객은 적었는데 손익은 맞췄다. 선판매의 마법", "조용히 망하고 조용히 남긴 영화"],
@@ -508,7 +515,8 @@ const FR = (() => {
     // 한줄평 고르기: 플래그/손익 문장(40%) → 9칸 기본 문장
     const lvl = (v, lo, hi) => (v >= hi ? 2 : v <= lo ? 0 : 1);
     let critic = null;
-    if (!st.over && rng() < 0.4) {
+    if (CRITIC_END[tier]) critic = pick(rng, CRITIC_END[tier]);
+    else if (rng() < 0.4) {
       const pool = [];
       CRITIC_FLAG.forEach(([k, lines]) => { if (f.has(k)) pool.push(...lines); });
       if (audience >= 1500000 && !bepHit) pool.push(...CRITIC_PROFIT.hitLoss);
@@ -714,7 +722,7 @@ const FR = (() => {
     FR.STAT_KEYS.forEach((k) => {
       const v = st.stats[k], danger = FR.SURVIVAL.includes(k) && v <= 20, d = deltas && deltas[k];
       const el = document.createElement("div"); el.className = "stat" + (danger ? " danger" : "");
-      el.innerHTML = `<div class="l">${FR.STATS[k]}${FR.SURVIVAL.includes(k) ? "" : " ·"}</div><div class="v">${v}</div><div class="bar"><i style="background:var(--${k})"></i></div>${d ? `<div class="d ${d > 0 ? "up" : "down"}">${d > 0 ? "+" : ""}${d}</div>` : ""}`;
+      el.innerHTML = `<div class="l">${FR.STATS[k]}${FR.SURVIVAL.includes(k) ? "" : " ·"}</div><div class="v">${v}${d ? `<span class="d ${d > 0 ? "up" : "down"}">${d > 0 ? "+" : ""}${d}</span>` : ""}</div><div class="bar"><i style="background:var(--${k})"></i></div>`;
       box.appendChild(el);
       requestAnimationFrame(() => { el.querySelector(".bar i").style.width = v + "%"; const dd = el.querySelector(".d"); if (dd) setTimeout(() => dd.classList.add("show"), 50); });
     });

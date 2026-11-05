@@ -115,7 +115,12 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "not": [
+    "ott_deal"
+   ]
+  }
  },
  {
   "id": "rel-gv-mic-incident",
@@ -172,7 +177,12 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "not": [
+    "ott_deal"
+   ]
+  }
  },
  {
   "id": "rel-review-bot-suspicion",
@@ -637,7 +647,12 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "not": [
+    "ott_deal"
+   ]
+  }
  },
  {
   "id": "rel-director-interview-gaffe",
@@ -693,7 +708,12 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "not": [
+    "ott_deal"
+   ]
+  }
  },
  {
   "id": "rel-empty-preview-seats",
@@ -999,7 +1019,12 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "not": [
+    "ott_deal"
+   ]
+  }
  },
  {
   "id": "rel-telecom-discount-tie",
@@ -1107,7 +1132,12 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "not": [
+    "ott_deal"
+   ]
+  }
  },
  {
   "id": "mkt-stage-greeting-empty",
@@ -1163,7 +1193,12 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "not": [
+    "ott_deal"
+   ]
+  }
  },
  {
   "id": "mkt-fan-rewatch-club",
@@ -1175,6 +1210,9 @@
    "quality": [
     45,
     100
+   ],
+   "not": [
+    "ott_deal"
    ]
   },
   "choices": [
@@ -1257,7 +1295,12 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "not": [
+    "ott_deal"
+   ]
+  }
  },
  {
   "id": "rel-popcorn-review-flood",
@@ -1313,7 +1356,12 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "not": [
+    "ott_deal"
+   ]
+  }
  },
  {
   "id": "rel-spoiler-poster",
@@ -1372,6 +1420,9 @@
   "cond": {
    "genre": [
     "thriller"
+   ],
+   "not": [
+    "ott_deal"
    ]
   }
  },
@@ -1415,7 +1466,12 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "not": [
+    "ott_deal"
+   ]
+  }
  },
  {
   "id": "rel-gv-fainting",
@@ -1472,7 +1528,12 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "not": [
+    "ott_deal"
+   ]
+  }
  },
  {
   "id": "rel-directors-cut-petition",
@@ -1529,7 +1590,12 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "not": [
+    "ott_deal"
+   ]
+  }
  },
  {
   "id": "rel-regional-theater-owner",
@@ -1570,7 +1636,12 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "not": [
+    "ott_deal"
+   ]
+  }
  },
  {
   "id": "rel-free-buzz-agency",

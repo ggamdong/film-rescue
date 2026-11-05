@@ -2970,7 +2970,12 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "not": [
+    "ott_deal"
+   ]
+  }
  },
  {
   "id": "mkt-05",
@@ -3328,7 +3333,12 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "not": [
+    "ott_deal"
+   ]
+  }
  },
  {
   "id": "rel-03",
@@ -3338,6 +3348,9 @@
   "cond": {
    "has": [
     "fake_booking"
+   ],
+   "not": [
+    "ott_deal"
    ]
   },
   "choices": [
@@ -3377,6 +3390,9 @@
    "morale": [
     0,
     40
+   ],
+   "not": [
+    "ott_deal"
    ]
   },
   "choices": [
@@ -3545,7 +3561,12 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "not": [
+    "ott_deal"
+   ]
+  }
  },
  {
   "id": "rel-08",

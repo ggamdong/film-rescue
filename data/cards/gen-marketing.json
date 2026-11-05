@@ -162,7 +162,12 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "not": [
+    "ott_deal"
+   ]
+  }
  },
  {
   "id": "mkt-critic-preview-dilemma",
@@ -204,7 +209,12 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "not": [
+    "ott_deal"
+   ]
+  }
  },
  {
   "id": "mkt-goods-overstock",
@@ -327,7 +337,12 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "not": [
+    "ott_deal"
+   ]
+  }
  },
  {
   "id": "mkt-empty-stage-greeting",
@@ -424,6 +439,9 @@
   "cond": {
    "has": [
     "trailer_lie"
+   ],
+   "not": [
+    "ott_deal"
    ]
   },
   "choices": [
@@ -874,7 +892,12 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "not": [
+    "ott_deal"
+   ]
+  }
  },
  {
   "id": "mkt-bgm-copyright-claim",
@@ -1092,7 +1115,12 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "not": [
+    "ott_deal"
+   ]
+  }
  },
  {
   "id": "mkt-chain-exclusive-offer",
@@ -1146,7 +1174,12 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "not": [
+    "ott_deal"
+   ]
+  }
  },
  {
   "id": "mkt-release-moved-up",
@@ -1187,7 +1220,12 @@
      }
     ]
    }
-  ]
+  ],
+  "cond": {
+   "not": [
+    "ott_deal"
+   ]
+  }
  },
  {
   "id": "post-trailer-rating-reject",
