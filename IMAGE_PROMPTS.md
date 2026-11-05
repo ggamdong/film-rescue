@@ -978,7 +978,7 @@ A lead actor surrounded by camera flashes outside a cinema on opening day, the f
 
 </details>
 
-**극장 상영 기간 단축** (mkt-ott-window-squeeze)
+**극장의 뒤늦은 전화** (mkt-ott-window-squeeze)
 
 <details><summary><code>assets/raw/cards/mkt-ott-window-squeeze.png</code></summary>
 
@@ -1138,7 +1138,7 @@ A critic sneaking out of a press screening typing on a phone, paper airplanes of
 
 </details>
 
-**극장 공개 2주 뒤 OTT** (fund-ott-window-clause)
+**OTT 공개일 통보** (fund-ott-window-clause)
 
 <details><summary><code>assets/raw/cards/fund-ott-window-clause.png</code></summary>
 
