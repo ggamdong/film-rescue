@@ -65,7 +65,7 @@ export default {
         if (!b) return json({ error: "bad json" }, 400, h);
         const seed = Number(b.seed), audience = Math.round(Number(b.audience));
         const title = String(b.title || "").slice(0, 24), genre = String(b.genre || "").slice(0, 16), tier = String(b.tier || "");
-        if (!Number.isInteger(seed) || seed < 0 || !Number.isFinite(audience) || audience < 0 || audience > 15_000_000 || !TIERS.has(tier) || !title)
+        if (!Number.isInteger(seed) || seed < 0 || !Number.isFinite(audience) || audience < 0 || audience > 20_000_000 || !TIERS.has(tier) || !title)
           return json({ error: "bad payload" }, 400, h);
         const picks = Array.isArray(b.picks) && b.picks.length <= 20 && b.picks.every((p) => Array.isArray(p) && typeof p[0] === "string" && p[0].length <= 64 && Number.isInteger(p[1]) && p[1] >= 0 && p[1] <= 3)
           ? JSON.stringify(b.picks.map((p) => [p[0], p[1]])) : null;
