@@ -301,8 +301,12 @@ const FR = (() => {
     { key: "sports",      name: "스포츠",      fx: { morale: 8, quality: 2 },                   note: "사기 +8, 완성도 +2" },
     { key: "docu",        name: "다큐",        fx: { budget: 10, buzz: -10, quality: 3 },       note: "예산 +10, 완성도 +3, 화제성 -10" },
   ];
-  const TITLE_A = ["마지막", "검은", "어느 날의", "완벽한", "그해 여름", "비밀의", "사라진", "불타는", "조용한", "두 번째", "서울의", "밤의"];
-  const TITLE_B = ["택시", "변호사", "동창회", "장례식", "소방관", "편의점", "아파트", "낚시터", "수학여행", "노래방", "세탁소", "부동산", "야간조", "골목"];
+  const TITLE_A = ["마지막", "검은", "어느 날의", "완벽한", "그해 여름", "비밀의", "사라진", "불타는", "조용한", "두 번째", "서울의", "밤의",
+    "수상한", "위험한", "오래된", "낯선", "뜨거운", "차가운", "아주 사적인", "돌아온", "잠들지 않는", "이름 없는", "우리 동네", "새벽의", "한낮의", "그 겨울", "일요일의", "세상 끝", "푸른", "멈추지 않는", "어쩌다", "오늘 밤", "스물아홉", "1999년", "눈 내리는"];
+  const TITLE_B = ["택시", "변호사", "동창회", "장례식", "소방관", "편의점", "아파트", "낚시터", "수학여행", "노래방", "세탁소", "부동산", "야간조", "골목",
+    "목욕탕", "분식집", "고시원", "터미널", "옥탑방", "사진관", "이발소", "휴게소", "결혼식", "이삿날", "면접", "회식", "당직실", "관제탑", "등대", "기숙사", "주유소", "빨래방", "포장마차", "산악회", "조기축구", "반상회", "막차", "첫차", "응급실", "수산시장", "캠핑장", "만화방", "철물점", "민박집"];
+  const TITLE_C = ["밤", "비밀", "여름", "기억", "손님", "주인", "규칙", "침묵", "온도", "계절", "이웃", "약속", "거짓말", "마지막 날", "첫눈", "유령", "용의자", "단골", "전설", "품격", "시간", "목격자", "사정", "기적"];
+  const TITLE_D = ["에서 생긴 일", "에서 만나요", " 가는 길", " 앞 삼거리", " 사람들", " 옆 그 집", "에 불이 켜지면", " 살인사건", " 블루스", " 연대기", " 사용 설명서", " 탈출기"];
 
   // ---------- RNG (mulberry32) ----------
   function makeRng(seed) {
@@ -352,7 +356,13 @@ const FR = (() => {
     if (op === "short") { const w = base.split(" ").filter(Boolean); if (w.length > 1) return w[w.length - 1]; const c = [...base]; return c.length > 1 ? c.slice(0, Math.ceil(c.length / 2)).join("") : base + base; }
     return t;
   }
-  function suggestTitle(rng) { return `${pick(rng, TITLE_A)} ${pick(rng, TITLE_B)}`; }
+  // 자동 제목: 세 가지 틀(꾸밈말+장소, 장소의 무엇, 장소+꼬리말)을 섞는다
+  function suggestTitle(rng) {
+    const r = rng(), b = pick(rng, TITLE_B);
+    if (r < 0.5) return `${pick(rng, TITLE_A)} ${b}`;
+    if (r < 0.8) return `${b}의 ${pick(rng, TITLE_C)}`;
+    return b + pick(rng, TITLE_D);
+  }
 
   function newGame({ seed, cards, title, genre }) {
     const rng = makeRng(seed);
@@ -362,7 +372,7 @@ const FR = (() => {
     const plan = []; STAGES.forEach((s) => { for (let i = 0; i < s.turns; i++) plan.push(s.key); });
     const cost = 30 + Math.floor(rng() * 50); // 총제작비(억), 손익분기 계산용
     const st = { seed, rng, cards, turn: 0, plan, stats, flags: new Set(), used: new Set(), history: [],
-      film: { title: (title || "").trim() || suggestTitle(rng), genre: g.key, genreName: g.name, cost }, card: null, over: null };
+      film: { title: (title || "").trim() || suggestTitle(makeRng((seed ^ 0x7171e) >>> 0)), genre: g.key, genreName: g.name, cost }, card: null, over: null };
     st.film.title0 = st.film.title; st.film.genre0 = g.key;   // 시작할 때의 제목·장르 (다시 보기용)
     return st;
   }
